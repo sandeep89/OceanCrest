@@ -321,8 +321,8 @@ This notice must stay intact for use
           <td width="15%"><input type="text" name="no_adults" id="no_adults" size="8" value="<?php echo trim($bookings->no_adults); ?>"/></td>
           <td width="10%">Child</td>
           <td width="16%"><input type="text" name="no_child" id="no_child" size="8" value="<?php echo trim($bookings->no_child); ?>"/></td>
-		  <td width="22%">Total in Pty</td>
-          <td width="27%"><input type="text" name="total_pty" size="8"/></td>
+		  <td width="22%">Total Persons</td>
+          <td width="27%"><input type="text" name="total_per" size="8"/></td>
         </tr>
       </table></td>
     </tr>

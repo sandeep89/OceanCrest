@@ -39,7 +39,7 @@ $access = fetch_object($results);
 	$_SESSION["access"]
 }*/
 
-if($access->admin==1) echo "<tr><td><a href=\"admin.php\">Admin</a></td></tr>";
+if($access->admin==1) echo "<tr><td><a href=\"admin.php\">Administration</a></td></tr>";
 if($access->guest==1) echo "<tr><td><a href=\"guests.php\">Guests</a></td></tr>";
 if($access->reservation==1) echo "<tr><td><a href=\"reservations.php\">Reservations</a></td></tr>";
 if($access->booking==1) echo "<tr><td><a href=\"bookings.php\">Bookings</a></td></tr>";
