@@ -40,15 +40,16 @@ $access = fetch_object($results);
 }*/
 
 
-if($access->guest==1) echo "<tr><td><a href=\"guests.php\">Guest Details</a></td></tr>";
+#if($access->guest==1) echo "<tr><td><a href=\"guests.php\">Guest Details</a></td></tr>";
 if($access->reservation==1) echo "<tr><td><a href=\"reservations.php\">Reservations</a></td></tr>";
+if($access->reservation==1) echo "<tr><td><a href=\"reservation_list.php\">Reservations List</a></td></tr>";
 if($access->booking==1) echo "<tr><td><a href=\"bookings.php\">Bookings</a></td></tr>";
 #if($access->agents==1) echo "<tr><td><a href=\"agents.php\">Agents</a></td></tr>";
-if($access->rooms==1) echo "<tr><td><a href=\"rooms.php\">Rooms</a></td></tr>";
-if($access->billing==1) echo "<tr><td><a href=\"billings.php\">Guest Bill</a></td></tr>";
-if($access->rates==1) echo "<tr><td><a href=\"rates.php\">Room Rates</a></td></tr>";
-if($access->lookup==1) echo "<tr><td><a href=\"lookup.php\">Lookups</a></td></tr>";
-if($access->reports==1) echo "<tr><td><a href=\"reports.php\">Reports</a></td></tr>";
-if($access->admin==1) echo "<tr><td><a href=\"admin.php\">Administration</a></td></tr>";
+#if($access->rooms==1) echo "<tr><td><a href=\"rooms.php\">Rooms</a></td></tr>";
+#if($access->billing==1) echo "<tr><td><a href=\"billings.php\">Guest Bill</a></td></tr>";
+#if($access->rates==1) echo "<tr><td><a href=\"rates.php\">Room Rates</a></td></tr>";
+#if($access->lookup==1) echo "<tr><td><a href=\"lookup.php\">Lookups</a></td></tr>"
+#if($access->reports==1) echo "<tr><td><a href=\"reports.php\">Reports</a></td></tr>";
+#if($access->admin==1) echo "<tr><td><a href=\"admin.php\">Administration</a></td></tr>";
 free_result($access);
 ?>

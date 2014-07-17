@@ -307,7 +307,7 @@ This notice must stay intact for use
       </tr>
       <tr>
         <td><table width="86%"  border="0" cellpadding="1" align="left">
-    <tr>
+   <!-- <tr>
       <td colspan="3">
 	<table border="1" cellpadding="0">
           <tr>
@@ -325,7 +325,7 @@ This notice must stay intact for use
 	</td>
 	<td width="32%"><input type="button" name="Submit" value="Reservations List" onclick="self.location='reservation_list.php'"/>
 	  <input name="guestid" type="hidden" value="<?php echo trim($guests->guestid); ?>" /></td>
-    </tr>
+    </tr>-->
     <tr>
       <td width="18%">Reservation By: </td>
       <td colspan="3"><p>
