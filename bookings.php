@@ -32,7 +32,29 @@ access("booking"); //check if user is allowed to access this page
 
 //if page was visited through a search hyperlin.
 if (isset($_GET["search"]) && !empty($_GET["search"])){
-	find($_GET["search"]);
+	$bookings = find($_GET["search"]);
+
+    $bookingId = $bookings->booking_id;
+    $guestName = $bookings->name_of_guest;
+    $age = $bookings->age;
+    $dependents = ($bookings->dependents!='NULL') ? $bookings->dependents  : '';
+    $no_adults = ($bookings->num_of_adults != 'NULL') ? $bookings->num_of_adults : '';
+    $no_child = ($bookings->num_of_children != 'NULL') ? $bookings->num_of_children : '';
+    $address = $bookings->address;
+    $nationality = $bookings->nationality;
+    $identification_doc = $bookings->identification_document;
+    $idNo = $bookings->id_doc_num;
+    $mobile_num = $bookings->mobile_num;
+    $alt_contact_num = ($bookings->landline_num != 'NULL') ? $bookings->landline_num : '';
+    $checkin_date = $bookings->checkin_date;
+    $checkout_date = $bookings->checkout_date;
+    $numNights = $bookings->no_nights;
+    $arrivedFrom = $bookings->arrived_from;
+    $emp_india = $bookings->employed_in_india;
+    $duration_stay_india = ($bookings->duration_of_stay_in_india != 'NULL') ? $bookings->duration_of_stay_in_india : '';
+    $purpose_of_visit = ($bookings->purpose_of_visit != 'NULL') ? $bookings->purpose_of_visit : '';
+    $roomId = $bookings->room_no;
+    $advance_amt = ($bookings->advance != 'NULL') ? $bookings->advance : '';
 }
 
 //if page was visited for confriming a reservation.
@@ -67,17 +89,20 @@ function find($search){
 	$strOffSet=!empty($_POST["strOffSet"]) ? $_POST["strOffSet"] : 0; //offset value peacked on all pages with pagination - logical error
 		
 	//check on wether search is being done on idno/ppno/guestid/guestname
-	$sql="Select guests.guestid,concat_ws(' ',guests.firstname,guests.middlename,guests.lastname) as guest,guests.pp_no,
-		guests.idno,guests.countrycode,guests.pobox,guests.town,guests.postal_code,guests.phone,guests.email,guests.mobilephone,
-		countries.country,booking.book_id,booking.guestid,booking.booking_type,booking.meal_plan,booking.no_adults,booking.no_child,
-		booking.checkin_date,booking.checkout_date,booking.residence_id,booking.payment_mode,booking.agents_ac_no,booking.roomid,
-		booking.checkedin_by,booking.invoice_no,booking.billed,booking.checkoutby,booking.codatetime,DATEDIFF(booking.checkout_date,booking.checkin_date) as no_nights
-		From guests
-		Inner Join countries ON guests.countrycode = countries.countrycode
-		Inner Join booking ON guests.guestid = booking.guestid
-		where booking.book_id='$search'";
+	$sql="Select booking.booking_id,booking.name_of_guest,booking.age, booking.dependents,booking.num_of_adults,booking.num_of_children,
+          booking.address,booking.nationality,booking.identification_document,booking.id_doc_num,booking.mobile_num,booking.landline_num,
+          booking.checkin_date,booking.checkout_date,DATEDIFF(booking.checkout_date,booking.checkin_date) as no_nights,booking.arrived_from,
+          booking.employed_in_india,booking.duration_of_stay_in_india,booking.purpose_of_visit,booking.room_no,booking.advance
+		From act_booking as booking
+		where booking.booking_id='$search'";
+    //echo $sql;
 	$results=mkr_query($sql,$conn);
 	$bookings=fetch_object($results);
+
+    //echo '<pre>';
+    //print_r($bookings);
+
+    return $bookings;
 }
 function findReservation($findReservation){
   global $conn;
@@ -237,17 +262,17 @@ This notice must stay intact for use
       </tr>
       <tr>
         <td><div id="Requests">  <table width="86%" border="0" cellpadding="4" align="left">
-     <tr>
+     <!-- <tr>
 	<td colspan="4"><input type="button" name="Submit" value="Booking List" onclick="self.location='bookings_list.php'"/>
 	  <input type="button" name="Submit" value="Booking Calendar" onclick="self.location='bookings_calendar.php'"/></td>
-	</tr>
+	</tr> -->
     <tr>
         <?php
         if($bookingId != '')
         {
         ?>
             <td width="20%">Booking Id</td>
-            <td><input type="text" name="book_id" value="<?php echo $bookingId; ?>" size="10" readonly/></td>
+            <td><?php echo $bookingId; ?></td>
         <?php
         }
         ?>
@@ -255,9 +280,11 @@ This notice must stay intact for use
     </tr>
     <tr>
       <td width="20%">Name of Primary Guest</td>
-      <td><input type="text" name="guest_name" value="<?php echo $guestName; ?>" size="30"/>
-      &nbsp;&nbsp;&nbsp;
-      Age&nbsp;&nbsp;&nbsp;<input type="text" name="age" value="<?php echo $age; ?>" size="1" maxlength="3"/></td>
+      <td><input type="text" name="guest_name" value="<?php echo $guestName; ?>" size="30"/></td>
+    </tr>
+    <tr>
+      <td>Age</td>
+      <td><input type="text" name="age" value="<?php echo $age; ?>" size="1" maxlength="3"/></td>
     </tr>
     <tr>
         <td width="20%" valign="top">Dependents</td>
@@ -295,12 +322,29 @@ This notice must stay intact for use
             <table border="0" width="45%" cellpadding="1">
                 <tr>
                     <td>Document Type <br />
+					<?php
+					$selectedPP = "";
+					$selectedPAN = "";
+					$selectedDL = "";
+					$selectedAadh = "";
+					
+					if($identification_doc == "Passport")
+						$selectedPP = "selected";
+					elseif($identification_doc == "PAN")
+						$selectedPAN = "selected";
+					elseif($identification_doc == "Driving License")
+						$selectedDL = "selected";
+					elseif($identification_doc == "Aadhar")
+						$selectedAadh = "selected";
+					else
+						$selected = "selected";
+					?>
                         <select name="identification_doc" id="identification_doc" onchange="">
-                            <option value="">Select ID Doc</option>
-                            <option value="Passport">Passport</option>
-                            <option value="PAN">PAN Card</option>
-                            <option value="Driving License">Driving License</option>
-                            <option value="Aadhar">Aadhar Card</option>
+                            <option value="" <?php echo $selected; ?>>Select ID Doc</option>
+                            <option value="Passport" <?php echo $selectedPP; ?>>Passport</option>
+                            <option value="PAN" <?php echo $selectedPAN; ?>>PAN Card</option>
+                            <option value="Driving License" <?php echo $selectedDL; ?>>Driving License</option>
+                            <option value="Aadhar" <?php echo $selectedAadh; ?>>Aadhar Card</option>
                         </select>
                     </td>
                     <td>ID Number <br />
@@ -344,8 +388,17 @@ This notice must stay intact for use
     <tr>
         <td>Employed in India</td>
         <td>
-            <input type="radio" name="emp_india" id="emp_india" value="Y" />Yes
-            <input type="radio" name="emp_india" id="emp_india" value="N" />No
+		<?php
+		$checkedY = '';
+		$checkedN = '';
+		
+		if($emp_india == 'Y')
+			$checkedY = 'checked';
+		elseif($emp_india == 'N')
+			$checkedN = 'checked';
+		?>
+            <input type="radio" name="emp_india" id="emp_india" value="Y" <?php echo $checkedY; ?> />Yes
+            <input type="radio" name="emp_india" id="emp_india" value="N" <?php echo $checkedN; ?> />No
         </td>
     </tr>
     <tr>
@@ -362,7 +415,7 @@ This notice must stay intact for use
              <div id="showrates"></div>
              <select name="roomid" id="roomid" size="6" onchange="loadHTMLPost('ajaxfunctions.php','showrates','GetRates')" multiple>
                  <option value="" >Select Room</option>
-                 <?php populate_select("rooms","roomid","roomno",$bookings->roomid);?>
+                 <?php populate_select("rooms","roomid","roomno",$roomId);?>
              </select>
          </td>
      </tr>
