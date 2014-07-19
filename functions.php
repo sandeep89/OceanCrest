@@ -25,7 +25,7 @@ error_reporting(E_ALL & ~E_NOTICE);
 function populate_select($table,$fields_id,$fields_value,$selected){
     if($selected == '')
         $selected = "IN";
-    
+
 	$conn=db_connect(HOST,USER,PASS,DB,PORT);
 	$sql="Select $fields_id,$fields_value From $table Order By $fields_value";
 	$results=mkr_query($sql,$conn);
