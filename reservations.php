@@ -249,14 +249,11 @@ function loadHTMLPost(URL, destination, button){
     }
 }
 
-function nights(){
-date2=(document.getElementById('checkoutdate').value);
-date1=(document.getElementById('checkindate').value);
-document.getElementById('no_nights').value=date2-date1;
-}
+
 //-->	 
 </script>
-<script language="javascript" src="js/cal2.js">
+<script language="javascript" src="js/cal2.js"> </script>
+<script language="javascript" src="js/scripts.js">
 /*
 Xin's Popup calendar script-  Xin Yang (http://www.yxscripts.com/)
 Script featured on/available at http://www.dynamicdrive.com/
@@ -327,32 +324,15 @@ This notice must stay intact for use
 	  <input name="guestid" type="hidden" value="<?php echo trim($guests->guestid); ?>" /></td>
     </tr>-->
     <tr>
-      <td width="18%">Reservation By: </td>
-      <td colspan="3"><p>
-          <label>
-<input type="radio" name="reservation_type" value="T" />        
-Telephone</label>
-          <label>
-          <input type="radio" name="reservation_type" value="A" />
-        At Desk</label>
-          <label>
-          <input type="radio" name="reservation_type" value="L" />
-        Letter</label>
-          <label>
-          <input type="radio" name="reservation_type" value="O" />
-        Online</label>
-      </p></td>
-    </tr>
-    <tr>
       <td>Guest Name: </td>
       <td width="35%"><input type="text" name="name" /></td>
-      <td width="15%">Telephone</td>
+      <td width="15%">Mobile</td>
       <td><input type="text" name="phone" value="<?php echo trim($guests->phone); ?>" /></td>
     </tr>
     <tr>
-      <td>Made By: </td>
+      <td>Reservation Made By: </td>
       <td><input type="text" name="reservation_by" /></td>
-      <td>Telephone</td>
+      <td>LandPhone:</td>
       <td><input type="text" name="reservation_by_phone" /></td>
     </tr>
     <tr>
@@ -365,7 +345,7 @@ Telephone</label>
     </tr>
     <tr>
       <td>No. of nights</td>
-      <td><input type="text" name="no_nights" id="no_nights" size="10" readonly=""/></td>
+      <td><input type="text" name="no_nights" id="no_nights" size="10"/></td>
       <td>&nbsp;</td>
       <td>&nbsp;</td>
     </tr>
