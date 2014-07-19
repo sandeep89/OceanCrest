@@ -148,8 +148,8 @@ This notice must stay intact for use
     
     <td width="67%" bgcolor="#FFFFFF"><table width="100%"  border="0" cellpadding="1">
       <tr>
-        <td align="center" onclick="loadHTMLPost('reportqueries.php','ReportDetails','')" style="cursor:pointer">Guests Arrivals</td>
-		<td align="center" onclick="loadHTMLPost('reportqueries.php','ReportDetails','')" style="cursor:pointer">Guests Departures</td>
+        <td align="center" onclick="loadHTMLPost('reportqueries.php','ReportDetails','arrivals')" style="cursor:pointer">Guests Arrivals</td>
+		<td align="center" onclick="loadHTMLPost('reportqueries.php','ReportDetails','departures')" style="cursor:pointer">Guests Departures</td>
 		<td align="center" onclick="loadHTMLPost('reportqueries.php','ReportDetails','')" style="cursor:pointer">Housekeepers</td>
 		<td align="center" onclick="loadHTMLPost('reportqueries.php','ReportDetails','')" style="cursor:pointer">Expenses</td>
 		<td align="center" onclick="loadHTMLPost('reportqueries.php','ReportDetails','')" style="cursor:pointer">Income</td>
