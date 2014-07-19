@@ -304,42 +304,27 @@ This notice must stay intact for use
       </tr>
       <tr>
         <td><table width="86%"  border="0" cellpadding="1" align="left">
-   <!-- <tr>
-      <td colspan="3">
-	<table border="1" cellpadding="0">
-          <tr>
-            <td width="78">
-			<input type="submit" name="Navigate" id="First" style="cursor:pointer" title="first page" value="<<"/>
-            <input type="submit" name="Navigate" id="Previous" style="cursor:pointer" title="previous page" value="<"/>
-            </td>
-            <td width="241" align="center" bgcolor="#FFFFFF"><h3><?php echo trim($guests->guest); ?></h3></td>
-            <td width="79">
-			<input type="submit" name="Navigate" id="Next" style="cursor:pointer" title="next page" value=">"/>
-            <input type="submit" name="Navigate" id="Last" style="cursor:pointer" title="last page" value=">>"/>
-            </td>
-          </tr>
-        </table>
-	</td>
-	<td width="32%"><input type="button" name="Submit" value="Reservations List" onclick="self.location='reservation_list.php'"/>
-	  <input name="guestid" type="hidden" value="<?php echo trim($guests->guestid); ?>" /></td>
-    </tr>-->
     <tr>
-      <td>Guest Name: </td>
-      <td width="65%"><input type="text" name="name" /></td>
-      <td width="15%">Mobile</td>
-      <td><input type="text" name="phone" value="<?php echo trim($guests->phone); ?>" /></td>
+    	<td width="15%">Reservation Id: </td>
+      <td ><input type="text" name="name"  maxlength="100" /></td>
     </tr>
     <tr>
-      <td>Reservation Made By: </td>
+      <td width="10%">Guest Name: </td>
+      <td width="25%"><input type="text" name="name"  maxlength="100" /></td>
+      <td width="20%">Contact Num</td>
+      <td width="45%"><input type="text" name="phone" maxlength="15" value="<?php echo trim($guests->phone); ?>" /></td>
+    </tr>
+    <tr>
+      <td>Coming From: </td>
       <td><input type="text" name="reservation_by" /></td>
-      <td>LandPhone:</td>
-      <td><input type="text" name="reservation_by_phone" /></td>
+      <td>Alerternate Num:</td>
+      <td><input type="text" name="reservation_by_phone" maxlength="15"/></td>
     </tr>
     <tr>
-      <td>Date of arrival </td>
+      <td>Date of arrival: </td>
       <td><input type="text" name="reserve_checkindate" id="checkindate" onblur="nights()" readonly=""/>
           <a href="javascript:showCal('Calendar1')"> <img src="images/ew_calendar.gif" width="16" height="15" border="0"/></a></td>
-      <td>Departure Date</td>
+      <td>Departure Date:</td>
       <td><input type="text" name="reserve_checkoutdate" id="checkoutdate" onblur="nights()" readonly=""/>
           <small><a href="javascript:showCal('Calendar2')"> <img src="images/ew_calendar.gif" width="16" height="15" border="0"/></a></small></td>
     </tr>
@@ -353,84 +338,30 @@ This notice must stay intact for use
       <td>No. of Guests </td>
       <td colspan="4"><table width="74%"  border="0" cellpadding="1">
           <tr>
-            <td width="18%">Adults <br />
+            <td >Adults <br />
                 <input type="text" name="no_adults" id="no_adults" size="10"/></td>
-            <td width="22%">Child 0 - 5 <br />
-                <input type="text" name="no_child0_5" size="10"/></td>
-            <td width="22%">Child 6 - 12 <br />
-                <input type="text" name="no_child6_12" size="10"/></td>
-            <td width="38%">Babies <br />
-                <input type="text" name="no_babies" size="10"/></td>
+            <td >Childs <br />
+                <input type="text" name="no_childs" size="10"/></td>
           </tr>
       </table></td>
     </tr>
-    <tr>
-      <td>Meal Plan </td>
-      <td><table width="108%"  border="0" cellpadding="1">
-        <tr>
-          <td width="28%"><input type="radio" name="meal_plan" id="mealplan" value="BO" <?php echo ($guests->meal_plan=="BO" ? "checked=\"checked\"" : ""); ?> />
-            BO</td>
-          <td width="25%"><input type="radio" name="meal_plan" id="mealplan" value="BB" <?php echo ($guests->meal_plan=="BB" ? "checked=\"checked\"" : ""); ?> />
-            BB</td>
-          <td width="24%"><input type="radio" name="meal_plan" id="mealplan" value="HB" <?php echo ($guests->meal_plan=="HB" ? "checked=\"checked\"" : ""); ?> />
-            HB</td>
-          <td width="23%"><input type="radio" name="meal_plan" id="mealplan" value="FB" <?php echo ($guests->meal_plan=="FB" ? "checked=\"checked\"" : ""); ?> />
-            FB</td>
-        </tr>
-      </table></td>
-      <td>Billing Instructions</td>
-      <td colspan="2"><textarea name="billing_instructions"></textarea></td>
-    </tr>
 <tr>
-      <td>Booking Type</td>
-      <td colspan="3">
-        <label>
-<input type="radio" name="booking_type" id="booking_type" value="D" onclick="loadHTMLPost('ajaxfunctions.php','agentoption','Direct')"/>
-Direct booking </label>
-        <label>
-        <input type="radio" name="booking_type" id="booking_type" value="A" onclick="loadHTMLPost('ajaxfunctions.php','agentoption','Agent')"/>
-  Agent booking</label>
-      </td>
-    </tr>    
-	<tr>
-      <td colspan="2" width="100%"><div id="agentoption"></div></td>
-      <td>Voucher No. </td>
-      <td><input type="text" name="voucher_no" /></td>
+      <td>Number of Rooms: </td>
+	 <td><input type="text" name="no_of_rooms" id="no_of_rooms" size="10"/></td></td>
     </tr>
-    <tr>
-      <td>Address</td>
-      <td bgcolor="#66CCCC"><?php
-	   echo "P. O. Box " . trim($guests->pobox) ."<br>";
-	   echo trim($guests->town) . "-" . trim($guests->postal_code);
-	   ?></td>
-      <td>Room No. </td>
-      <td><div id="showrates"></div>
-	  <select name="roomid" id="roomid" onchange="loadHTMLPost('ajaxfunctions.php','showrates','GetRates')">
-        <option value="" >Select Room</option>
-        <?php populate_select("rooms","roomid","roomno",$bookings->roomid);?>
-      </select></td>
-    </tr>
-<tr>
-      <td>Daily Rates</td>
-      <td><input type="text" name="textfield" /></td>
-      <td>Deposit</td>
-      <td><input type="text" name="deposit" /></td>
-    </tr>	
+
     <tr>
       <td colspan="2"><h2>Booking Taken By</h2></td>
-      <td colspan="2"><h2>Booking Confirmed By:</h2></td>
     </tr>
     <tr>
       <td>Name</td>
       <td><input type="text" name="reserved_by" value="<?php echo $_SESSION["employee"]; ?>"/></td>
-      <td>Name</td>
-      <td><input type="text" name="confirmed_by" /></td>
     </tr>
     <tr>
       <td>Date</td>
-      <td><input type="text" name="date_reserved" /></td>
-      <td>Date</td>
-      <td><input type="text" name="confirmed_date" /></td>
+      <td><input type="text" name="date_reserved" id="reservationdate" readonly=""/>
+          <small><a href="javascript:showCal('Calendar9')"> <img src="images/ew_calendar.gif" width="16" height="15" border="0"/></a></small></td>
+
     </tr>
     <tr>
       <td>&nbsp;</td>

@@ -13,6 +13,9 @@ addCalendar("Calendar7", "Select Date", "doc_date", "billing");
 
 addCalendar("Calendar8", "Select Date", "date", "report");
 
+addCalendar("Calendar9", "Select Date", "reservationdate", "reservation");
+
+
 // default settings for English
 // Uncomment desired lines and modify its values
 // setFont("verdana", 9);
