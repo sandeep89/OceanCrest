@@ -78,8 +78,8 @@ if (isset($_POST['Submit'])){
 				//}
 				
 				$results=mkr_query($sql,$conn);
-				$msg[0]="Sorry user account no created";
-				$msg[1]="User account created successful";
+				$msg[0]="Sorry User Account not created";
+				$msg[1]="User Account successfully Created";
 				AddSuccess($results,$conn,$msg);	
 			}
 			break;
