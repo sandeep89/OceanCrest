@@ -154,7 +154,7 @@ function find($search){
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
  <link href="css/new.css" rel="stylesheet" type="text/css">
 <!-- <link rel="stylesheet" type="text/css" href="css/print.css" media="print" /> -->
-<title>Hotel Management Information System</title>
+<title>OCEAN CREST RESERVATION SYSTEMS</title>
 
 <script type="text/javascript">
 <!--
