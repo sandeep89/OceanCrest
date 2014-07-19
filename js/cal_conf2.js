@@ -3,8 +3,8 @@
 addCalendar("Calendar1", "Select Date", "checkin_date", "reservation");
 addCalendar("Calendar2", "Select Date", "checkout_date", "reservation");
 
-addCalendar("Calendar3", "Select Date", "arrivaldate", "bookings");
-addCalendar("Calendar4", "Select Date", "departuredate", "bookings");
+addCalendar("Calendar3", "Select Date", "checkin_date", "bookings");
+addCalendar("Calendar4", "Select Date", "checkout_date", "bookings");
 
 addCalendar("Calendar5", "Select Date", "date_started", "rates");
 addCalendar("Calendar6", "Select Date", "date_stopped", "rates");
