@@ -102,7 +102,7 @@ function Login(){
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
 <link href="css/new.css" rel="stylesheet" type="text/css">
-<title>Hotel Management Information System</title>
+<title>OCEAN CREST RESERVATION SYSTEMS</title>
 
 <script type="text/javascript">
 <!--
@@ -181,7 +181,7 @@ function loadHTMLPost(URL, destination){
 		</tr>
 	  </table></td></tr>
 		<?php require_once("menu_header.php"); ?>	
-    <tr><td align="center"><div onclick="loadHTML('futures.php','RequestDetails')" style="cursor:pointer"><h2>Futures</h2></div></td></tr>		
+    <!--<tr><td align="center"><div onclick="loadHTML('futures.php','RequestDetails')" style="cursor:pointer"><h2>Futures</h2></div></td></tr>		-->
     </table>
 	</td>
     
@@ -191,7 +191,7 @@ function loadHTMLPost(URL, destination){
       </tr>
       <tr>
         <td>
-		<H4>HOTEL MANAGEMENT INFORMATION SYSTEMS</H4> </td>
+		<H4>OCEAN CREST RESERVATION SYSTEMS</H4> </td>
       </tr>
       <tr>
         <td><div id="Requests">

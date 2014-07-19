@@ -30,7 +30,7 @@ access("reservation"); //check if user is allowed to access this page
 $conn=db_connect(HOST,USER,PASS,DB,PORT);
 
 if (isset($_GET["search"]) && !empty($_GET["search"])){
-	find($_GET["search"]);
+	$reservation = find($_GET["search"]);
 }
 
 if (isset($_POST['Navigate'])){
@@ -64,6 +64,7 @@ if (isset($_POST['Submit'])){
 					 VALUES($name_of_guest,$contact_num,$alt_contact_num,$checkin_date,$checkout_date,$num_of_nights,$num_of_adults,$num_of_children,
 					 	$num_of_rooms,$coming_from,$reservation_date,$booked_by)";
 				$results=mkr_query($sql,$conn);
+
 				if ((int) $results==0){
 					//should log mysql errors to a file instead of displaying them to the user
 					echo 'Invalid query: ' . mysql_errno($conn). "<br>" . ": " . mysql_error($conn). "<br>";
@@ -104,17 +105,16 @@ if (isset($_POST['Submit'])){
 function find($search){
 	global $conn,$guests;
 	$search=$search;
-	$strOffSet=!empty($_POST["strOffSet"]) ? $_POST["strOffSet"] : 0; //offset value peacked on all pages with pagination - logical error
+
+  $strOffSet=!empty($_POST["strOffSet"]) ? $_POST["strOffSet"] : 0; //offset value peacked on all pages with pagination - logical error
 	
 	//check on wether search is being done on idno/ppno/guestid/guestname
-	$sql="Select guests.guestid,concat_ws(' ',guests.firstname,guests.middlename,guests.lastname) as guest,guests.pp_no,
-		guests.idno,guests.countrycode,guests.pobox,guests.town,guests.postal_code,guests.phone,
-		guests.email,guests.mobilephone,countries.country
-		From guests
-		Inner Join countries ON guests.countrycode = countries.countrycode where guests.guestid='$search'
+	$sql="Select * from act_reservation where reservation_id='$search'
 		LIMIT $strOffSet,1";
+
 	$results=mkr_query($sql,$conn);
-	$guests=fetch_object($results);
+	$reservation=fetch_object($results);
+  return $reservation;
 }
 ?>
 
@@ -123,7 +123,12 @@ function find($search){
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
 <link href="css/new.css" rel="stylesheet" type="text/css">
-<title>Hotel Management Information System</title>
+<title>OCEAN CREST RESERVATION SYSTEMS</title>
+
+<script language="javascript" src="js/cal2.js"></script>
+<script language="javascript" src="js/scripts.js"></script>
+<script language="javascript" src="js/jquery-2.1.1.min.js"></script>
+<script language="javascript" src="js/cal_conf2.js"></script>
 
 <script type="text/javascript">
 <!--
@@ -202,18 +207,14 @@ function loadHTMLPost(URL, destination, button){
     }
 }
 
+$(document).ready(function() {
+  if(!$("#reservation_date").val()){
+    $("#reservation_date").val(getCurrentDate());
+  }
+});
 
 //-->	 
 </script>
-<script language="javascript" src="js/cal2.js"> </script>
-<script language="javascript" src="js/scripts.js">
-/*
-Xin's Popup calendar script-  Xin Yang (http://www.yxscripts.com/)
-Script featured on/available at http://www.dynamicdrive.com/
-This notice must stay intact for use
-*/
-</script>
-<script language="javascript" src="js/cal_conf2.js"></script>
 <style type="text/css">
 <!--
 .style1 {color: #000000}
@@ -221,7 +222,7 @@ This notice must stay intact for use
 </style>
 </head>
 
-<body>
+<body onready="callOnReady()">
 <form action="reservations.php" method="post" name="reservation" enctype="multipart/form-data">
 <table width="100%"  border="0" cellpadding="1" bgcolor="#66CCCC" align="center">
   <tr valign="top">
@@ -259,69 +260,79 @@ This notice must stay intact for use
         <td><table width="86%"  border="0" cellpadding="1" align="left">
     <tr>
     	<?php
-    		if($reservation -> reservation_id != ''){
+        var_dump($reservations);
+    		if($reservation->reservation_id != ''){
     			?>
-    			<td width="15%">Reservation Id </td>
-     			<td><input id="reservation_id" type="text"  maxlength="100" /></td>
+    			<td width="20%">Reservation Id </td>
+     			<td><input id="reservation_id" type="text"  maxlength="100" readonly="" value="<?php echo $reservation->reservation_id; ?>"/></td>
     			<?php
     		}
     	?>
     </tr>
     <tr>
-      <td width="10%">Guest Name </td>
-      <td width="25%"><input type="text" id="name_of_guest" name="name_of_guest"  maxlength="100" /></td>
-      <td width="20%">Contact Number</td>
-      <td width="45%"><input type="text" id="contact_num" name="contact_num" maxlength="15" value="<?php echo trim($guests->phone); ?>" /></td>
+      <td width="20%">Guest Name* </td>
+      <td width="25%"><input type="text" id="name_of_guest" name="name_of_guest" value="<?php echo trim($reservation->name_of_guest); ?>" maxlength="100" /></td>
+      <td width="20%">Contact Number*</td>
+      <td width="45%"><input type="text" id="contact_num" name="contact_num" maxlength="15" value="<?php echo $reservation->contact_num; ?>" /></td>
     </tr>
     <tr>
-      <td>Coming From </td>
-      <td><input type="text" id="coming_from" name="coming_from" /></td>
+      <td>Coming From* </td>
+      <td><input type="text" id="coming_from" name="coming_from" value="<?php echo trim($reservation->coming_from); ?>" /></td>
       <td>Alternate Number</td>
-      <td><input type="text" id="alt_contact_num" name="alt_contact_num" maxlength="15"/></td>
+      <td><input type="text" id="alt_contact_num" name="alt_contact_num" maxlength="15" value="<?php echo $reservation->alt_contact_num; ?>"/></td>
     </tr>
     <tr>
-      <td>Date of arrival </td>
-      <td><input type="text" name="checkin_date" id="checkin_date" onblur="nights()" readonly=""/>
+      <td>Date of arrival* </td>
+      <td><input type="text" name="checkin_date" id="checkin_date" onblur="nights()" readonly="" value="<?php echo $reservation->checkin_date; ?>"/>
           <a href="javascript:showCal('Calendar1')"> <img src="images/ew_calendar.gif" width="16" height="15" border="0"/></a></td>
-      <td>Departure Date</td>
-      <td><input type="text" name="checkout_date" id="checkout_date" onblur="nights()" readonly=""/>
+      <td>Departure Date*</td>
+      <td><input type="text" name="checkout_date" id="checkout_date" onblur="nights()" readonly="" value="<?php echo $reservation->checkout_date; ?>"/>
           <small><a href="javascript:showCal('Calendar2')"> <img src="images/ew_calendar.gif" width="16" height="15" border="0"/></a></small></td>
     </tr>
     <tr>
-      <td>No. of nights</td>
-      <td><input type="text" name="num_of_nights" id="num_of_nights" size="10"/></td>
+      <td>Number of nights*</td>
+      <td><input type="text" name="num_of_nights" id="num_of_nights" value="<?php echo $reservation->num_of_nights; ?>" size="10"/></td>
     </tr>
     <tr>
-      <td>No. of Guests </td>
+      <td>Number of Guests* </td>
       <td colspan="4"><table width="74%"  border="0" cellpadding="1">
           <tr>
             <td >Adults <br />
-                <input type="text" id="num_of_adults" name="num_of_adults" id="no_adults" size="10"/></td>
+                <input type="text" id="num_of_adults" name="num_of_adults" id="no_adults" value="<?php echo $reservation->num_of_adults; ?>" size="10"/></td>
             <td >Children <br />
-                <input type="text" id="num_of_children" name="num_of_children" size="10"/></td>
+                <input type="text" id="num_of_children" name="num_of_children" size="10" value="<?php echo $reservation->num_of_children; ?>" /></td>
           </tr>
       </table></td>
     </tr>
 <tr>
-      <td>Number of Rooms </td>
-	 <td><input type="text" name="num_of_rooms" id="num_of_rooms" size="10"/></td></td>
+      <td>Number of Rooms* </td>
+	 <td><input type="text" name="num_of_rooms" id="num_of_rooms" size="10" value="<?php echo $reservation->num_of_rooms; ?>" /></td></td>
     </tr>
 
     <tr>
       <td colspan="2"><h2>Booking Taken By</h2></td>
     </tr>
     <tr>
-      <td>Name</td>
-      <td><input type="text" id="booked_by" name="booked_by" value="<?php echo $_SESSION["employee"]; ?>"/></td>
+      <td>Name*</td>
+      <td><input type="text" id="booked_by" name="booked_by" value="<?php echo $reservation->booked_by; ?>"/></td>
     </tr>
     <tr>
       <td>Date</td>
-      <td><input type="text" name="reservation_date" id="reservation_date" readonly=""/>
-          <small><a href="javascript:showCal('Calendar9')"> <img src="images/ew_calendar.gif" width="16" height="15" border="0"/></a></small></td>
-
+      <td><input type="text" name="reservation_date" id="reservation_date" readonly="" value="<?php echo $reservation->reservation_date; ?>"/>
     </tr>
     <tr>
-      <td><input type="submit" name="Submit" value="Reserve Now"/></td>
+      <?php
+        if($reservation->reservation_id){
+          ?>
+            <td><input type="submit" name="Submit" value="Confirm Booking"/></td>
+          <?php
+          }
+          else{?>
+            <td><input type="submit" name="Submit" value="Reserve Now"/></td>    
+          <?php
+        }
+      ?>
+      
     </tr>
   </table>
 		</td>
@@ -339,9 +350,3 @@ This notice must stay intact for use
 </form>
 </body>
 </html>
-
-<!--"Select reservation_id,reserved_through,guestid,reservation_by,reservation_by_phone,datereserved,
-reserve_checkindate,reserve_checkoutdate,no_adults,no_child0_5,no_child6_12,no_babies,meal_plan,
-billing_instructions,deposit,agents_ac_no,voucher_no,reserved_by,date_reserved,confirmed_by,
-confirmed_date,roomid
-From reservation";-->

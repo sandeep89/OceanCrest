@@ -57,7 +57,7 @@ if (isset($_GET['action'])){
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
 <link href="css/new.css" rel="stylesheet" type="text/css">
-<title>Hotel Management Information System</title>
+<title>OCEAN CREST RESERVATION SYSTEMS</title>
 
 <script type="text/javascript">
 <!--
@@ -152,11 +152,7 @@ function loadHTMLPost(URL, destination){
       <tr>
         <td><div id="Requests">
 		<?php
-			$sql="Select reservation.reservation_id,guests.guestid,concat_ws(' ',guests.firstname,guests.middlename,guests.lastname) as guest,reservation.reserve_checkindate,reservation.reserve_checkoutdate,DATEDIFF(reservation.reserve_checkoutdate,reservation.reserve_checkindate) nights,
-			reservation.meal_plan,reservation.no_adults,reservation.no_child0_5,reservation.roomid,reservation.reservation_by,rooms.roomno
-			From reservation
-			Inner Join guests ON reservation.guestid = guests.guestid
-			Inner Join rooms ON reservation.roomid = rooms.roomid";
+			$sql="Select * from act_reservation";
 			$conn=db_connect(HOST,USER,PASS,DB,PORT);
 			$results=mkr_query($sql,$conn);
 			
@@ -164,9 +160,8 @@ function loadHTMLPost(URL, destination){
 			//get field names to create the column header
 			echo "<tr bgcolor=\"#009999\">
 				<th colspan=\"4\">Action</th>
-				<th>Room No.</th>
-				<th>Guest</th>
-				<th>Meal Plan</th>
+        <th>Registration Id</th>
+				<th>Guest Name</th>
 				<th>Check-In Date</th>
 				<th>Check-Out Date</th>
 				<th>Nights</th>
@@ -183,18 +178,17 @@ function loadHTMLPost(URL, destination){
 					}else{
 					echo "<tr id=\"row$j\" onmouseover=\"javascript:setColor('$j')\" onmouseout=\"javascript:origColor('$j')\" bgcolor=\"#EEEEF8\">";
 				}
-					echo "<td><a href=\"reservations.php?search=$reservation->guestid\"><img src=\"images/button_view.png\" width=\"16\" height=\"16\" border=\"0\" title=\"view/edit reservation\"/></a></td>";
+					echo "<td><a href=\"reservations.php?search=$reservation->reservation_id\"><img src=\"images/button_view.png\" width=\"16\" height=\"16\" border=\"0\" title=\"view/edit reservation\"/></a></td>";
 					echo "<td><a href=\"bookings.php?search=$reservation->guestid\"><img src=\"images/bed.jpg\" width=\"16\" height=\"16\" border=\"0\" title=\"book guest\"/></a></td>";
 					echo "<td><a href=\"billings.php?search=$reservation->guestid\"><img src=\"images/button_signout.png\" width=\"16\" height=\"16\" border=\"0\" title=\"bill guest\"/></a></td>";
 					echo "<td><a href=\"reservation_list.php?search=$reservation->reservation_id&action=remove\"><img src=\"images/button_remove.png\" width=\"16\" height=\"16\" border=\"0\" title=\"delete reservation\"/></a></td>";
-					echo "<td>" . $reservation->roomno . "</td>";					
-					echo "<td>" . trim($reservation->guest) . "</td>";
-					echo "<td>" . $reservation->meal_plan . "</td>";
-					echo "<td>" . $reservation->reserve_checkindate . "</td>";
-					echo "<td>" . $reservation->reserve_checkoutdate . "</td>";
-					echo "<td>" . $reservation->nights . "</td>";			
-					echo "<td>" . $reservation->no_adults . "</td>";
-					echo "<td>" . $reservation->no_child0_5 . "</td>";
+					echo "<td>" . $reservation->reservation_id. "</td>";					
+					echo "<td>" . trim($reservation->name_of_guest) . "</td>";
+					echo "<td>" . $reservation->checkin_date . "</td>";
+					echo "<td>" . $reservation->checkout_date . "</td>";
+					echo "<td>" . $reservation->num_of_nights . "</td>";			
+					echo "<td>" . $reservation->num_of_adults . "</td>";
+					echo "<td>" . $reservation->num_of_children . "</td>";
 				echo "</tr>"; //end of - data rows
 			} //end of while row
 			echo "</table>";
@@ -206,45 +200,7 @@ function loadHTMLPost(URL, destination){
 		</td>
       </tr>
     </table></td>
-	<td width="16%" bgcolor="#FFFFFF">
-	<table width="100%"  border="0" cellpadding="1">	  
-	  <tr>
-    <td width="15%" bgcolor="#66CCCC">
-	<table width="100%"  border="0" cellpadding="1" bgcolor="#FFFFFF">
-       <tr>
-        <td>Image</td>
-      </tr>
-	  <tr>
-        <td><input type="button" name="Submit" value="List" onclick="self.location='reservation_list.php'"/></td>
-	  </tr>
-      <tr>
-        <td>&nbsp;</td>
-      </tr>
-      <tr>
-        <td>&nbsp;</td>
-      </tr>
-      <tr>
-        <td>
-            <label> Search By:<br />
-            <input type="radio" name="optFind" value="Name" />
-        Card No.</label>
-            <br />
-            <label>
-            <input type="radio" name="optFind" value="Payrollno" />
-        Room No. </label>
-            <br>
-        <input type="text" name="search" width="100" /><br>
-        <input type="submit" name="Submit" value="Find"/>
-        </td>
-      </tr>
-      <tr>
-        <td>&nbsp;</td>
-      </tr>
-      <tr>
-        <td>&nbsp;</td>
-      </tr>
-    </table>
-	</td></tr></table>
+</tr></table>
 	</td>
   </tr>
    <?php require_once("footer1.php"); ?>
