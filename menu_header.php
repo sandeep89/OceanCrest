@@ -50,6 +50,6 @@ if($access->booking==1) echo "<tr><td><a href=\"bookings.php\">Bookings</a></td>
 #if($access->rates==1) echo "<tr><td><a href=\"rates.php\">Room Rates</a></td></tr>";
 if($access->lookup==1) echo "<tr><td><a href=\"lookup.php\">Expense Management</a></td></tr>";
 if($access->reports==1) echo "<tr><td><a href=\"reports.php\">Reports</a></td></tr>";
-if($access->admin==1) echo "<tr><td><a href=\"admin.php\">Administration</a></td></tr>";
+if($access->admin==1) echo "<tr><td><a href=\"admin.php\">User Account Management</a></td></tr>";
 free_result($access);
 ?>
