@@ -248,7 +248,7 @@ function loadHTMLPost(URL, destination){
   <tr>
     <td colspan="4"><table width="100%" cellpadding="1">
 	  <tr>
-		<td width="13%">User Account Management</td>
+		<td width="25%">User Account Management</td>
 		<td width="87%"><input type="checkbox" name="admin" value="1" <?php if($users->admin==1) echo "checked";?>/></td>
 	  </tr>
       <!--<tr>
@@ -256,36 +256,36 @@ function loadHTMLPost(URL, destination){
         <td width="87%"><input type="checkbox" name="guest" value="1" <?php if($users->guest==1) echo "checked";?>/></td>
       </tr>-->
       <tr>
-        <td>reservation</td>
-        <td><input type="checkbox" name="reservation" value="1" <?php if($users->reservation==1) echo "checked";?>/></td>
+        <td>Reservations</td>
+        <td><input type="checkbox" name="Reservations" value="1" <?php if($users->reservation==1) echo "checked";?>/></td>
       </tr>
       <tr>
-        <td>booking</td>
-        <td><input type="checkbox" name="booking" value="1" <?php if($users->booking==1) echo "checked";?>/></td>
+        <td>Bookings</td>
+        <td><input type="checkbox" name="Bookings" value="1" <?php if($users->booking==1) echo "checked";?>/></td>
       </tr>
       <tr>
         <!--<td>agents</td>
         <td><input type="checkbox" name="agents" value="1" <?php if($users->agents==1) echo "checked";?>/></td>
       </tr>-->
       <tr>
-        <td>rooms</td>
+        <!--<td>rooms</td>
         <td><input type="checkbox" name="rooms" value="1" <?php if($users->rooms==1) echo "checked";?>/></td>
-      </tr>
+      </tr>-->
       <tr>
-        <td>billing</td>
+        <!--<td>billing</td>
         <td><input type="checkbox" name="billing" value="1" <?php if($users->billing==1) echo "checked";?>/></td>
-      </tr>
+      </tr>-->
       <tr>
-        <td>rates</td>
+        <!--<td>rates</td>
         <td><input type="checkbox" name="rates" value="1" <?php if($users->rates==1) echo "checked";?>/></td>
+      </tr>-->
+      <tr>
+        <td>Expense Management</td>
+        <td><input type="checkbox" name="Expense Management" value="1" <?php if($users->lookup==1) echo "checked";?>/></td>
       </tr>
       <tr>
-        <td>lookup</td>
-        <td><input type="checkbox" name="lookup" value="1" <?php if($users->lookup==1) echo "checked";?>/></td>
-      </tr>
-      <tr>
-        <td>reports</td>
-        <td><input type="checkbox" name="reports" value="1" <?php if($users->reports==1) echo "checked";?>/></td>
+        <td>Reports</td>
+        <td><input type="checkbox" name="Reports" value="1" <?php if($users->reports==1) echo "checked";?>/></td>
       </tr>
     </table></td>
   </tr>
