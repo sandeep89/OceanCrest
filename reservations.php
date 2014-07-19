@@ -306,7 +306,7 @@ $(document).ready(function() {
     </tr>
     <tr>
       <td>Number of Guests* </td>
-      <td colspan="4"><table width="74%"  border="0" cellpadding="1">
+      <td colspan="4"><table width="62%"  border="0" cellpadding="1">
           <tr>
             <td >Adults <br />
                 <input type="text" id="num_of_adults" name="num_of_adults" id="no_adults" value="<?php echo $reservation->num_of_adults; ?>" size="10"/></td>
