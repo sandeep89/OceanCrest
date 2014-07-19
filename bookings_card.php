@@ -310,7 +310,7 @@ This notice must stay intact for use
       <tr>
         <td><div id="Requests">  <table width="100%"  border="0" cellpadding="1" align="left">
     <tr>
-      <td><a href="index.php"><img src="images/titanic1.gif" width="70" height="74" border="0"/></a></td>
+      <td><a href="index.php"><img src="images/OpenCrest.gif" width="100%" height="100%" border="0"/></a></td>
 		<td colspan="3"><H2>GUEST REGISTRATION CARD</H2></td>
     </tr>
     <tr>
