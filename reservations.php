@@ -325,7 +325,7 @@ This notice must stay intact for use
     </tr>-->
     <tr>
       <td>Guest Name: </td>
-      <td width="35%"><input type="text" name="name" /></td>
+      <td width="65%"><input type="text" name="name" /></td>
       <td width="15%">Mobile</td>
       <td><input type="text" name="phone" value="<?php echo trim($guests->phone); ?>" /></td>
     </tr>
@@ -337,7 +337,7 @@ This notice must stay intact for use
     </tr>
     <tr>
       <td>Date of arrival </td>
-      <td><input type="text" name="reserve_checkindate" id="checkindate" readonly=""/>
+      <td><input type="text" name="reserve_checkindate" id="checkindate" onblur="nights()" readonly=""/>
           <a href="javascript:showCal('Calendar1')"> <img src="images/ew_calendar.gif" width="16" height="15" border="0"/></a></td>
       <td>Departure Date</td>
       <td><input type="text" name="reserve_checkoutdate" id="checkoutdate" onblur="nights()" readonly=""/>
