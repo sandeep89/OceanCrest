@@ -74,7 +74,7 @@ if (isset($_POST['Submit'])){
 					//echo different $msg0 & 1
 				}else{ //adding*/
 					$sql="INSERT INTO users (fname,sname,loginname,pass,phone,mobile,fax,email,dateregistered,admin,guest,reservation,booking,agents,rooms,billing,rates,lookup,reports)
-	 					VALUES('$fname','$sname','$loginname','$pass',$phone,$mobile,$fax,$email,now(),$admin,$guest,$reservation,$booking,$agents,$rooms,$billing,$rates,$lookup,$reports)";
+	 					VALUES('$fname','$sname','$loginname','$pass','$phone','$mobile','$fax','$email',now(),'$admin','$guest','$reservation','$booking','$agents','$rooms','$billing','$rates','$lookup','$reports')";
 				//}
 				
 				$results=mkr_query($sql,$conn);
