@@ -218,11 +218,23 @@ $(document).ready(function() {
 <style type="text/css">
 <!--
 .style1 {color: #000000}
+
+.buttonlink{
+    background-color: grey;
+    color: white;
+    display: block;
+    height: 40px;
+    line-height: 40px;
+    text-decoration: none;
+    width: 150px;
+    text-align: center;
+}
+
 -->
 </style>
 </head>
 
-<body onready="callOnReady()">
+<body >
 <form action="reservations.php" method="post" name="reservation" enctype="multipart/form-data">
 <table width="100%"  border="0" cellpadding="1" bgcolor="#66CCCC" align="center">
   <tr valign="top">
@@ -260,7 +272,6 @@ $(document).ready(function() {
         <td><table width="86%"  border="0" cellpadding="1" align="left">
     <tr>
     	<?php
-        var_dump($reservations);
     		if($reservation->reservation_id != ''){
     			?>
     			<td width="20%">Reservation Id </td>
@@ -295,7 +306,7 @@ $(document).ready(function() {
     </tr>
     <tr>
       <td>Number of Guests* </td>
-      <td colspan="4"><table width="74%"  border="0" cellpadding="1">
+      <td colspan="4"><table width="62%"  border="0" cellpadding="1">
           <tr>
             <td >Adults <br />
                 <input type="text" id="num_of_adults" name="num_of_adults" id="no_adults" value="<?php echo $reservation->num_of_adults; ?>" size="10"/></td>
@@ -324,11 +335,11 @@ $(document).ready(function() {
       <?php
         if($reservation->reservation_id){
           ?>
-            <td><input type="submit" name="Submit" value="Confirm Booking"/></td>
+            <td><a class="buttonlink" href="bookings.php?confirmReservation=<?php echo $reservation->reservation_id ?>">Confirm Booking</a></td>
           <?php
           }
           else{?>
-            <td><input type="submit" name="Submit" value="Reserve Now"/></td>    
+            <td><input class="buttonlink" type="submit" name="Submit" value="Reserve Now" /></td>    
           <?php
         }
       ?>
@@ -338,14 +349,8 @@ $(document).ready(function() {
 		</td>
 		
       </tr>
-	  <tr bgcolor="#66CCCC" >
-        <td align="left">
-		<div id="RequestDetails"></div>
-		</td>
-      </tr>
     </table></td>
   </tr>
-   <?php require_once("footer1.php"); ?>
 </table>
 </form>
 </body>

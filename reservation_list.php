@@ -179,8 +179,7 @@ function loadHTMLPost(URL, destination){
 					echo "<tr id=\"row$j\" onmouseover=\"javascript:setColor('$j')\" onmouseout=\"javascript:origColor('$j')\" bgcolor=\"#EEEEF8\">";
 				}
 					echo "<td><a href=\"reservations.php?search=$reservation->reservation_id\"><img src=\"images/button_view.png\" width=\"16\" height=\"16\" border=\"0\" title=\"view/edit reservation\"/></a></td>";
-					echo "<td><a href=\"bookings.php?search=$reservation->guestid\"><img src=\"images/bed.jpg\" width=\"16\" height=\"16\" border=\"0\" title=\"book guest\"/></a></td>";
-					echo "<td><a href=\"billings.php?search=$reservation->guestid\"><img src=\"images/button_signout.png\" width=\"16\" height=\"16\" border=\"0\" title=\"bill guest\"/></a></td>";
+					echo "<td><a href=\"bookings.php?confirmReservation=$reservation->reservation_id\"><img src=\"images/bed.jpg\" width=\"16\" height=\"16\" border=\"0\" title=\"book guest\"/></a></td>";
 					echo "<td><a href=\"reservation_list.php?search=$reservation->reservation_id&action=remove\"><img src=\"images/button_remove.png\" width=\"16\" height=\"16\" border=\"0\" title=\"delete reservation\"/></a></td>";
 					echo "<td>" . $reservation->reservation_id. "</td>";					
 					echo "<td>" . trim($reservation->name_of_guest) . "</td>";

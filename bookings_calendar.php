@@ -272,6 +272,7 @@ This notice must stay intact for use
 	echo "<table align=\"center\" border=\"1\">";
 	echo "<tr><td colspan=\"32\">Guest booking for the Month of January 2006</td></tr>
 	<tr><td width=\"67\"><select name=\"year\" id=\"year\" >
+	  <option value=\"2006\">2007</option>
 	  <option value=\"2006\">2006</option>
 	  <option value=\"2005\">2005</option>
 	  <option value=\"2004\">2004</option>

@@ -201,7 +201,7 @@ function loadHTMLPost(URL, destination){
 		<H4>OCEAN CREST RESERVATION SYSTEMS</H4> </td>
       </tr>
       <tr>
-        <td><h2>Administrator</h2></td>
+        <td><h2>User Account Management</h2></td>
       </tr>
 	<tr>
         <td><div id="Requests">
@@ -213,9 +213,9 @@ function loadHTMLPost(URL, destination){
     <td width="32%"><input type="text" name="dateregistered" readonly="" value="<?php echo trim($users->dateregistered); ?>" /></td>
   </tr>
   <tr>
-    <td>Login Name</td>
+    <td>Username</td>
     <td><input type="text" name="loginname" value="<?php echo trim($users->loginname); ?>"/></td>
-    <td>Password</td>
+    <td>User Password</td>
     <td><input type="password" name="pass" /></td>
   </tr>
   <tr>
@@ -225,7 +225,7 @@ function loadHTMLPost(URL, destination){
     <td>&nbsp;</td>
   </tr>
   <tr>
-    <td>Second Name </td>
+    <td>Last Name </td>
     <td><input type="text" name="sname" value="<?php echo trim($users->sname); ?>"/></td>
     <td>&nbsp;</td>
     <td>&nbsp;</td>
@@ -233,59 +233,60 @@ function loadHTMLPost(URL, destination){
   <tr>
     <td>Phone</td>
     <td><input type="text" name="phone" value="<?php echo trim($users->phone); ?>"/></td>
-    <td>Mobile</td>
-    <td><input type="text" name="mobile" value="<?php echo trim($users->mobile); ?>"/></td>
-  </tr>
+   
+ </tr>
   <tr>
-    <td>Fax</td>
-    <td><input type="text" name="fax" value="<?php echo trim($users->fax); ?>"/></td>
-    <td>Email</td>
+  <td>Email</td>
     <td><input type="text" name="email" value="<?php echo trim($users->email); ?>"/></td>
   </tr>
+  <tr>
+   <td>Mobile</td>
+    <td><input type="text" name="mobile" value="<?php echo trim($users->mobile); ?>"/></td>
+	</tr>
   <tr>
     <td><h3>Access Rights</h3> </td>
   </tr>
   <tr>
     <td colspan="4"><table width="100%" cellpadding="1">
 	  <tr>
-		<td width="13%">Administrator</td>
+		<td width="25%">User Account Management</td>
 		<td width="87%"><input type="checkbox" name="admin" value="1" <?php if($users->admin==1) echo "checked";?>/></td>
 	  </tr>
-      <tr>
+      <!--<tr>
         <td width="13%">guest</td>
         <td width="87%"><input type="checkbox" name="guest" value="1" <?php if($users->guest==1) echo "checked";?>/></td>
+      </tr>-->
+      <tr>
+        <td>Reservations</td>
+        <td><input type="checkbox" name="Reservations" value="1" <?php if($users->reservation==1) echo "checked";?>/></td>
       </tr>
       <tr>
-        <td>reservation</td>
-        <td><input type="checkbox" name="reservation" value="1" <?php if($users->reservation==1) echo "checked";?>/></td>
+        <td>Bookings</td>
+        <td><input type="checkbox" name="Bookings" value="1" <?php if($users->booking==1) echo "checked";?>/></td>
       </tr>
       <tr>
-        <td>booking</td>
-        <td><input type="checkbox" name="booking" value="1" <?php if($users->booking==1) echo "checked";?>/></td>
-      </tr>
-      <tr>
-        <td>agents</td>
+        <!--<td>agents</td>
         <td><input type="checkbox" name="agents" value="1" <?php if($users->agents==1) echo "checked";?>/></td>
-      </tr>
+      </tr>-->
       <tr>
-        <td>rooms</td>
+        <!--<td>rooms</td>
         <td><input type="checkbox" name="rooms" value="1" <?php if($users->rooms==1) echo "checked";?>/></td>
-      </tr>
+      </tr>-->
       <tr>
-        <td>billing</td>
+        <!--<td>billing</td>
         <td><input type="checkbox" name="billing" value="1" <?php if($users->billing==1) echo "checked";?>/></td>
-      </tr>
+      </tr>-->
       <tr>
-        <td>rates</td>
+        <!--<td>rates</td>
         <td><input type="checkbox" name="rates" value="1" <?php if($users->rates==1) echo "checked";?>/></td>
+      </tr>-->
+      <tr>
+        <td>Expense Management</td>
+        <td><input type="checkbox" name="Expense Management" value="1" <?php if($users->lookup==1) echo "checked";?>/></td>
       </tr>
       <tr>
-        <td>lookup</td>
-        <td><input type="checkbox" name="lookup" value="1" <?php if($users->lookup==1) echo "checked";?>/></td>
-      </tr>
-      <tr>
-        <td>reports</td>
-        <td><input type="checkbox" name="reports" value="1" <?php if($users->reports==1) echo "checked";?>/></td>
+        <td>Reports</td>
+        <td><input type="checkbox" name="Reports" value="1" <?php if($users->reports==1) echo "checked";?>/></td>
       </tr>
     </table></td>
   </tr>
@@ -311,9 +312,9 @@ function loadHTMLPost(URL, destination){
        <tr>
         <td>Image</td>
       </tr>
-	  <tr>
+	 <!-- <tr>
         <td><input type="submit" name="Submit" value="<?php echo isset($_GET["search"]) ? "Update User" : "Add User" ?>"/></td>
-      </tr>
+      </tr>-->
       <tr>
         <td><input type="button" name="Submit" value="Users List" onclick="self.location='users_list.php'"/></td>
       </tr>
