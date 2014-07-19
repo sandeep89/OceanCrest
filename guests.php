@@ -308,7 +308,7 @@ function ReserveGuest(){
             <tr>
               <td>&nbsp;</td>
               <td><input type="button" name="button" value="Guests Chek-In" onclick="BookGuest()"/></td>
-              <td><input type="button" name="button" value="Guest Reservation" onclick="ReserveGuest()"/></td>
+              <td><input type="button" name="button" value="Reserve Now" onclick="ReserveGuest()"/></td>
               <td>&nbsp;</td>
             </tr>
             <tr>

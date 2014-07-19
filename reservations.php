@@ -46,7 +46,7 @@ $guestid=$_POST['guestid'];
 if (isset($_POST['Submit'])){
 	$action=$_POST['Submit'];
 	switch ($action) {
-		case 'Guest Reservation':
+		case 'Reserve Now':
 					$name_of_guest = !empty($_POST["name_of_guest"]) ? "'" . $_POST["name_of_guest"] . "'" : 'NULL';
 					$contact_num = !empty($_POST["contact_num"]) ? "'" . $_POST["contact_num"] . "'" : 'NULL';
 					$alt_contact_num = !empty($_POST["alt_contact_num"]) ? "'" . $_POST["alt_contact_num"] . "'" : 'NULL';
@@ -321,7 +321,7 @@ This notice must stay intact for use
 
     </tr>
     <tr>
-      <td><input type="submit" name="Submit" value="Guest Reservation"/></td>
+      <td><input type="submit" name="Submit" value="Reserve Now"/></td>
     </tr>
   </table>
 		</td>
