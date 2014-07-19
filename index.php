@@ -181,7 +181,7 @@ function loadHTMLPost(URL, destination){
 		</tr>
 	  </table></td></tr>
 		<?php require_once("menu_header.php"); ?>	
-    <tr><td align="center"><div onclick="loadHTML('futures.php','RequestDetails')" style="cursor:pointer"><h2>Futures</h2></div></td></tr>		
+    <!--<tr><td align="center"><div onclick="loadHTML('futures.php','RequestDetails')" style="cursor:pointer"><h2>Futures</h2></div></td></tr>		-->
     </table>
 	</td>
     
