@@ -122,7 +122,7 @@ function find($search){
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
 <link href="css/new.css" rel="stylesheet" type="text/css">
-<title>Hotel Management Information System</title>
+<title>OCEAN CREST RESERVATION SYSTEMS</title>
 
 <script language="javascript" src="js/cal2.js"></script>
 <script language="javascript" src="js/scripts.js"></script>
