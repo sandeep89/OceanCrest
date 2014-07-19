@@ -125,6 +125,11 @@ function find($search){
 <link href="css/new.css" rel="stylesheet" type="text/css">
 <title>Hotel Management Information System</title>
 
+<script language="javascript" src="js/cal2.js"></script>
+<script language="javascript" src="js/scripts.js"></script>
+<script language="javascript" src="js/jquery-2.1.1.min.js"></script>
+<script language="javascript" src="js/cal_conf2.js"></script>
+
 <script type="text/javascript">
 <!--
 var request;
@@ -202,18 +207,12 @@ function loadHTMLPost(URL, destination, button){
     }
 }
 
+$(document).ready(function() {
+  $("#reservation_date").val(getCurrentDate());
+});
 
 //-->	 
 </script>
-<script language="javascript" src="js/cal2.js"> </script>
-<script language="javascript" src="js/scripts.js">
-/*
-Xin's Popup calendar script-  Xin Yang (http://www.yxscripts.com/)
-Script featured on/available at http://www.dynamicdrive.com/
-This notice must stay intact for use
-*/
-</script>
-<script language="javascript" src="js/cal_conf2.js"></script>
 <style type="text/css">
 <!--
 .style1 {color: #000000}
@@ -221,7 +220,7 @@ This notice must stay intact for use
 </style>
 </head>
 
-<body>
+<body onready="callOnReady()">
 <form action="reservations.php" method="post" name="reservation" enctype="multipart/form-data">
 <table width="100%"  border="0" cellpadding="1" bgcolor="#66CCCC" align="center">
   <tr valign="top">
@@ -256,7 +255,7 @@ This notice must stay intact for use
 		</td>
       </tr>
       <tr>
-        <td><table width="86%"  border="0" cellpadding="1" align="left">
+        <td><table width="86%"  border="1" cellpadding="1" align="left">
     <tr>
     	<?php
     		if($reservation -> reservation_id != ''){
@@ -312,13 +311,11 @@ This notice must stay intact for use
     </tr>
     <tr>
       <td>Name</td>
-      <td><input type="text" id="booked_by" name="booked_by" value="<?php echo $_SESSION["employee"]; ?>"/></td>
+      <td><input type="text" id="booked_by" name="booked_by" value=""/></td>
     </tr>
     <tr>
       <td>Date</td>
-      <td><input type="text" name="reservation_date" id="reservation_date" readonly=""/>
-          <small><a href="javascript:showCal('Calendar9')"> <img src="images/ew_calendar.gif" width="16" height="15" border="0"/></a></small></td>
-
+      <td><input type="text" name="reservation_date" id="reservation_date" readonly="" value=""/>
     </tr>
     <tr>
       <td><input type="submit" name="Submit" value="Guest Reservation"/></td>

@@ -899,25 +899,26 @@ CREATE TABLE `act_booking` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 
-CREATE TABLE `act_reservation` (
-  `reservation_id` int(11) NOT NULL auto_increment,
-  `name_of_guest` varchar(100) NULL,
+CREATE TABLE IF NOT EXISTS `act_reservation` (
+  `reservation_id` int(11) NOT NULL AUTO_INCREMENT,
+  `name_of_guest` varchar(100) NOT NULL,
   `contact_num` int(11) NOT NULL,
+  `alt_contact_num` int(15) DEFAULT NULL,
   `checkin_date` datetime DEFAULT '0000-00-00 00:00:00',
   `checkout_date` datetime DEFAULT '0000-00-00 00:00:00',
+  `num_of_nights` int(3) NOT NULL,
   `num_of_adults` int(11) NOT NULL,
-  `num_of_children` int(11) NOT NULL,
+  `num_of_children` int(11) DEFAULT NULL,
   `num_of_rooms` int(11) NOT NULL,
   `coming_from` varchar(100) NOT NULL,
   `reservation_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `booked_by` varchar(100) NOT NULL,
-  PRIMARY KEY  (`reservation_id`),
+  PRIMARY KEY (`reservation_id`),
   KEY `idx_guest_name` (`name_of_guest`),
   KEY `idx_checkin_date` (`checkin_date`),
   KEY `idx_checkout_date` (`checkout_date`),
   KEY `idx_reservation_date` (`reservation_date`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1;
 
 CREATE TABLE `act_audit` (
   `audit_id` int(11) NOT NULL auto_increment,
