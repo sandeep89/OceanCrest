@@ -21,13 +21,14 @@ check for license.txt at the root folder
 For any details please feel free to contact me at taifa@users.sourceforge.net
 Or for snail mail. P. O. Box 938, Kilifi-80108, East Africa-Kenya.
 /*****************************************************************************/
-error_reporting(E_ALL & ~E_NOTICE);
-include_once("login_check.inc.php");
-include_once ("queryfunctions.php");
-include_once ("functions.php");
+require_once("login_check.inc.php");
+require_once("queryfunctions.php");
+require_once("functions.php");
+
+require_once("./process/bookings_proc.php");
+//require_once("./functions/bookings_functions.php");
 
 access("booking"); //check if user is allowed to access this page
-$conn=db_connect(HOST,USER,PASS,DB,PORT);
 
 //if page was visited through a search hyperlin.
 if (isset($_GET["search"]) && !empty($_GET["search"])){
@@ -45,92 +46,6 @@ if (isset($_POST['Navigate'])){
 
 $guestid=$_POST['guestid'];  //forgotten what this does
 
-if (isset($_POST['Submit'])){
-	$action=$_POST['Submit'];
-	switch ($action) {
-		case 'Book Guest':
-			//if guest has not been selected exit
-			// instantiate form validator object
-			$fv=new formValidator(); //from functions.php
-			if (empty($_POST["guestid"])){ //if no guest has been selected no point in displaying other errors
-				$fv->validateEmpty('guestid','Sorry no guest information is available for booking');
-			}else{			
-				$fv->validateEmpty('no_adults','Please indicate number of people booking');
-				$fv->validateEmpty('booking_type','Please indicate if it\'s a Direct booking or Agent booking.');
-				$fv->validateEmpty('meal_plan','Please select Meal Plan');
-				$fv->validateEmpty('roomid','Please indicate room being booked');				
-			}
-			
-			if($fv->checkErrors()){
-				// display errors
-				echo "<div align=\"center\">";
-				echo '<h2>Resubmit the form after correcting the following errors:</h2>';
-				echo $fv->displayErrors();
-				echo "</div>";
-			}
-			else {
-				$booking_type=$_POST["booking_type"];
-				$meal_plan=$_POST["meal_plan"];
-				$no_adults=$_POST["no_adults"];			
-				$no_child= !empty($_POST["no_child"]) ? $_POST["no_child"] : 'NULL';
-				$checkin_date= "'" . $_POST["checkin_date"] . "'" ;
-				$checkout_date=!empty($_POST["checkout_date"]) ? "'" . $_POST["checkout_date"] . "'" : 'NULL';
-				$residence_id=$_POST["residence_id"];
-				$payment_mode=$_POST["payment_mode"];
-				$agents_ac_no=!empty($_POST["agents_ac_no"]) ? $_POST["agents_ac_no"] : 'NULL';
-				$roomid=$_POST["roomid"];
-				$checkedin_by=1; //$_POST["checkedin_by"];
-				$invoice_no=!empty($_POST["invoice_no"]) ? $_POST["invoice_no"] : 'NULL';
-				$sql="INSERT INTO booking (guestid,booking_type,meal_plan,no_adults,no_child,checkin_date,checkout_date,
-					residence_id,payment_mode,agents_ac_no,roomid,checkedin_by,invoice_no,billed)
-				 VALUES($guestid,'$booking_type','$meal_plan',$no_adults,$no_child,$checkin_date,$checkout_date,
-					'$residence_id',$payment_mode,$agents_ac_no,$roomid,$checkedin_by,$invoice_no,0)";
-				$results=mkr_query($sql,$conn);
-				if ((int) $results==0){
-					//should log mysql errors to a file instead of displaying them to the user
-					echo 'Invalid query: ' . mysql_errno($conn). "<br>" . ": " . mysql_error($conn). "<br>";
-					echo "Guests NOT BOOKED.";  //return;
-				}else{
-					echo "<div align=\"center\"><h1>Guests successful checked in.</h1></div>";
-					//create bill - let user creat bill/create bill automatically
-					$sql="INSERT INTO bills (book_id,billno,date_billed) select booking.book_id,booking.book_id,booking.checkin_date from booking where booking.billed=0";
-					$results=mkr_query($sql,$conn);
-					$msg[0]="Sorry no bill created";
-					$msg[1]="Bill successfull created";
-					AddSuccess($results,$conn,$msg);
-		
-					//if bill succesful created update billed to 1 in bookings- todo
-					$sql="Update booking set billed=1 where billed=0"; //get the actual updated book_id, currently this simply updates all bookings 
-					$results=mkr_query($sql,$conn);
-					$msg[0]="Sorry Booking not updated";
-					$msg[1]="Booking successful updated";			
-					AddSuccess($results,$conn,$msg);
-					
-					//mark room as booked
-					$sql="Update rooms set status='B' where roomid=$roomid"; //get the actual updated book_id, currently this simply updates all bookings 
-					$results=mkr_query($sql,$conn);
-					$msg[0]="Sorry room occupation not marked";
-					$msg[1]="Room marked as occupied";
-					AddSuccess($results,$conn,$msg);
-				}				
-			}			
-			find($guestid);
-			break;
-		case 'Find':
-			//check if user is searching using name, payrollno, national id number or other fields
-			$search=$_POST["search"];
-			find($search);
-			$sql="Select guests.guestid,guests.lastname,guests.firstname,guests.middlename,guests.pp_no,
-			guests.idno,guests.countrycode,guests.pobox,guests.town,guests.postal_code,guests.phone,
-			guests.email,guests.mobilephone,countries.country
-			From guests
-			Inner Join countries ON guests.countrycode = countries.countrycode where pp_no='$search'
-			LIMIT $strOffSet,1";
-			$results=mkr_query($sql,$conn);
-			$bookings=fetch_object($results);
-			break;
-	}
-}
 
 function find($search){
 	global $conn,$bookings;
@@ -164,15 +79,6 @@ function find($search){
 <!--
 var request;
 var dest;
-
-$(function() {
-    $('#chkveg').multiselect({
-        includeSelectAllOption: true
-    });
-    $('#btnget').click(function() {
-        alert($('#chkveg').val());
-    })
-});
 
 function loadHTML(URL, destination){
     dest = destination;
@@ -271,8 +177,7 @@ This notice must stay intact for use
 </script>
 <script language="javascript" src="js/cal_conf2.js"></script>
 <script type="text/javascript" src="http://code.jquery.com/jquery-1.8.2.js"></script>
-<script type="text/javascript" src="js/bootstrap-2.3.2.min.js"></script>
-<script type="text/javascript" src="js/bootstrap-multiselect.js"></script>
+<script language="javascript" src="js/scripts.js"></script>
 </head>
 
 <body>
@@ -308,18 +213,6 @@ This notice must stay intact for use
       <tr>
         <td><div id="Requests">  <table width="86%" border="0" cellpadding="4" align="left">
      <tr>
-      <!-- <td colspan="3">
-	    <table border="1" cellpadding="0">
-          <tr>
-            <td width="78"><input type="submit" name="Navigate" id="First" style="cursor:pointer" title="first page" value="<<"/>
-                <input type="submit" name="Navigate" id="Previous" style="cursor:pointer" title="previous page" value="<"/>
-            </td>
-            <td width="241" align="center" bgcolor="#FFFFFF"><h3><?php echo trim($bookings->guest); ?></h3></td>
-            <td width="79"><input type="submit" name="Navigate" id="Next" style="cursor:pointer" title="next page" value=">"/>
-                <input type="submit" name="Navigate" id="Last" style="cursor:pointer" title="last page" value=">>"/>
-            </td>
-          </tr>
-        </table></td> -->
 	<td colspan="4"><input type="button" name="Submit" value="Booking List" onclick="self.location='bookings_list.php'"/>
 	  <input type="button" name="Submit" value="Booking Calendar" onclick="self.location='bookings_calendar.php'"/></td>
 	</tr>
@@ -339,7 +232,7 @@ This notice must stay intact for use
       <td width="20%">Name of Primary Guest</td>
       <td><input type="text" name="guest_name" value="<?php echo $guestName; ?>" size="30"/>
       &nbsp;&nbsp;&nbsp;
-      Age&nbsp;&nbsp;&nbsp;<input type="text" name="guest_name" value="<?php echo $guestName; ?>" size="1" maxlength="3"/></td>
+      Age&nbsp;&nbsp;&nbsp;<input type="text" name="age" value="<?php echo $age; ?>" size="1" maxlength="3"/></td>
     </tr>
     <tr>
         <td width="20%" valign="top">Dependents</td>
@@ -348,12 +241,12 @@ This notice must stay intact for use
     <tr>
         <td>No. of Guests </td>
         <td colspan="4">
-            <table border="0" cellpadding="1">
+            <table border="0" width="30%" cellpadding="1">
                 <tr>
-                    <td width="18%">Adults <br />
+                    <td>Adults <br />
                         <input type="text" name="no_adults" id="no_adults" size="10"/></td>
-                    <td width="22%">Children<br />
-                        <input type="text" name="no_child0_5" size="10"/></td>
+                    <td>Children<br />
+                        <input type="text" name="no_child" size="10"/></td>
                 </tr>
             </table>
         </td>
@@ -374,9 +267,9 @@ This notice must stay intact for use
     <tr>
         <td>Identification</td>
         <td colspan="4">
-            <table border="0" cellpadding="1">
+            <table border="0" width="45%" cellpadding="1">
                 <tr>
-                    <td width="18%">Document Type <br />
+                    <td>Document Type <br />
                         <select name="identification_doc" id="identification_doc" onchange="">
                             <option value="">Select ID Doc</option>
                             <option value="Passport">Passport</option>
@@ -385,7 +278,7 @@ This notice must stay intact for use
                             <option value="Aadhar">Aadhar Card</option>
                         </select>
                     </td>
-                    <td width="22%">ID Number <br />
+                    <td>ID Number <br />
                         <input type="text" name="id_no" value="<?php echo $idNo; ?>" maxlength="50"/>
                     </td>
                 </tr>
@@ -397,24 +290,27 @@ This notice must stay intact for use
         <td colspan="4">
             <table border="0" width="100%" cellpadding="1">
                 <tr>
-                    <td width="30%">Mobile</td><td><input type="text" name="mobile" id="no_adults" size="20" maxlength="15"/></td>
+                    <td width="25%">Mobile</td><td><input type="text" name="mobile_num" id="mobile_num" size="20" maxlength="15"/></td>
                 </tr>
                 <tr>
-                    <td width="30%">Alternate Contact Number </td><td><input type="text" name="alt_num" size="20" maxlength="15"/></td>
+                    <td width="25%">Alternate Contact Number </td><td><input type="text" name="alt_num" size="20" maxlength="15"/></td>
                 </tr>
             </table>
         </td>
     </tr>
     <tr>
         <td width="20%">Arrival Date </td>
-        <td><input type="text" name="checkin_date" id="arrivaldate" readonly="" value="<?php echo (isset($_POST["checkin_date"]) ? $_POST["checkin_date"] : trim($bookings->checkin_date)); ?>"/>
+        <td>
+            <input type="text" name="checkin_date" id="checkin_date" readonly="" value="<?php echo (isset($_POST["checkin_date"]) ? $_POST["checkin_date"] : trim($bookings->checkin_date)); ?>"/>
             <a href="javascript:showCal('Calendar3')"> <img src="images/ew_calendar.gif" width="16" height="15" border="0"/></a>
-            &nbsp;&nbsp;&nbsp;Departure Date&nbsp;&nbsp;&nbsp;<input type="text" name="checkout_date" id="departuredate" readonly="" value="<?php echo trim($bookings->checkout_date); ?>" onblur="nights()"/>
-            <small><a href="javascript:showCal('Calendar4')"> <img src="images/ew_calendar.gif" width="16" height="15" border="0"/></a></small></td>
+            &nbsp;&nbsp;&nbsp;
+            Departure Date&nbsp;&nbsp;&nbsp;<input type="text" name="checkout_date" id="checkout_date" readonly="" value="<?php echo trim($bookings->checkout_date); ?>" onblur="nights()"/>
+            <small><a href="javascript:showCal('Calendar4')"> <img src="images/ew_calendar.gif" width="16" height="15" border="0"/></a></small>
+        </td>
     </tr>
     <tr>
         <td>No. of Nights</td>
-        <td><input type="text" name="num_nights" value="<?php echo $numNights; ?>" size="1" maxlength="2" /></td>
+        <td><input type="text" id="num_of_nights" name="num_of_nights" value="<?php echo $numNights; ?>" size="1" maxlength="2" /></td>
     </tr>
     <tr>
         <td>Arrived From</td>
@@ -445,6 +341,10 @@ This notice must stay intact for use
              </select>
          </td>
      </tr>
+    <tr>
+        <td>Advance Amount</td>
+        <td>INR <input type="text" name="advance_amt" id="advance_amt" value="<?php echo $advance_amt; ?>" size="5" maxlength="5" /></td>
+    </tr>
      <tr>
          <td>&nbsp</td>
          <td colspan="3">

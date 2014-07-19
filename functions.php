@@ -23,11 +23,14 @@ Or for snail mail. P. O. Box 938, Kilifi-80108, East Africa-Kenya.
 /*****************************************************************************/
 error_reporting(E_ALL & ~E_NOTICE);
 function populate_select($table,$fields_id,$fields_value,$selected){
+    if($selected == '')
+        $selected = "IN";
+    
 	$conn=db_connect(HOST,USER,PASS,DB,PORT);
 	$sql="Select $fields_id,$fields_value From $table Order By $fields_value";
 	$results=mkr_query($sql,$conn);
 	while ($row = fetch_object($results)){
-		$SelectedCountry=($row->$fields_id==$selected) ? " selected" : "";		
+		$SelectedCountry=($row->$fields_id==$selected) ? " selected" : "";
 		echo "<option value=" . $row->$fields_id . $SelectedCountry . ">" . $row->$fields_value . "</option>";
 		//($row->$fields_id==$selected) ? 'selected' : '';
 	}
