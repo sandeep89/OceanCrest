@@ -204,7 +204,7 @@ function ReserveGuest(){
 	  <tr>
     <td width="15%" bgcolor="#66CCCC">
 		<table cellspacing=0 cellpadding=0 width="100%" align="left" bgcolor="#FFFFFF">
-      <tr><td width="110" align="center"><a href="index.php"><img src="images/titanic1.gif" width="70" height="74" border="0"/><br>
+      <tr><td width="110" align="center"><a href="index.php"><img src="images/OpenCrest.gif" width="100%" height="100%" border="0"/><br>
           Home</a> </td>
       </tr>
       <tr><td> <br>
@@ -308,7 +308,7 @@ function ReserveGuest(){
             <tr>
               <td>&nbsp;</td>
               <td><input type="button" name="button" value="Guests Chek-In" onclick="BookGuest()"/></td>
-              <td><input type="button" name="button" value="Guest Reservation" onclick="ReserveGuest()"/></td>
+              <td><input type="button" name="button" value="Reserve Now" onclick="ReserveGuest()"/></td>
               <td>&nbsp;</td>
             </tr>
             <tr>

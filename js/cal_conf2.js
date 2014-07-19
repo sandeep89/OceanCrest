@@ -1,7 +1,7 @@
 
 //Define calendar(s): addCalendar ("Unique Calendar Name", "Window title", "Form element's name", Form name")
-addCalendar("Calendar1", "Select Date", "checkindate", "reservation");
-addCalendar("Calendar2", "Select Date", "checkoutdate", "reservation");
+addCalendar("Calendar1", "Select Date", "checkin_date", "reservation");
+addCalendar("Calendar2", "Select Date", "checkout_date", "reservation");
 
 addCalendar("Calendar3", "Select Date", "arrivaldate", "bookings");
 addCalendar("Calendar4", "Select Date", "departuredate", "bookings");
@@ -12,6 +12,9 @@ addCalendar("Calendar6", "Select Date", "date_stopped", "rates");
 addCalendar("Calendar7", "Select Date", "doc_date", "billing");
 
 addCalendar("Calendar8", "Select Date", "date", "report");
+
+addCalendar("Calendar9", "Select Date", "reservation_date", "reservation");
+
 
 // default settings for English
 // Uncomment desired lines and modify its values

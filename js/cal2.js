@@ -600,10 +600,12 @@ function get2Digits(n) {
 function clearDate() {
   currentCal.form[currentCal.field].value="";
   hideCal();
+  nights();
 }
 
 function pickDate(d) {
   hideCal();
+
   window.focus();
 
   var date=calFormat;
@@ -618,6 +620,7 @@ function pickDate(d) {
   currentCal.form[currentCal.field].value=date;
   // IE5/Mac needs focus to show the value, weird.
   currentCal.form[currentCal.field].focus();
+  nights();
 }
 // ------
 
