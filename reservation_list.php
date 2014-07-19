@@ -160,7 +160,7 @@ function loadHTMLPost(URL, destination){
 			//get field names to create the column header
 			echo "<tr bgcolor=\"#009999\">
 				<th colspan=\"4\">Action</th>
-        <thRegistration Id</th>
+        <th>Registration Id</th>
 				<th>Guest Name</th>
 				<th>Check-In Date</th>
 				<th>Check-Out Date</th>
@@ -200,45 +200,7 @@ function loadHTMLPost(URL, destination){
 		</td>
       </tr>
     </table></td>
-	<td width="16%" bgcolor="#FFFFFF">
-	<table width="100%"  border="0" cellpadding="1">	  
-	  <tr>
-    <td width="15%" bgcolor="#66CCCC">
-	<table width="100%"  border="0" cellpadding="1" bgcolor="#FFFFFF">
-       <tr>
-        <td>Image</td>
-      </tr>
-	  <tr>
-        <td><input type="button" name="Submit" value="List" onclick="self.location='reservation_list.php'"/></td>
-	  </tr>
-      <tr>
-        <td>&nbsp;</td>
-      </tr>
-      <tr>
-        <td>&nbsp;</td>
-      </tr>
-      <tr>
-        <td>
-            <label> Search By:<br />
-            <input type="radio" name="optFind" value="Name" />
-        Card No.</label>
-            <br />
-            <label>
-            <input type="radio" name="optFind" value="Payrollno" />
-        Room No. </label>
-            <br>
-        <input type="text" name="search" width="100" /><br>
-        <input type="submit" name="Submit" value="Find"/>
-        </td>
-      </tr>
-      <tr>
-        <td>&nbsp;</td>
-      </tr>
-      <tr>
-        <td>&nbsp;</td>
-      </tr>
-    </table>
-	</td></tr></table>
+</tr></table>
 	</td>
   </tr>
    <?php require_once("footer1.php"); ?>

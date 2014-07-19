@@ -884,8 +884,8 @@ CREATE TABLE `act_booking` (
   `landline_num` int(11) NOT NULL,
   `address` varchar(255) NOT NULL,
   `nationality` int(11) NOT NULL,
-  `checkin_date` datetime DEFAULT '0000-00-00 00:00:00',
-  `checkout_date` datetime DEFAULT '0000-00-00 00:00:00',
+  `checkin_date` date DEFAULT '0000-00-00',
+  `checkout_date` date DEFAULT '0000-00-00',
   `arrived_from` int(11) NOT NULL,
   `room_no` int(11) NOT NULL,
   `employed_in_india` ENUM ('Y','N') DEFAULT 'Y' NOT NULL,
@@ -899,19 +899,19 @@ CREATE TABLE `act_booking` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 
-CREATE TABLE IF NOT EXISTS `act_reservation` (
+CREATE TABLE `act_reservation` (
   `reservation_id` int(11) NOT NULL AUTO_INCREMENT,
   `name_of_guest` varchar(100) NOT NULL,
-  `contact_num` int(11) NOT NULL,
-  `alt_contact_num` int(15) DEFAULT NULL,
-  `checkin_date` datetime DEFAULT '0000-00-00 00:00:00',
-  `checkout_date` datetime DEFAULT '0000-00-00 00:00:00',
+  `contact_num` varchar(15) NOT NULL,
+  `alt_contact_num` varchar(15) DEFAULT NULL,
+  `checkin_date` date DEFAULT '0000-00-00',
+  `checkout_date` date DEFAULT '0000-00-00',
   `num_of_nights` int(3) NOT NULL,
   `num_of_adults` int(11) NOT NULL,
   `num_of_children` int(11) DEFAULT NULL,
   `num_of_rooms` int(11) NOT NULL,
   `coming_from` varchar(100) NOT NULL,
-  `reservation_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `reservation_date` date DEFAULT '0000-00-00',
   `booked_by` varchar(100) NOT NULL,
   PRIMARY KEY (`reservation_id`),
   KEY `idx_guest_name` (`name_of_guest`),

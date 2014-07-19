@@ -64,6 +64,7 @@ if (isset($_POST['Submit'])){
 					 VALUES($name_of_guest,$contact_num,$alt_contact_num,$checkin_date,$checkout_date,$num_of_nights,$num_of_adults,$num_of_children,
 					 	$num_of_rooms,$coming_from,$reservation_date,$booked_by)";
 				$results=mkr_query($sql,$conn);
+
 				if ((int) $results==0){
 					//should log mysql errors to a file instead of displaying them to the user
 					echo 'Invalid query: ' . mysql_errno($conn). "<br>" . ": " . mysql_error($conn). "<br>";
@@ -349,9 +350,3 @@ $(document).ready(function() {
 </form>
 </body>
 </html>
-
-<!--"Select reservation_id,reserved_through,guestid,reservation_by,reservation_by_phone,datereserved,
-reserve_checkindate,reserve_checkoutdate,no_adults,no_child0_5,no_child6_12,no_babies,meal_plan,
-billing_instructions,deposit,agents_ac_no,voucher_no,reserved_by,date_reserved,confirmed_by,
-confirmed_date,roomid
-From reservation";-->
