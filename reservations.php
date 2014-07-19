@@ -46,7 +46,7 @@ $guestid=$_POST['guestid'];
 if (isset($_POST['Submit'])){
 	$action=$_POST['Submit'];
 	switch ($action) {
-		case 'Guest Reservation':
+		case 'Reserve Now':
 					$name_of_guest = !empty($_POST["name_of_guest"]) ? "'" . $_POST["name_of_guest"] . "'" : 'NULL';
 					$contact_num = !empty($_POST["contact_num"]) ? "'" . $_POST["contact_num"] . "'" : 'NULL';
 					$alt_contact_num = !empty($_POST["alt_contact_num"]) ? "'" . $_POST["alt_contact_num"] . "'" : 'NULL';
@@ -251,7 +251,7 @@ $(document).ready(function() {
       </tr>
       <tr>
         <td>
-		<H2>ROOM RESERVATIONS</H2>
+		<H2>RESERVATION DETAILS</H2>
 		</td>
       </tr>
       <tr>
@@ -260,29 +260,29 @@ $(document).ready(function() {
     	<?php
     		if($reservation -> reservation_id != ''){
     			?>
-    			<td width="15%">Reservation Id: </td>
+    			<td width="15%">Reservation Id </td>
      			<td><input id="reservation_id" type="text"  maxlength="100" /></td>
     			<?php
     		}
     	?>
     </tr>
     <tr>
-      <td width="10%">Guest Name: </td>
+      <td width="10%">Guest Name </td>
       <td width="25%"><input type="text" id="name_of_guest" name="name_of_guest"  maxlength="100" /></td>
-      <td width="20%">Contact Num</td>
+      <td width="20%">Contact Number</td>
       <td width="45%"><input type="text" id="contact_num" name="contact_num" maxlength="15" value="<?php echo trim($guests->phone); ?>" /></td>
     </tr>
     <tr>
-      <td>Coming From: </td>
+      <td>Coming From </td>
       <td><input type="text" id="coming_from" name="coming_from" /></td>
-      <td>Alerternate Num:</td>
+      <td>Alternate Number</td>
       <td><input type="text" id="alt_contact_num" name="alt_contact_num" maxlength="15"/></td>
     </tr>
     <tr>
-      <td>Date of arrival: </td>
+      <td>Date of arrival </td>
       <td><input type="text" name="checkin_date" id="checkin_date" onblur="nights()" readonly=""/>
           <a href="javascript:showCal('Calendar1')"> <img src="images/ew_calendar.gif" width="16" height="15" border="0"/></a></td>
-      <td>Departure Date:</td>
+      <td>Departure Date</td>
       <td><input type="text" name="checkout_date" id="checkout_date" onblur="nights()" readonly=""/>
           <small><a href="javascript:showCal('Calendar2')"> <img src="images/ew_calendar.gif" width="16" height="15" border="0"/></a></small></td>
     </tr>
@@ -296,13 +296,13 @@ $(document).ready(function() {
           <tr>
             <td >Adults <br />
                 <input type="text" id="num_of_adults" name="num_of_adults" id="no_adults" size="10"/></td>
-            <td >Childs <br />
+            <td >Children <br />
                 <input type="text" id="num_of_children" name="num_of_children" size="10"/></td>
           </tr>
       </table></td>
     </tr>
 <tr>
-      <td>Number of Rooms: </td>
+      <td>Number of Rooms </td>
 	 <td><input type="text" name="num_of_rooms" id="num_of_rooms" size="10"/></td></td>
     </tr>
 
@@ -318,7 +318,7 @@ $(document).ready(function() {
       <td><input type="text" name="reservation_date" id="reservation_date" readonly="" value=""/>
     </tr>
     <tr>
-      <td><input type="submit" name="Submit" value="Guest Reservation"/></td>
+      <td><input type="submit" name="Submit" value="Reserve Now"/></td>
     </tr>
   </table>
 		</td>
