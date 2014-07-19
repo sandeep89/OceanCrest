@@ -872,3 +872,62 @@ INSERT INTO `users_online` (`id`, `timestamp`, `ip`, `file`) VALUES (591, 114396
 (589, 1143969157, '127.0.0.1', '/titanic/photogallery/photo.php'),
 (590, 1143969159, '127.0.0.1', '/titanic/photogallery/photo.php'),
 (571, 1143969018, '127.0.0.1', '/titanic/index.php');
+
+
+CREATE TABLE `act_booking` (
+  `booking_id` int(11) NOT NULL auto_increment,
+  `name_of_guest` varchar(100) NULL,
+  `age` int(11) NOT NULL,
+  `identification_document` ENUM ('Passport','PAN','Driving License','Aadhar') NOT NULL,
+  `id_doc_num` bigint NOT NULL,
+  `mobile_num` int(11) NOT NULL,
+  `landline_num` int(11) NOT NULL,
+  `address` varchar(255) NOT NULL,
+  `nationality` int(11) NOT NULL,
+  `checkin_date` datetime DEFAULT '0000-00-00 00:00:00',
+  `checkout_date` datetime DEFAULT '0000-00-00 00:00:00',
+  `arrived_from` int(11) NOT NULL,
+  `room_no` int(11) NOT NULL,
+  `employed_in_india` ENUM ('Y','N') DEFAULT 'Y' NOT NULL,
+  `duration_of_stay_in_india` int(11) NOT NULL,
+  `purpose_of_visit` varchar(100) NOT NULL,
+  PRIMARY KEY  (`booking_id`),
+  KEY `fk_room_no` (`room_no`),
+  KEY `idx_guest_name` (`name_of_guest`),
+  KEY `idx_checkin_date` (`checkin_date`),
+  KEY `idx_checkout_date` (`checkout_date`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+
+CREATE TABLE `act_reservation` (
+  `reservation_id` int(11) NOT NULL auto_increment,
+  `name_of_guest` varchar(100) NULL,
+  `contact_num` int(11) NOT NULL,
+  `checkin_date` datetime DEFAULT '0000-00-00 00:00:00',
+  `checkout_date` datetime DEFAULT '0000-00-00 00:00:00',
+  `num_of_adults` int(11) NOT NULL,
+  `num_of_children` int(11) NOT NULL,
+  `num_of_rooms` int(11) NOT NULL,
+  `coming_from` varchar(100) NOT NULL,
+  `reservation_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `booked_by` varchar(100) NOT NULL,
+  PRIMARY KEY  (`reservation_id`),
+  KEY `idx_guest_name` (`name_of_guest`),
+  KEY `idx_checkin_date` (`checkin_date`),
+  KEY `idx_checkout_date` (`checkout_date`),
+  KEY `idx_reservation_date` (`reservation_date`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+
+CREATE TABLE `act_audit` (
+  `audit_id` int(11) NOT NULL auto_increment,
+  `date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `changed_by` varchar(100) NOT NULL,
+  `audit_type` ENUM ('0','1') NOT NULL,
+  `audit_num` int(11) NOT NULL,
+  `audit_val` ENUM ('0','1','2') NOT NULL,
+  PRIMARY KEY  (`audit_id`),
+  KEY `idx_date` (`date`),
+  KEY `idx_changed_by` (`changed_by`),
+  KEY `fk_audit_num` (`audit_num`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
