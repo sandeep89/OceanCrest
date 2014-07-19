@@ -165,6 +165,15 @@ function find($search){
 var request;
 var dest;
 
+$(function() {
+    $('#chkveg').multiselect({
+        includeSelectAllOption: true
+    });
+    $('#btnget').click(function() {
+        alert($('#chkveg').val());
+    })
+});
+
 function loadHTML(URL, destination){
     dest = destination;
 	if (window.XMLHttpRequest){
@@ -261,6 +270,9 @@ This notice must stay intact for use
 */
 </script>
 <script language="javascript" src="js/cal_conf2.js"></script>
+<script type="text/javascript" src="http://code.jquery.com/jquery-1.8.2.js"></script>
+<script type="text/javascript" src="js/bootstrap-2.3.2.min.js"></script>
+<script type="text/javascript" src="js/bootstrap-multiselect.js"></script>
 </head>
 
 <body>
@@ -294,9 +306,9 @@ This notice must stay intact for use
 		</td>
       </tr>
       <tr>
-        <td><div id="Requests">  <table width="100%"  border="0" cellpadding="1" align="left">
-    <tr>
-      <td colspan="3">
+        <td><div id="Requests">  <table width="86%" border="0" cellpadding="4" align="left">
+     <tr>
+      <!-- <td colspan="3">
 	    <table border="1" cellpadding="0">
           <tr>
             <td width="78"><input type="submit" name="Navigate" id="First" style="cursor:pointer" title="first page" value="<<"/>
@@ -307,123 +319,143 @@ This notice must stay intact for use
                 <input type="submit" name="Navigate" id="Last" style="cursor:pointer" title="last page" value=">>"/>
             </td>
           </tr>
-        </table></td>
-	<td width="35%"><input type="button" name="Submit" value="Booking List" onclick="self.location='bookings_list.php'"/>
+        </table></td> -->
+	<td colspan="4"><input type="button" name="Submit" value="Booking List" onclick="self.location='bookings_list.php'"/>
 	  <input type="button" name="Submit" value="Booking Calendar" onclick="self.location='bookings_calendar.php'"/></td>
 	</tr>
     <tr>
-      <td width="13%">Card No.</td>
-      <td width="35%"><input type="text" name="book_id" value="<?php echo trim($bookings->book_id); ?>" size="10" readonly=""/><input name="guestid" type="hidden" value="<?php echo trim($bookings->guestid); ?>" />
+        <?php
+        if($bookingId != '')
+        {
+        ?>
+            <td width="20%">Booking Id</td>
+            <td><input type="text" name="book_id" value="<?php echo $bookingId; ?>" size="10" readonly/></td>
+        <?php
+        }
+        ?>
+
+    </tr>
+    <tr>
+      <td width="20%">Name of Primary Guest</td>
+      <td><input type="text" name="guest_name" value="<?php echo $guestName; ?>" size="30"/>
+      &nbsp;&nbsp;&nbsp;
+      Age&nbsp;&nbsp;&nbsp;<input type="text" name="guest_name" value="<?php echo $guestName; ?>" size="1" maxlength="3"/></td>
+    </tr>
+    <tr>
+        <td width="20%" valign="top">Dependents</td>
+        <td><textarea name="dependents" rows="5" cols="24" maxlength="500" /><?php echo $dependents; ?></textarea></td>
+    </tr>
+    <tr>
+        <td>No. of Guests </td>
+        <td colspan="4">
+            <table border="0" cellpadding="1">
+                <tr>
+                    <td width="18%">Adults <br />
+                        <input type="text" name="no_adults" id="no_adults" size="10"/></td>
+                    <td width="22%">Children<br />
+                        <input type="text" name="no_child0_5" size="10"/></td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+    <tr>
+        <td width="20%" valign="top">Address</td>
+        <td><textarea name="address" rows="5" cols="24" maxlength="255" /><?php echo $address; ?></textarea></td>
+    </tr>
+    <tr>
+        <td>Nationality</td>
+        <td>
+            <select name="residence_id">
+                <option value="">Select Country</option>
+                <?php populate_select("countries","countrycode","country",$nationality);?>
+            </select>
+        </td>
+    </tr>
+    <tr>
+        <td>Identification</td>
+        <td colspan="4">
+            <table border="0" cellpadding="1">
+                <tr>
+                    <td width="18%">Document Type <br />
+                        <select name="identification_doc" id="identification_doc" onchange="">
+                            <option value="">Select ID Doc</option>
+                            <option value="Passport">Passport</option>
+                            <option value="PAN">PAN Card</option>
+                            <option value="Driving License">Driving License</option>
+                            <option value="Aadhar">Aadhar Card</option>
+                        </select>
+                    </td>
+                    <td width="22%">ID Number <br />
+                        <input type="text" name="id_no" value="<?php echo $idNo; ?>" maxlength="50"/>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+    <tr>
+        <td valign="top">Contact Information </td>
+        <td colspan="4">
+            <table border="0" width="100%" cellpadding="1">
+                <tr>
+                    <td width="30%">Mobile</td><td><input type="text" name="mobile" id="no_adults" size="20" maxlength="15"/></td>
+                </tr>
+                <tr>
+                    <td width="30%">Alternate Contact Number </td><td><input type="text" name="alt_num" size="20" maxlength="15"/></td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+    <tr>
+        <td width="20%">Arrival Date </td>
+        <td><input type="text" name="checkin_date" id="arrivaldate" readonly="" value="<?php echo (isset($_POST["checkin_date"]) ? $_POST["checkin_date"] : trim($bookings->checkin_date)); ?>"/>
+            <a href="javascript:showCal('Calendar3')"> <img src="images/ew_calendar.gif" width="16" height="15" border="0"/></a>
+            &nbsp;&nbsp;&nbsp;Departure Date&nbsp;&nbsp;&nbsp;<input type="text" name="checkout_date" id="departuredate" readonly="" value="<?php echo trim($bookings->checkout_date); ?>" onblur="nights()"/>
+            <small><a href="javascript:showCal('Calendar4')"> <img src="images/ew_calendar.gif" width="16" height="15" border="0"/></a></small></td>
+    </tr>
+    <tr>
+        <td>No. of Nights</td>
+        <td><input type="text" name="num_nights" value="<?php echo $numNights; ?>" size="1" maxlength="2" /></td>
+    </tr>
+    <tr>
+        <td>Arrived From</td>
+        <td><input type="text" name="arrived_from" value="<?php echo $arrivedFrom; ?>" size="20" maxlength="100" /></td>
+    </tr>
+    <tr>
+        <td>Employed in India</td>
+        <td>
+            <input type="radio" name="emp_india" id="emp_india" value="Y" />Yes
+            <input type="radio" name="emp_india" id="emp_india" value="N" />No
+        </td>
+    </tr>
+    <tr>
+        <td>Duration of Stay in India</td>
+        <td><input type="text" name="duration_stay_india" value="<?php echo $duration_stay_india; ?>" size="2" maxlength="3" /> days</td>
+    </tr>
+    <tr>
+        <td>Purpose of visit</td>
+        <td><input type="text" name="purpose_of_visit" value="<?php echo $purpose_of_visit; ?>" size="20" maxlength="50" /></td>
+    </tr>
+     <tr>
+         <td valign="top">Room Number </td>
+         <td>
+             <div id="showrates"></div>
+             <select name="roomid" id="roomid" size="6" onchange="loadHTMLPost('ajaxfunctions.php','showrates','GetRates')" multiple>
+                 <option value="" >Select Room</option>
+                 <?php populate_select("rooms","roomid","roomno",$bookings->roomid);?>
+             </select>
          </td>
-      <td colspan="2"><table width="100%"  border="0" cellpadding="1">
-        <tr>
-          <td width="10%">Adult</td>
-          <td width="15%"><input type="text" name="no_adults" id="no_adults" size="8" value="<?php echo trim($bookings->no_adults); ?>"/></td>
-          <td width="10%">Child</td>
-          <td width="16%"><input type="text" name="no_child" id="no_child" size="8" value="<?php echo trim($bookings->no_child); ?>"/></td>
-		  <td width="22%">Total Persons</td>
-          <td width="27%"><input type="text" name="total_per" size="8"/></td>
-        </tr>
-      </table></td>
-    </tr>
-    <tr>
-      <td>Address</td>
-      <td bgcolor="#66CCCC" colspan="2">
-	  <?php
-	   echo "P. O. Box " . trim($bookings->pobox) ."<br>";
-	   echo trim($bookings->town) . "-" . trim($bookings->postal_code);
-	   ?>
-		</td>
-      <td>&nbsp;</td>
-    </tr>
-    <tr>
-      <td>Passport/ID No. </td>
-      <td><input type="text" name="pp_id_no" readonly="" value="<?php echo (!is_null($bookings->pp_no) ? $bookings->pp_no : $bookings->idno); ?>" /></td>
-      <td width="17%">Arrival  Date </td>
-      <td><input type="text" name="checkin_date" id="arrivaldate" readonly="" value="<?php echo (isset($_POST["checkin_date"]) ? $_POST["checkin_date"] : trim($bookings->checkin_date)); ?>"/>
-        <a href="javascript:showCal('Calendar3')"> <img src="images/ew_calendar.gif" width="16" height="15" border="0"/></a></td>
-    </tr>
-    <tr>
-      <td>Nationality</td>
-      <td><input type="text" name="country" readonly="" value="<?php echo trim($bookings->country); ?>"/></td>
-      <td>Departure  Date</td>
-      <td><input type="text" name="checkout_date" id="departuredate" readonly="" value="<?php echo trim($bookings->checkout_date); ?>" onblur="nights()"/>
-          <small><a href="javascript:showCal('Calendar4')"> <img src="images/ew_calendar.gif" width="16" height="15" border="0"/></a></small></td>
-    </tr>
-    <tr>
-      <td>Telephone</td>
-      <td><input type="text" name="phone" readonly="" value="<?php echo trim($bookings->phone); ?>"/></td>
-      <td>No. of Nights </td>
-      <td><input type="text" name="no_nights" id="no_nights" size="10" readonly="" value="<?php echo trim($bookings->no_nights); ?>"/></td>
-    </tr>
-    <tr>
-      <td>Remarks</td>
-      <td><table width="108%"  border="0" cellpadding="1">
-        <tr>
-          <td width="28%"><label><input type="radio" name="meal_plan" id="mealplan" value="BO" <?php echo ($bookings->meal_plan=="BO" ? "checked=\"checked\"" : ""); ?> />
-            BO</label></td>
-          <td width="25%"><label><input type="radio" name="meal_plan" id="mealplan" value="BB" <?php echo ($bookings->meal_plan=="BB" ? "checked=\"checked\"" : ""); ?> />
-            BB</label></td>
-          <td width="24%"><label><input type="radio" name="meal_plan" id="mealplan" value="HB" <?php echo ($bookings->meal_plan=="HB" ? "checked=\"checked\"" : ""); ?> />
-            HB</label></td>
-          <td width="23%"><label><input type="radio" name="meal_plan" id="mealplan" value="FB" <?php echo ($bookings->meal_plan=="FB" ? "checked=\"checked\"" : ""); ?> />
-            FB</label></td>
-        </tr>
-      </table></td>
-	  <td>Country of Residence</td>
-	  <td><select name="residence_id">
-        <option value="">Select Country</option>
-        <?php populate_select("countries","countrycode","country",$booking->residence_id);?>
-      </select></td>
-    </tr>
-    <tr>
-      <td>Accounts will be settled by </td>
-      <td colspan="3">
-        <label><input type="radio" name="payment_mode" value="1" <?php echo ($bookings->payment_mode=="1" ? "checked=\"checked\"" : ""); ?> />i) Cash</label><br />
-        <label><input type="radio" name="payment_mode" value="2" <?php echo ($bookings->payment_mode=="2" ? "checked=\"checked\"" : ""); ?> />ii) Credit Card</label><br />
-        <label><input type="radio" name="payment_mode" value="3" <?php echo ($bookings->payment_mode=="3" ? "checked=\"checked\"" : ""); ?> />iii) Cheque by prior arrangements</label><br />
-        <label><input type="radio" name="payment_mode" value="4" <?php echo ($bookings->payment_mode=="4" ? "checked=\"checked\"" : ""); ?> />iv) Charge to Co.</label>
-      </td>
-    </tr>
-    <tr>
-      <td>Booking Type</td>
-      <td><p>
-        <label>
-<input type="radio" name="booking_type" value="D" <?php echo ($bookings->booking_type=="D" ? "checked=\"checked\"" : ""); ?> onclick="loadHTMLPost('ajaxfunctions.php','agentoption','Direct')"/>
-Direct booking </label>
-        <label>
-        <input type="radio" name="booking_type" value="A" <?php echo ($bookings->booking_type=="A" ? "checked=\"checked\"" : ""); ?> onclick="loadHTMLPost('ajaxfunctions.php','agentoption','Agent')"/>
-  Agent booking</label>
-      </p></td>
-	  <td colspan="2"><div id="agentoption"></div></td>
-    </tr>
-    <tr>
-      <td>Room No. </td>
-      <td>
-	  <div id="showrates"></div>
-	  <select name="roomid" id="roomid" onchange="loadHTMLPost('ajaxfunctions.php','showrates','GetRates')">
-        <option value="" >Select Room</option>
-        <?php populate_select("rooms","roomid","roomno",$bookings->roomid);?>
-      </select> </td>
-      <td>Rate Kshs.</td>
-      <td><input type="text" name="rates" /></td>
-    </tr>
-    <tr>
-      <td colspan="2"><h2>Checked in By</h2></td>
-      <td colspan="2">&nbsp;</td>
-    </tr>
-    <tr>
-      <td>Name</td>
-      <td><input type="text" name="checkedin_by" value="<?php echo $_SESSION["employee"]; ?>" /></td>
-      <td>&nbsp;</td>
-      <td>&nbsp;</td>
-    </tr>
-    <tr>
-      <td>Invoice No. </td>
-      <td><input type="text" name="invoice_no" value="<?php echo $_SESSION["invoice_no"]; ?>" /></td>
-      <td><input type="submit" name="Submit" value="Book Guest"/></td>
-      <td><input type="button" name="Submit" value="Prepare Bill" onclick="RatesPeacker()"/></td>
-    </tr>
+     </tr>
+     <tr>
+         <td>&nbsp</td>
+         <td colspan="3">
+             <table border="0" cellpadding="0" width="20%">
+                 <tr>
+                     <td><input type="submit" name="Submit" value="Book Guest"/></td>
+                     <td><input type="button" name="Submit" value="Prepare Bill" onclick="RatesPeacker()"/></td>
+                 </tr>
+             </table>
+         </td>
+     </tr>
   </table>
 		</div></td>
 		
