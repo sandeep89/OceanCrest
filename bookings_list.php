@@ -143,25 +143,29 @@ function loadHTMLPost(URL, destination){
 		<h2>Booking List </h2>
 		</td>
       </tr>
+    <tr bgcolor="#66CCCC" >
+        <td align="left"><div id="RequestDetails"></div>
+        </td>
+    </tr>
       <tr>
-        <td><div id="Requests">
+        <td><div id="Requests"><br /><br />
 		<?php
-			$sql="Select guests.guestid,concat_ws(' ',guests.firstname,guests.middlename,guests.lastname) as guest,booking.checkin_date,
-			booking.checkout_date,DATEDIFF(booking.checkout_date,booking.checkin_date) nights,
-			booking.meal_plan,booking.no_adults,booking.no_child,booking.roomid,booking.checkedin_by,rooms.roomno,booking.book_id
-			From booking
-			Inner Join guests ON booking.guestid = guests.guestid
-			Inner Join rooms ON booking.roomid = rooms.roomid";
+			$sql="Select booking.booking_id,booking.name_of_guest as guest,booking.checkin_date,
+			booking.checkout_date,DATEDIFF(booking.checkout_date,booking.checkin_date) as nights,
+			booking.num_of_adults,booking.num_of_children,rooms.roomno
+			From hotelmis.act_booking as booking
+			Inner Join rooms ON booking.room_no = rooms.roomid";
 			$conn=db_connect(HOST,USER,PASS,DB,PORT);
+
 			$results=mkr_query($sql,$conn);
 			
-			echo "<table align=\"center\">";
+			echo "<table>";
 			//get field names to create the column header
 			echo "<tr bgcolor=\"#009999\">
 				<th colspan=\"2\">Action</th>
+				<th>Booking Id</th>
 				<th>Room No.</th>
 				<th>Guest</th>
-				<th>Meal Plan</th>
 				<th>Check-In Date</th>
 				<th>Check-Out Date</th>
 				<th>Nights</th>
@@ -178,28 +182,24 @@ function loadHTMLPost(URL, destination){
 					}else{
 					echo "<tr id=\"row$j\" onmouseover=\"javascript:setColor('$j')\" onmouseout=\"javascript:origColor('$j')\" bgcolor=\"#EEEEF8\">";
 				}
-					echo "<td><a href=\"bookings.php?search=$booking->book_id\"><img src=\"images/button_view.png\" width=\"16\" height=\"16\" border=\"0\" title=\"view booking details\"/></a></td>";					
+					echo "<td><a href=\"bookings.php?search=$booking->booking_id\"><img src=\"images/button_view.png\" width=\"16\" height=\"16\" border=\"0\" title=\"view booking details\"/></a></td>";
 					echo "<td><a href=\"billings.php?search=$booking->guestid\"><img src=\"images/button_signout.png\" width=\"16\" height=\"16\" border=\"0\" title=\"bill guest\"/></a></td>";
-					echo "<td>" . $booking->roomno . "</td>";					
+                    echo "<td>" . $booking->booking_id . "</td>";
+                    echo "<td>" . $booking->roomno . "</td>";
 					echo "<td>" . trim($booking->guest) . "</td>";
-					echo "<td>" . $booking->meal_plan . "</td>";
 					echo "<td>" . $booking->checkin_date . "</td>";
 					echo "<td>" . $booking->checkout_date . "</td>";
 					echo "<td>" . $booking->nights . "</td>";			
-					echo "<td>" . $booking->no_adults . "</td>";
-					echo "<td>" . $booking->no_child . "</td>";
+					echo "<td>" . $booking->num_of_adults . "</td>";
+					echo "<td>" . $booking->num_of_children . "</td>";
 				echo "</tr>"; //end of - data rows
 			} //end of while row
 			echo "</table>";
 		?>
 		</div></td>		
       </tr>
-	  <tr bgcolor="#66CCCC" >
-        <td align="left"><div id="RequestDetails"></div>
-		</td>
-      </tr>
     </table></td>
-	<td width="16%" bgcolor="#FFFFFF">
+	<!-- <td width="16%" bgcolor="#FFFFFF">
 	<table width="100%"  border="0" cellpadding="1">	  
 	  <tr>
     <td width="15%" bgcolor="#66CCCC">
@@ -238,7 +238,7 @@ function loadHTMLPost(URL, destination){
       </tr>
     </table>
 	</td></tr></table>
-	</td>
+	</td> -->
   </tr>
    <?php require_once("footer1.php"); ?>
 </table>

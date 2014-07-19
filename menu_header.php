@@ -44,6 +44,7 @@ $access = fetch_object($results);
 if($access->reservation==1) echo "<tr><td><a href=\"reservations.php\">Make Reservation</a></td></tr>";
 if($access->reservation==1) echo "<tr><td><a href=\"reservation_list.php\">Reservations List</a></td></tr>";
 if($access->booking==1) echo "<tr><td><a href=\"bookings.php\">Bookings</a></td></tr>";
+if($access->booking==1) echo "<tr><td><a href=\"bookings_list.php\">Bookings List</a></td></tr>";
 #if($access->agents==1) echo "<tr><td><a href=\"agents.php\">Agents</a></td></tr>";
 #if($access->rooms==1) echo "<tr><td><a href=\"rooms.php\">Rooms</a></td></tr>";
 #if($access->billing==1) echo "<tr><td><a href=\"billings.php\">Guest Bill</a></td></tr>";

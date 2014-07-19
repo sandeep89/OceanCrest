@@ -35,6 +35,20 @@ if (isset($_GET["search"]) && !empty($_GET["search"])){
 	find($_GET["search"]);
 }
 
+//if page was visited for confriming a reservation.
+if (isset($_GET["confirmReservation"]) && !empty($_GET["confirmReservation"])){
+  $reservation = findReservation($_GET["confirmReservation"]);
+    $guestName = $reservation->name_of_guest;
+    $checkin_date = $reservation->checkin_date;
+    $checkout_date = $reservation->checkout_date;
+    $numNights = $reservation->num_of_nights;
+    $arrivedFrom = $reservation->coming_from;
+    $mobile_num = $reservation->contact_num;
+    $alt_contact_num = $reservation->alt_contact_num;
+    $no_adults = $reservation->num_of_adults;
+    $no_child = $reservation->num_of_children;
+}
+
 //consider having this as a function in the functions.php
 if (isset($_POST['Navigate'])){
 	//echo $_SESSION["strOffSet"];
@@ -64,6 +78,17 @@ function find($search){
 		where booking.book_id='$search'";
 	$results=mkr_query($sql,$conn);
 	$bookings=fetch_object($results);
+}
+function findReservation($findReservation){
+  global $conn;
+  $search=$search;
+  $strOffSet=!empty($_POST["strOffSet"]) ? $_POST["strOffSet"] : 0; //offset value peacked on all pages with pagination - logical error
+    
+  //check on wether search is being done on idno/ppno/guestid/guestname
+  $sql="Select * from act_reservation where reservation_id = '$findReservation'";
+  $results=mkr_query($sql,$conn);
+  $reservation=fetch_object($results);
+  return $reservation;
 }
 
 ?>
@@ -244,9 +269,9 @@ This notice must stay intact for use
             <table border="0" width="30%" cellpadding="1">
                 <tr>
                     <td>Adults <br />
-                        <input type="text" name="no_adults" id="no_adults" size="10"/></td>
+                        <input type="text" name="no_adults" id="no_adults" size="10" value="<?php echo $no_adults; ?>"/></td>
                     <td>Children<br />
-                        <input type="text" name="no_child" size="10"/></td>
+                        <input type="text" name="no_child" size="10" value="<?php echo $no_child; ?>"/></td>
                 </tr>
             </table>
         </td>
@@ -290,10 +315,10 @@ This notice must stay intact for use
         <td colspan="4">
             <table border="0" width="100%" cellpadding="1">
                 <tr>
-                    <td width="25%">Mobile</td><td><input type="text" name="mobile_num" id="mobile_num" size="20" maxlength="15"/></td>
+                    <td width="25%">Mobile</td><td><input type="text" name="mobile_num" id="mobile_num" size="20" value="<?php echo $mobile_num; ?>" maxlength="15"/></td>
                 </tr>
                 <tr>
-                    <td width="25%">Alternate Contact Number </td><td><input type="text" name="alt_num" size="20" maxlength="15"/></td>
+                    <td width="25%">Alternate Contact Number </td><td><input type="text" name="alt_num" size="20" maxlength="15" value="<?php echo $alt_contact_num; ?>"/></td>
                 </tr>
             </table>
         </td>
@@ -301,10 +326,10 @@ This notice must stay intact for use
     <tr>
         <td width="20%">Arrival Date </td>
         <td>
-            <input type="text" name="checkin_date" id="checkin_date" readonly="" value="<?php echo (isset($_POST["checkin_date"]) ? $_POST["checkin_date"] : trim($bookings->checkin_date)); ?>"/>
+            <input type="text" name="checkin_date" id="checkin_date" readonly="" value="<?php echo $checkin_date; ?>"/>
             <a href="javascript:showCal('Calendar3')"> <img src="images/ew_calendar.gif" width="16" height="15" border="0"/></a>
             &nbsp;&nbsp;&nbsp;
-            Departure Date&nbsp;&nbsp;&nbsp;<input type="text" name="checkout_date" id="checkout_date" readonly="" value="<?php echo trim($bookings->checkout_date); ?>" onblur="nights()"/>
+            Departure Date&nbsp;&nbsp;&nbsp;<input type="text" name="checkout_date" id="checkout_date" readonly="" value="<?php echo $checkout_date; ?>" onblur="nights()"/>
             <small><a href="javascript:showCal('Calendar4')"> <img src="images/ew_calendar.gif" width="16" height="15" border="0"/></a></small>
         </td>
     </tr>
