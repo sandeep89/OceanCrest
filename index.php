@@ -171,7 +171,7 @@ function loadHTMLPost(URL, destination){
 	  <tr>
     <td bgcolor="#66CCCC">
 		<table cellspacing=0 cellpadding=0 width="100%" align="left" bgcolor="#FFFFFF">
-      <tr><td align="center"><a href="index.php"><img src="images/titanic1.gif" width="70" height="74" border="0"/><br>Home</a></td></tr>
+      <tr><td align="center"><a href="index.php"><img src="images/OpenCrest.gif" width="100%" height="100%" border="0"/><br>Home</a></td></tr>
 	  <tr><td width="110"> Username:<br><input name="username" type="text" width="10"></input> </td></tr>
       <tr><td> Password: <br><input name="password" type="password" width="10"></input></td></tr>
       <tr>

@@ -232,7 +232,7 @@ This notice must stay intact for use
     <td width="15%" bgcolor="#66CCCC">
 		<table cellspacing=0 cellpadding=0 width="100%" align="left" bgcolor="#FFFFFF">
       <tr>
-        <td width="110" align="center"><a href="index.php"><img src="images/titanic1.gif" width="70" height="74" border="0"/><br>
+        <td width="110" align="center"><a href="index.php"><img src="images/OpenCrest.gif" width="100%0" height="100%" border="0"/><br>
           Home</a></td>
       </tr>
       <tr><td>&nbsp; </td>
