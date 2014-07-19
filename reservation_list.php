@@ -34,7 +34,7 @@ if (isset($_GET['action'])){
 		case 'remove':
 			//before deleting check if deposit had been made and mark for refund - todo
 			//release reserved room - todo
-			$sql="delete from reservation where reservation_id='$search'";
+			$sql="delete from act_reservation where reservation_id='$search'";
 			$results=mkr_query($sql,$conn);
 			$msg[0]="Sorry reservation not deleted";
 			$msg[1]="Reservation successful deleted";
@@ -112,6 +112,13 @@ function loadHTMLPost(URL, destination){
         }
     }
 }
+function confirmDeletion(id){
+
+ 	var confirmation = confirm("Are you sure you want to delete reservation!");
+    if (confirmation == true) {
+         window.location.assign("reservation_list.php?search="+ id +"&action=remove");
+    } 
+}
 //-->	 
 </script>
 <script language="JavaScript" src="js/highlight.js" type="text/javascript"></script>
@@ -159,8 +166,8 @@ function loadHTMLPost(URL, destination){
 			echo "<table align=\"center\">";
 			//get field names to create the column header
 			echo "<tr bgcolor=\"#009999\">
-				<th colspan=\"4\">Action</th>
-        <th>Registration Id</th>
+				<th colspan=\"3\">Action</th>
+        		<th>Registration Id</th>
 				<th>Guest Name</th>
 				<th>Check-In Date</th>
 				<th>Check-Out Date</th>
@@ -180,7 +187,7 @@ function loadHTMLPost(URL, destination){
 				}
 					echo "<td><a href=\"reservations.php?search=$reservation->reservation_id\"><img src=\"images/button_view.png\" width=\"16\" height=\"16\" border=\"0\" title=\"view/edit reservation\"/></a></td>";
 					echo "<td><a href=\"bookings.php?confirmReservation=$reservation->reservation_id\"><img src=\"images/bed.jpg\" width=\"16\" height=\"16\" border=\"0\" title=\"book guest\"/></a></td>";
-					echo "<td><a href=\"reservation_list.php?search=$reservation->reservation_id&action=remove\"><img src=\"images/button_remove.png\" width=\"16\" height=\"16\" border=\"0\" title=\"delete reservation\"/></a></td>";
+					echo "<td><a href=\"#\" onclick=\"confirmDeletion($reservation->reservation_id)\"><img src=\"images/button_remove.png\" width=\"16\" height=\"16\" border=\"0\" title=\"delete reservation\"/></a></td>";
 					echo "<td>" . $reservation->reservation_id. "</td>";					
 					echo "<td>" . trim($reservation->name_of_guest) . "</td>";
 					echo "<td>" . $reservation->checkin_date . "</td>";

@@ -33,16 +33,6 @@ if (isset($_GET["search"]) && !empty($_GET["search"])){
 	$reservation = find($_GET["search"]);
 }
 
-if (isset($_POST['Navigate'])){
-	//echo $_SESSION["strOffSet"];
-	$nRecords=num_rows(mkr_query("select * from guests",$conn),$conn);
-	paginate($nRecords);
-	free_result($results);
-	find($_SESSION["strOffSet"]);
-}
-
-$guestid=$_POST['guestid'];
-
 if (isset($_POST['Submit'])){
 	$action=$_POST['Submit'];
 	switch ($action) {
@@ -70,35 +60,13 @@ if (isset($_POST['Submit'])){
 					echo 'Invalid query: ' . mysql_errno($conn). "<br>" . ": " . mysql_error($conn). "<br>";
 					echo "Reservation NOT MADE.";  //return;
 				}else{
+          //$reservation = fetch_object($results);
+          var_dump($results);
 					echo "<div align=\"center\"><h1>Reservation successfull.</h1></div>";					
 				}							
 			break;
-		case 'List':
-			break;
-		case 'Find':
-			//check if user is searching using name, payrollno, national id number or other fields
-			$search=$_POST["search"];
-			find($search);
-			$sql="Select guests.guestid,guests.lastname,guests.firstname,guests.middlename,guests.pp_no,
-			guests.idno,guests.countrycode,guests.pobox,guests.town,guests.postal_code,guests.phone,
-			guests.email,guests.mobilephone,countries.country
-			From guests
-			Inner Join countries ON guests.countrycode = countries.countrycode where pp_no='$search'";
-			$results=mkr_query($sql,$conn);
-			$reservation=fetch_object($results);
-			break;
-		case 'FindReservation':
-			//check if user is searching using name, payrollno, national id number or other fields
-			$search=$_POST["search"];
-			find($search);
-			$sql="Select guests.guestid,guests.lastname,guests.firstname,guests.middlename,guests.pp_no,
-			guests.idno,guests.countrycode,guests.pobox,guests.town,guests.postal_code,guests.phone,
-			guests.email,guests.mobilephone,countries.country
-			From guests
-			Inner Join countries ON guests.countrycode = countries.countrycode where pp_no='$search'";
-			$results=mkr_query($sql,$conn);
-			$reservation=fetch_object($results);
-			break;
+      default:
+        echo "Please provide valid action";
 	}
 }
 
