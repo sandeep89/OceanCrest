@@ -201,7 +201,7 @@ function loadHTMLPost(URL, destination){
 		<H4>OCEAN CREST RESERVATION SYSTEMS</H4> </td>
       </tr>
       <tr>
-        <td><h2>Administrator</h2></td>
+        <td><h2>User Account Management</h2></td>
       </tr>
 	<tr>
         <td><div id="Requests">
@@ -248,13 +248,13 @@ function loadHTMLPost(URL, destination){
   <tr>
     <td colspan="4"><table width="100%" cellpadding="1">
 	  <tr>
-		<td width="13%">Administrator</td>
+		<td width="13%">User Account Management</td>
 		<td width="87%"><input type="checkbox" name="admin" value="1" <?php if($users->admin==1) echo "checked";?>/></td>
 	  </tr>
-      <tr>
+      <!--<tr>
         <td width="13%">guest</td>
         <td width="87%"><input type="checkbox" name="guest" value="1" <?php if($users->guest==1) echo "checked";?>/></td>
-      </tr>
+      </tr>-->
       <tr>
         <td>reservation</td>
         <td><input type="checkbox" name="reservation" value="1" <?php if($users->reservation==1) echo "checked";?>/></td>
@@ -264,9 +264,9 @@ function loadHTMLPost(URL, destination){
         <td><input type="checkbox" name="booking" value="1" <?php if($users->booking==1) echo "checked";?>/></td>
       </tr>
       <tr>
-        <td>agents</td>
+        <!--<td>agents</td>
         <td><input type="checkbox" name="agents" value="1" <?php if($users->agents==1) echo "checked";?>/></td>
-      </tr>
+      </tr>-->
       <tr>
         <td>rooms</td>
         <td><input type="checkbox" name="rooms" value="1" <?php if($users->rooms==1) echo "checked";?>/></td>
