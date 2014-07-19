@@ -47,93 +47,46 @@ if (isset($_POST['Submit'])){
 	$action=$_POST['Submit'];
 	switch ($action) {
 		case 'Guest Reservation':
-			//if guest has not been selected exit
-			// instantiate form validator object
-			$fv=new formValidator(); //from functions.php
-			if (empty($_POST["guestid"])){ //if no guest has been selected no point in displaying other errors
-				$fv->validateEmpty('guestid','No guest has been selected for reservation.');
-			}else{
-				$fv->validateEmpty('reservation_type','Please indicate if it\'s a Direct booking or Agent booking.');
-				$fv->validateEmpty('meal_plan','Please select Meal Plan');
-				$fv->validateEmpty('reserve_checkindate','Please enter checkin date for reservation');
-				$fv->validateEmpty('roomid','Please indicate room being booked');				
-			}
-			if($fv->checkErrors()){
-				// display errors
-				echo "<div align=\"center\">";
-				echo '<h2>Resubmit the form after correcting the following errors:</h2>';
-				echo $fv->displayErrors();
-				echo "</div>";
-			}
-			else {
-				$reserved_through=!empty($_POST["reservation_type"]) ? "'" . $_POST["reservation_type"] . "'" : 'NULL';
-				$guestid=$_POST["guestid"];
-				$reservation_by=!empty($_POST["reservation_by"]) ? "'" . $_POST["reservation_by"] . "'" : 'NULL';
-				$reservation_by_phone=!empty($_POST["reservation_by_phone"]) ? "'" . $_POST["reservation_by_phone"] . "'" : 'NULL';
-				$reserve_checkindate=!empty($_POST["reserve_checkindate"]) ? "'" . $_POST["reserve_checkindate"] . "'" : 'NULL';
-				$reserve_checkoutdate=!empty($_POST["reserve_checkoutdate"]) ? "'" . $_POST["reserve_checkoutdate"] . "'" : 'NULL';
-				$no_adults=!empty($_POST["no_adults"]) ? $_POST["no_adults"] : 'NULL';
-				$no_child0_5=!empty($_POST["no_child0_5"]) ? $_POST["no_child0_5"] : 'NULL';
-				$no_child6_12=!empty($_POST["no_child6_12"]) ? $_POST["no_child6_12"] : 'NULL';
-				$no_babies=!empty($_POST["no_babies"]) ? $_POST["no_babies"] : 'NULL';
-				$meal_plan=$_POST["meal_plan"];
-				$billing_instructions=!empty($_POST["billing_instructions"]) ? "'" . $_POST["billing_instructions"] . "'" : 'NULL';
-				$deposit=!empty($_POST["deposit"]) ? $_POST["deposit"] : 'NULL';
-				$agents_ac_no=!empty($_POST["agents_ac_no"]) ? "'" . $_POST["agents_ac_no"] . "'" : 'NULL';
-				$voucher_no=!empty($_POST["voucher_no"]) ? "'" . $_POST["voucher_no"] . "'" : 'NULL';
-				$reserved_by=$_SESSION["userid"]; //a need to check if the session value exists
-				$date_reserved=!empty($_POST["date_reserved"]) ? "'" . $_POST["date_reserved"] . "'" : 'NULL';
-				$confirmed_by=!empty($_POST["confirmed_by"]) ? "'" . $_POST["confirmed_by"] . "'" : 'NULL';
-				$confirmed_date=!empty($_POST["confirmed_date"]) ? "'" . $_POST["confirmed_date"] . "'" : 'NULL';
-				$roomid=!empty($_POST["roomid"]) ? $_POST["roomid"] : 'NULL';
-				
-				$sql="INSERT INTO reservation (reserved_through,guestid,reservation_by,reservation_by_phone,datereserved,
-						reserve_checkindate,reserve_checkoutdate,no_adults,no_child0_5,no_child6_12,no_babies,meal_plan,
-						billing_instructions,deposit,agents_ac_no,voucher_no,reserved_by,date_reserved,confirmed_by,confirmed_date,roomid,billed)
-					 VALUES($reserved_through,$guestid,$reservation_by,$reservation_by_phone,now(),
-						$reserve_checkindate,$reserve_checkoutdate,$no_adults,$no_child0_5,$no_child6_12,$no_babies,'$meal_plan',
-						$billing_instructions,$deposit,$agents_ac_no,$voucher_no,$reserved_by,$date_reserved,$confirmed_by,$confirmed_date,$roomid,0)";
+					$name_of_guest = !empty($_POST["name_of_guest"]) ? "'" . $_POST["name_of_guest"] . "'" : 'NULL';
+					$contact_num = !empty($_POST["contact_num"]) ? "'" . $_POST["contact_num"] . "'" : 'NULL';
+					$alt_contact_num = !empty($_POST["alt_contact_num"]) ? "'" . $_POST["alt_contact_num"] . "'" : 'NULL';
+					$checkin_date = !empty($_POST["checkin_date"]) ? "'" . $_POST["checkin_date"] . "'" : 'NULL';
+					$checkout_date = !empty($_POST["checkout_date"]) ? "'" . $_POST["checkout_date"] . "'" : 'NULL';
+					$num_of_nights = !empty($_POST["num_of_nights"]) ? "'" . $_POST["num_of_nights"] . "'" : 'NULL';
+					$num_of_adults = !empty($_POST["num_of_adults"]) ? "'" . $_POST["num_of_adults"] . "'" : 'NULL';
+					$num_of_children = !empty($_POST["num_of_children"]) ? "'" . $_POST["num_of_children"] . "'" : 'NULL';
+					$num_of_rooms = !empty($_POST["num_of_rooms"]) ? "'" . $_POST["num_of_rooms"] . "'" : 'NULL';
+					$coming_from = !empty($_POST["coming_from"]) ? "'" . $_POST["coming_from"] . "'" : 'NULL';
+					$reservation_date = !empty($_POST["reservation_date"]) ? "'" . $_POST["reservation_date"] . "'" : 'NULL';
+					$booked_by = !empty($_POST["booked_by"]) ? "'" . $_POST["booked_by"] . "'" : 'NULL';
+				$sql="INSERT INTO act_reservation (name_of_guest,contact_num,alt_contact_num,checkin_date,checkout_date,
+					num_of_nights,num_of_adults,num_of_children,num_of_rooms,coming_from,reservation_date,booked_by)
+					 VALUES($name_of_guest,$contact_num,$alt_contact_num,$checkin_date,$checkout_date,$num_of_nights,$num_of_adults,$num_of_children,
+					 	$num_of_rooms,$coming_from,$reservation_date,$booked_by)";
 				$results=mkr_query($sql,$conn);
 				if ((int) $results==0){
 					//should log mysql errors to a file instead of displaying them to the user
 					echo 'Invalid query: ' . mysql_errno($conn). "<br>" . ": " . mysql_error($conn). "<br>";
 					echo "Reservation NOT MADE.";  //return;
 				}else{
-					echo "<div align=\"center\"><h1>Reservation successfull.</h1></div>";
-					
-					//only create bill when deposit has been payed.(Give a setup option to the user for this) - todo
-					if (!empty($_POST["deposit"])){
-						//create bill - let user creat bill/create bill automatically
-						$sql="INSERT INTO bills (book_id,billno,date_billed) select reservation.reservation_id,reservation.reservation_id,reservation.datereserved from reservation where reservation.billed=0";
-						$results=mkr_query($sql,$conn);
-						$msg[0]="Sorry no bill created";
-						$msg[1]="Bill successfull created";
-						AddSuccess($results,$conn,$msg);
-						
-						//if bill succesful created update billed to 1 in bookings- todo
-						$sql="Update reservation set billed=1 where billed=0"; //get the actual updated reservation_id, currently this simply updates all reservations that have not been billed
-						$results=mkr_query($sql,$conn);
-						$msg[0]="Sorry Reservation not updated";
-						$msg[1]="Reservations successful updated";			
-						AddSuccess($results,$conn,$msg);
-					}else{
-						echo "<div align=\"center\"><h1>Bill/Reservation will be created on deposit</h1></div>";
-					}
-		
-					//mark room as booked
-					$sql="Update rooms set status='R' where roomid=$roomid"; //get the actual updated book_id, currently this simply updates all bookings 
-					$results=mkr_query($sql,$conn);
-					$msg[0]="Sorry room reservation not marked";
-					$msg[1]="Room marked as reserved";			
-					AddSuccess($results,$conn,$msg);					
-				}				
-			}			
-			find($guestid);
-			$results=mkr_query($sql,$conn);		
+					echo "<div align=\"center\"><h1>Reservation successfull.</h1></div>";					
+				}							
 			break;
 		case 'List':
 			break;
 		case 'Find':
+			//check if user is searching using name, payrollno, national id number or other fields
+			$search=$_POST["search"];
+			find($search);
+			$sql="Select guests.guestid,guests.lastname,guests.firstname,guests.middlename,guests.pp_no,
+			guests.idno,guests.countrycode,guests.pobox,guests.town,guests.postal_code,guests.phone,
+			guests.email,guests.mobilephone,countries.country
+			From guests
+			Inner Join countries ON guests.countrycode = countries.countrycode where pp_no='$search'";
+			$results=mkr_query($sql,$conn);
+			$reservation=fetch_object($results);
+			break;
+		case 'FindReservation':
 			//check if user is searching using name, payrollno, national id number or other fields
 			$search=$_POST["search"];
 			find($search);
@@ -305,49 +258,53 @@ This notice must stay intact for use
       <tr>
         <td><table width="86%"  border="0" cellpadding="1" align="left">
     <tr>
-    	<td width="15%">Reservation Id: </td>
-      <td ><input type="text" name="name"  maxlength="100" /></td>
+    	<?php
+    		if($reservation -> reservation_id != ''){
+    			?>
+    			<td width="15%">Reservation Id: </td>
+     			<td><input id="reservation_id" type="text"  maxlength="100" /></td>
+    			<?php
+    		}
+    	?>
     </tr>
     <tr>
       <td width="10%">Guest Name: </td>
-      <td width="25%"><input type="text" name="name"  maxlength="100" /></td>
+      <td width="25%"><input type="text" id="name_of_guest" name="name_of_guest"  maxlength="100" /></td>
       <td width="20%">Contact Num</td>
-      <td width="45%"><input type="text" name="phone" maxlength="15" value="<?php echo trim($guests->phone); ?>" /></td>
+      <td width="45%"><input type="text" id="contact_num" name="contact_num" maxlength="15" value="<?php echo trim($guests->phone); ?>" /></td>
     </tr>
     <tr>
       <td>Coming From: </td>
-      <td><input type="text" name="reservation_by" /></td>
+      <td><input type="text" id="coming_from" name="coming_from" /></td>
       <td>Alerternate Num:</td>
-      <td><input type="text" name="reservation_by_phone" maxlength="15"/></td>
+      <td><input type="text" id="alt_contact_num" name="alt_contact_num" maxlength="15"/></td>
     </tr>
     <tr>
       <td>Date of arrival: </td>
-      <td><input type="text" name="reserve_checkindate" id="checkindate" onblur="nights()" readonly=""/>
+      <td><input type="text" name="checkin_date" id="checkin_date" onblur="nights()" readonly=""/>
           <a href="javascript:showCal('Calendar1')"> <img src="images/ew_calendar.gif" width="16" height="15" border="0"/></a></td>
       <td>Departure Date:</td>
-      <td><input type="text" name="reserve_checkoutdate" id="checkoutdate" onblur="nights()" readonly=""/>
+      <td><input type="text" name="checkout_date" id="checkout_date" onblur="nights()" readonly=""/>
           <small><a href="javascript:showCal('Calendar2')"> <img src="images/ew_calendar.gif" width="16" height="15" border="0"/></a></small></td>
     </tr>
     <tr>
       <td>No. of nights</td>
-      <td><input type="text" name="no_nights" id="no_nights" size="10"/></td>
-      <td>&nbsp;</td>
-      <td>&nbsp;</td>
+      <td><input type="text" name="num_of_nights" id="num_of_nights" size="10"/></td>
     </tr>
     <tr>
       <td>No. of Guests </td>
       <td colspan="4"><table width="74%"  border="0" cellpadding="1">
           <tr>
             <td >Adults <br />
-                <input type="text" name="no_adults" id="no_adults" size="10"/></td>
+                <input type="text" id="num_of_adults" name="num_of_adults" id="no_adults" size="10"/></td>
             <td >Childs <br />
-                <input type="text" name="no_childs" size="10"/></td>
+                <input type="text" id="num_of_children" name="num_of_children" size="10"/></td>
           </tr>
       </table></td>
     </tr>
 <tr>
       <td>Number of Rooms: </td>
-	 <td><input type="text" name="no_of_rooms" id="no_of_rooms" size="10"/></td></td>
+	 <td><input type="text" name="num_of_rooms" id="num_of_rooms" size="10"/></td></td>
     </tr>
 
     <tr>
@@ -355,19 +312,16 @@ This notice must stay intact for use
     </tr>
     <tr>
       <td>Name</td>
-      <td><input type="text" name="reserved_by" value="<?php echo $_SESSION["employee"]; ?>"/></td>
+      <td><input type="text" id="booked_by" name="booked_by" value="<?php echo $_SESSION["employee"]; ?>"/></td>
     </tr>
     <tr>
       <td>Date</td>
-      <td><input type="text" name="date_reserved" id="reservationdate" readonly=""/>
+      <td><input type="text" name="reservation_date" id="reservation_date" readonly=""/>
           <small><a href="javascript:showCal('Calendar9')"> <img src="images/ew_calendar.gif" width="16" height="15" border="0"/></a></small></td>
 
     </tr>
     <tr>
-      <td>&nbsp;</td>
       <td><input type="submit" name="Submit" value="Guest Reservation"/></td>
-      <td>&nbsp;</td>
-      <td>&nbsp;</td>
     </tr>
   </table>
 		</td>

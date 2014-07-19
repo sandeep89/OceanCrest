@@ -1,7 +1,7 @@
 //common script file
 function nights(){
-var date2=document.getElementById('checkoutdate').value;
-var date1=document.getElementById('checkindate').value;
+var date2=document.getElementById('checkout_date').value;
+var date1=document.getElementById('checkin_date').value;
 
 if(date1 && date2){
 	var dateCompare = compareDates(date2, date1);
@@ -18,13 +18,13 @@ if(date1 && date2){
 
 		var diff = new Date(date2.getTime() - date1.getTime());
 		diff = diff.getUTCDate() - 1;
-		document.getElementById('no_nights').value=diff;
+		document.getElementById('num_of_nights').value=diff;
 	} else{
 
 		alert("Please provide correct checkin and end checkout date");
-		document.getElementById('no_nights').value='';
+		document.getElementById('num_of_nights').value='';
 	}
 }else{
-	document.getElementById('no_nights').value='';
+	document.getElementById('num_of_nights').value='';
 }
 }
