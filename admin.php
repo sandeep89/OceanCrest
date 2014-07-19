@@ -114,7 +114,7 @@ function find($search){
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
 <link href="css/new.css" rel="stylesheet" type="text/css">
-<title>Hotel Management Information System</title>
+<title>OCEAN CREST RESERVATION SYSTEMS</title>
 
 <script type="text/javascript">
 <!--
@@ -198,7 +198,7 @@ function loadHTMLPost(URL, destination){
       </tr>
       <tr>
         <td>
-		<H4>HOTEL MANAGEMENT INFORMATION SYSTEMS</H4> </td>
+		<H4>OCEAN CREST RESERVATION SYSTEMS</H4> </td>
       </tr>
       <tr>
         <td><h2>Administrator</h2></td>
@@ -244,13 +244,13 @@ function loadHTMLPost(URL, destination){
   </tr>
   <tr>
     <td><h3>Access Rights</h3> </td>
-    <td>Administrator
-      <input type="checkbox" name="admin" value="1" <?php if($users->admin==1) echo "checked";?>/></td>
-    <td>&nbsp;</td>
-    <td>&nbsp;</td>
   </tr>
   <tr>
     <td colspan="4"><table width="100%" cellpadding="1">
+	  <tr>
+		<td width="13%">Administrator</td>
+		<td width="87%"><input type="checkbox" name="admin" value="1" <?php if($users->admin==1) echo "checked";?>/></td>
+	  </tr>
       <tr>
         <td width="13%">guest</td>
         <td width="87%"><input type="checkbox" name="guest" value="1" <?php if($users->guest==1) echo "checked";?>/></td>
