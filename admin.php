@@ -74,12 +74,12 @@ if (isset($_POST['Submit'])){
 					//echo different $msg0 & 1
 				}else{ //adding*/
 					$sql="INSERT INTO users (fname,sname,loginname,pass,phone,mobile,fax,email,dateregistered,admin,guest,reservation,booking,agents,rooms,billing,rates,lookup,reports)
-	 					VALUES('$fname','$sname','$loginname','$pass',$phone,$mobile,$fax,$email,now(),$admin,$guest,$reservation,$booking,$agents,$rooms,$billing,$rates,$lookup,$reports)";
+	 					VALUES('$fname','$sname','$loginname','$pass','$phone','$mobile','$fax','$email',now(),'$admin','$guest','$reservation','$booking','$agents','$rooms','$billing','$rates','$lookup','$reports')";
 				//}
 				
 				$results=mkr_query($sql,$conn);
-				$msg[0]="Sorry user account no created";
-				$msg[1]="User account created successful";
+				$msg[0]="Sorry User Account not created";
+				$msg[1]="User Account successfully Created";
 				AddSuccess($results,$conn,$msg);	
 			}
 			break;
