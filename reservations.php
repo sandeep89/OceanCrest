@@ -252,7 +252,7 @@ This notice must stay intact for use
       </tr>
       <tr>
         <td>
-		<H2>ROOM RESERVATIONS</H2>
+		<H2>RESERVATION DETAILS</H2>
 		</td>
       </tr>
       <tr>
