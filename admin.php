@@ -213,9 +213,9 @@ function loadHTMLPost(URL, destination){
     <td width="32%"><input type="text" name="dateregistered" readonly="" value="<?php echo trim($users->dateregistered); ?>" /></td>
   </tr>
   <tr>
-    <td>Login Name</td>
+    <td>Username</td>
     <td><input type="text" name="loginname" value="<?php echo trim($users->loginname); ?>"/></td>
-    <td>Password</td>
+    <td>User Password</td>
     <td><input type="password" name="pass" /></td>
   </tr>
   <tr>
@@ -225,7 +225,7 @@ function loadHTMLPost(URL, destination){
     <td>&nbsp;</td>
   </tr>
   <tr>
-    <td>Second Name </td>
+    <td>Last Name </td>
     <td><input type="text" name="sname" value="<?php echo trim($users->sname); ?>"/></td>
     <td>&nbsp;</td>
     <td>&nbsp;</td>
@@ -233,15 +233,16 @@ function loadHTMLPost(URL, destination){
   <tr>
     <td>Phone</td>
     <td><input type="text" name="phone" value="<?php echo trim($users->phone); ?>"/></td>
-    <td>Mobile</td>
-    <td><input type="text" name="mobile" value="<?php echo trim($users->mobile); ?>"/></td>
-  </tr>
+   
+ </tr>
   <tr>
-    <td>Fax</td>
-    <td><input type="text" name="fax" value="<?php echo trim($users->fax); ?>"/></td>
-    <td>Email</td>
+  <td>Email</td>
     <td><input type="text" name="email" value="<?php echo trim($users->email); ?>"/></td>
   </tr>
+  <tr>
+   <td>Mobile</td>
+    <td><input type="text" name="mobile" value="<?php echo trim($users->mobile); ?>"/></td>
+	</tr>
   <tr>
     <td><h3>Access Rights</h3> </td>
   </tr>
@@ -311,9 +312,9 @@ function loadHTMLPost(URL, destination){
        <tr>
         <td>Image</td>
       </tr>
-	  <tr>
+	 <!-- <tr>
         <td><input type="submit" name="Submit" value="<?php echo isset($_GET["search"]) ? "Update User" : "Add User" ?>"/></td>
-      </tr>
+      </tr>-->
       <tr>
         <td><input type="button" name="Submit" value="Users List" onclick="self.location='users_list.php'"/></td>
       </tr>
