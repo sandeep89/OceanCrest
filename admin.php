@@ -290,6 +290,10 @@ function loadHTMLPost(URL, destination){
     </table></td>
   </tr>
 </table>
+
+	  <tr>
+        <td><input type="submit" name="Submit" value="<?php echo isset($_GET["search"]) ? "Update User" : "Add User" ?>"/></td>
+      </tr>
 		</div></td>
 			
       </tr>
