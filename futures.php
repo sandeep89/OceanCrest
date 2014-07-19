@@ -6,7 +6,7 @@
 </head>
 
 <body>
-<p align="center">HOTEL MANAGEMENT INFORMATION SYSTEMS FUTURES.</p>
+<p align="center">OCEAN CREST RESERVATION SYSTEM.</p>
 <P> These are my scattered thoughts on part of the development, hopefull if i get time i will refine this to form part of the document<br>
 Some of the notes appearing below have not been implemented, it's my hope that will get some people from the community out there to assist.
 </p>
