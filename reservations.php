@@ -255,7 +255,7 @@ $(document).ready(function() {
 		</td>
       </tr>
       <tr>
-        <td><table width="86%"  border="1" cellpadding="1" align="left">
+        <td><table width="86%"  border="0" cellpadding="1" align="left">
     <tr>
     	<?php
     		if($reservation -> reservation_id != ''){
