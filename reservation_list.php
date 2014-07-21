@@ -34,10 +34,10 @@ if (isset($_GET['action'])){
 		case 'remove':
 			//before deleting check if deposit had been made and mark for refund - todo
 			//release reserved room - todo
-			$sql="delete from act_reservation where reservation_id='$search'";
+			$sql="update act_reservation set status=0 where reservation_id='$search'";
 			$results=mkr_query($sql,$conn);
 			$msg[0]="Sorry reservation not deleted";
-			$msg[1]="Reservation successful deleted";
+			$msg[1]="Reservation successful canceled";
 			AddSuccess($results,$conn,$msg);
 			break;
 		case 'Find':
@@ -159,7 +159,7 @@ function confirmDeletion(id){
       <tr>
         <td><div id="Requests">
 		<?php
-			$sql="Select * from act_reservation";
+			$sql="Select * from act_reservation where status=1";
 			$conn=db_connect(HOST,USER,PASS,DB,PORT);
 			$results=mkr_query($sql,$conn);
 			
