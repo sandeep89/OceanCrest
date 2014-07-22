@@ -21,6 +21,28 @@ check for license.txt at the root folder
 For any details please feel free to contact me at taifa@users.sourceforge.net
 Or for snail mail. P. O. Box 938, Kilifi-80108, East Africa-Kenya.
 /*****************************************************************************/
+/*
+to put export feature use somehting like below
+	<li><a href="#" onClick ="$('#customers').tableExport({type:'json',escape:'false'});"> <img src='icons/json.png' width='24px'> JSON</a></li>
+								<li><a href="#" onClick ="$('#customers').tableExport({type:'json',escape:'false',ignoreColumn:'[2,3]'});"> <img src='icons/json.png' width='24px'> JSON (ignoreColumn)</a></li>
+								<li><a href="#" onClick ="$('#customers').tableExport({type:'json',escape:'true'});"> <img src='icons/json.png' width='24px'> JSON (with Escape)</a></li>
+								<li class="divider"></li>
+								<li><a href="#" onClick ="$('#customers').tableExport({type:'xml',escape:'false'});"> <img src='icons/xml.png' width='24px'> XML</a></li>
+								<li><a href="#" onClick ="$('#customers').tableExport({type:'sql'});"> <img src='icons/sql.png' width='24px'> SQL</a></li>
+								<li class="divider"></li>
+								<li><a href="#" onClick ="$('#customers').tableExport({type:'csv',escape:'false'});"> <img src='icons/csv.png' width='24px'> CSV</a></li>
+								<li><a href="#" onClick ="$('#customers').tableExport({type:'txt',escape:'false'});"> <img src='icons/txt.png' width='24px'> TXT</a></li>
+								<li class="divider"></li>				
+								
+								<li><a href="#" onClick ="$('#customers').tableExport({type:'excel',escape:'false'});"> <img src='icons/xls.png' width='24px'> XLS</a></li>
+								<li><a href="#" onClick ="$('#customers').tableExport({type:'doc',escape:'false'});"> <img src='icons/word.png' width='24px'> Word</a></li>
+								<li><a href="#" onClick ="$('#customers').tableExport({type:'powerpoint',escape:'false'});"> <img src='icons/ppt.png' width='24px'> PowerPoint</a></li>
+								<li class="divider"></li>
+								<li><a href="#" onClick ="$('#customers').tableExport({type:'png',escape:'false'});"> <img src='icons/png.png' width='24px'> PNG</a></li>
+								<li><a href="#" onClick ="$('#customers').tableExport({type:'pdf',escape:'false'});"> <img src='icons/pdf.png' width='24px'> PDF</a></li>
+								
+
+*/
 error_reporting(E_ALL & ~E_NOTICE);
 include_once ("queryfunctions.php");
 include_once ("functions.php");
@@ -102,10 +124,60 @@ switch ($gueststatus){
 		</table>";
 		getdata();
 		break;
+	case "canceled_reservations":
+		$sql = "select * from act_reservation where status=0";
+		reservationlist($sql);
 	default:
 		echo "<h2>Under construction</h2>";
 }				
 
+function reservationlist($sql){
+	//global $gueststatus;
+	$conn=db_connect(HOST,USER,PASS,DB,PORT);
+	$results=mkr_query($sql,$conn);
+	echo "<table id=\"canceled-reservation\"border=\"1\" align=\"center\">";
+	//get field names to create the column header
+	echo "<thead>";
+	echo "<tr bgcolor=\"#009999\">
+				<th colspan=\"1\">Action</th>
+        		<th>Registration Id</th>
+        		<th>Reserved by</th>
+				<th>Guest Name</th>
+				<th>Check-In Date</th>
+				<th>Check-Out Date</th>
+				<th>Nights</th>
+				<th>Adults</th>
+				<th>Children</th>
+				</tr>";
+	echo "</thead>";
+	echo "<tbody>";
+				//end of field header
+				//get data from selected table on the selected fields
+			while ($reservation = fetch_object($results)) {
+			//alternate row colour
+				$j++;
+				if($j%2==1){
+					echo "<tr id=\"row$j\" onmouseover=\"javascript:setColor('$j')\" onmouseout=\"javascript:origColor('$j')\" bgcolor=\"#CCCCCC\">";
+					}else{
+					echo "<tr id=\"row$j\" onmouseover=\"javascript:setColor('$j')\" onmouseout=\"javascript:origColor('$j')\" bgcolor=\"#EEEEF8\">";
+				}
+					echo "<td><a href=\"reservations.php?search=$reservation->reservation_id\"><img src=\"images/button_view.png\" width=\"16\" height=\"16\" border=\"0\" title=\"view/edit reservation\"/></a></td>";
+					echo "<td>" . $reservation->reservation_id. "</td>";	
+					echo "<td>" . $reservation->booked_by. "</td>";				
+					echo "<td>" . trim($reservation->name_of_guest) . "</td>";
+					echo "<td>" . $reservation->checkin_date . "</td>";
+					echo "<td>" . $reservation->checkout_date . "</td>";
+					echo "<td>" . $reservation->num_of_nights . "</td>";			
+					echo "<td>" . $reservation->num_of_adults . "</td>";
+					echo "<td>" . $reservation->num_of_children . "</td>";
+				echo "</tr>"; //end of - data rows
+			} //end of while row
+	echo "</tbody>";
+			echo "</table>";
+			echo "<a href=\"#\" onClick =\"$('#canceled-reservation').tableExport({type:'excel',escape:'false'});\"> XLS export</a>";
+			break;
+
+}
 function guestslist($sql){
 	//global $gueststatus;
 	$conn=db_connect(HOST,USER,PASS,DB,PORT);
