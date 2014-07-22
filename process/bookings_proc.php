@@ -45,6 +45,7 @@ if (isset($_POST['Submit'])){
             $purpose_of_visit = !empty($_POST["purpose_of_visit"]) ? $_POST["purpose_of_visit"]  : 'NULL';
             $roomid = !empty($_POST["roomid"]) ? $_POST["roomid"]  : 'NULL';
             $advance_amt = !empty($_POST["advance_amt"]) ? $_POST["advance_amt"]  : 'NULL';
+            $reservationId = !empty($_POST["reservationId"]) ? $_POST["reservationId"]  : 'NULL';
 
             $sql="INSERT INTO act_booking (name_of_guest,age,dependents,num_of_adults,num_of_children,address,nationality,identification_document,id_doc_num,
                                           mobile_num,landline_num,checkin_date,checkout_date,no_of_nights,arrived_from,employed_in_india,duration_of_stay_in_india,
@@ -57,7 +58,17 @@ if (isset($_POST['Submit'])){
                 //should log mysql errors to a file instead of displaying them to the user
                 echo 'Invalid query: ' . mysql_errno($conn). "<br>" . ": " . mysql_error($conn). "<br>";
                 echo "Guests NOT BOOKED.";  //return;
-            }/*else{
+            }else{
+                //update reservation status if a registration is confirmed
+                if($reservationId != ''){
+                    $sql = "UPDATE act_reservation SET status=2 where reservation_id = $reservationId";
+                    $results=mkr_query($sql,$conn);
+
+                    // create a audit log for the reservation
+                    // Need to check why we do not have a user name who is confirming the booking
+                }
+            }
+            /*else{
                 echo "<div align=\"center\"><h1>Guests successful checked in.</h1></div>";
                 //create bill - let user creat bill/create bill automatically
                 $sql="INSERT INTO bills (book_id,billno,date_billed) select booking.book_id,booking.book_id,booking.checkin_date from booking where booking.billed=0";
