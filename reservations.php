@@ -61,6 +61,21 @@ if (isset($_POST['Submit'])){
 					echo "Reservation NOT MADE.";  //return;
 				}else{
           //$reservation = fetch_object($results);
+          $reservationId = mysql_insert_id();
+
+          /*
+              Audit table descriptions
+              audit_type = 1/2 (reservation/booking)
+              autdit_num = (reservation/booking) id
+              audit_val = (0,1,2) (created, confirmed, deleted)
+          */
+          
+
+          // create a audit log for this reservations
+          $sql = "INSERT INTO act_audit(date, changed_by, audit_type, audit_num, audit_val) VALUES
+                  (now(), $booked_by, 1, $reservationId, '0')";
+
+          $results=mkr_query($sql,$conn);
           var_dump($results);
 					echo "<div align=\"center\"><h1>Reservation Successful.</h1></div>";					
 				}							

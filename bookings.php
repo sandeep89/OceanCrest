@@ -60,6 +60,7 @@ if (isset($_GET["search"]) && !empty($_GET["search"])){
 //if page was visited for confriming a reservation.
 if (isset($_GET["confirmReservation"]) && !empty($_GET["confirmReservation"])){
   $reservation = findReservation($_GET["confirmReservation"]);
+    $reservationId = $reservation->reservation_id;
     $guestName = $reservation->name_of_guest;
     $checkin_date = $reservation->checkin_date;
     $checkout_date = $reservation->checkout_date;
@@ -226,7 +227,7 @@ This notice must stay intact for use
 */
 </script>
 <script language="javascript" src="js/cal_conf2.js"></script>
-<script type="text/javascript" src="http://code.jquery.com/jquery-1.8.2.js"></script>
+<script type="text/javascript" src="js/jquery-2.1.1.min.js"></script>
 <script language="javascript" src="js/scripts.js"></script>
 </head>
 
@@ -273,6 +274,12 @@ This notice must stay intact for use
         ?>
             <td width="20%">Booking Id</td>
             <td><?php echo $bookingId; ?></td>
+        <?php
+        }
+        if($reservationId != '')
+        {
+        ?>
+            <td><input type="hidden" name="reservationId" value="<?php echo $reservationId; ?>" /></td>
         <?php
         }
         ?>

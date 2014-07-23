@@ -121,6 +121,13 @@ This notice must stay intact for use
 */
 </script>
 <script language="javascript" src="js/cal_conf2.js"></script>
+<script type="text/javascript" src="js/jquery-2.1.1.min.js"></script>
+  <script type="text/javascript" src="js/tableExport.js"></script>
+  <script type="text/javascript" src="js/jquery.base64.js"></script>
+  <script type="text/javascript" src="js/html2canvas.js"></script>
+  <script type="text/javascript" src="js/jspdf/libs/sprintf.js"></script>
+  <script type="text/javascript" src="js/jspdf/jspdf.js"></script>
+  <script type="text/javascript" src="js/jspdf/libs/base64.js"></script>
 </head>
 
 <body>
@@ -148,9 +155,10 @@ This notice must stay intact for use
     
     <td width="67%" bgcolor="#FFFFFF"><table width="100%"  border="0" cellpadding="1">
       <tr>
-        <td align="center" onclick="loadHTMLPost('reportqueries.php','ReportDetails','arrivals')" style="cursor:pointer">Guests Arrivals</td>
+    <td align="center" onclick="loadHTMLPost('reportqueries.php','ReportDetails','arrivals')" style="cursor:pointer">Guests Arrivals</td>
 		<td align="center" onclick="loadHTMLPost('reportqueries.php','ReportDetails','')" style="cursor:pointer">Guests Departures</td>
-		<td align="center" onclick="loadHTMLPost('reportqueries.php','ReportDetails','')" style="cursor:pointer">Housekeepers</td>
+		<td align="center" onclick="loadHTMLPost('reportqueries.php','ReportDetails','canceled_reservations')" style="cursor:pointer">Canceled Reservations</td>
+    <td align="center" onclick="loadHTMLPost('reportqueries.php','ReportDetails','')" style="cursor:pointer">Housekeepers</td>
 		<td align="center" onclick="loadHTMLPost('reportqueries.php','ReportDetails','')" style="cursor:pointer">Expenses</td>
 		<td align="center" onclick="loadHTMLPost('reportqueries.php','ReportDetails','')" style="cursor:pointer">Income</td>
 		<td align="center" onclick="loadHTMLPost('reportqueries.php','ReportDetails','dep_summ')" style="cursor:pointer">Departmental Summary</td>		
