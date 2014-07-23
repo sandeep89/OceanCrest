@@ -62,7 +62,7 @@ if (isset($_POST['Submit'])){
 				}else{
           //$reservation = fetch_object($results);
           var_dump($results);
-					echo "<div align=\"center\"><h1>Reservation successfull.</h1></div>";					
+					echo "<div align=\"center\"><h1>Reservation Successful.</h1></div>";					
 				}							
 			break;
       default:
