@@ -190,12 +190,6 @@ function loadHTMLPost(URL, destination, button){
     }
 }
 
-$(document).ready(function() {
-  if(!$("#reservation_date").val()){
-    $("#reservation_date").val(getCurrentDate());
-  }
-});
-
 //-->	 
 </script>
 <style type="text/css">
@@ -217,7 +211,7 @@ $(document).ready(function() {
 </style>
 </head>
 
-<body >
+<body onload="return getCurrentDate();">
 <form action="reservations.php" method="post" name="reservation" enctype="multipart/form-data">
 <table width="100%"  border="0" cellpadding="1" bgcolor="#66CCCC" align="center">
   <tr valign="top">

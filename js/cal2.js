@@ -644,12 +644,12 @@ function checkDate(name) {
 }
 
 function getCurrentDate() {
-  var date=calFormat, d = new Date();
-  date = date.replace(/yyyy/i, d.getFullYear());
-  date = date.replace(/mm/i, get2Digits(d.getMonth()+1));
-  date = date.replace(/dd/i, get2Digits(d.getDate()));
-
-  return date;
+    var currentDate = new Date()
+    var day = currentDate.getDate();
+    var month = currentDate.getMonth() + 1;
+    var year = currentDate.getFullYear();
+    var my_date = day+"/"+month+"/"+year;
+    document.getElementById("reservation_date").value=my_date;
 }
 
 function compareDates(date1, date2) {
