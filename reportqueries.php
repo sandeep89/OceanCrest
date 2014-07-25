@@ -127,8 +127,7 @@ switch ($gueststatus){
 	case "canceled_reservations":
 		$sql = "select * from act_reservation where status=0";
 		reservationlist($sql);
-	default:
-		echo "<h2>Under construction</h2>";
+	
 }				
 
 function reservationlist($sql){
@@ -174,7 +173,7 @@ function reservationlist($sql){
 			} //end of while row
 	echo "</tbody>";
 			echo "</table>";
-			echo "<a href=\"#\" onClick =\"$('#canceled-reservation').tableExport({type:'excel',escape:'false'});\"> XLS export</a>";
+			echo "<a href=\"#\" onClick =\"$('#canceled-reservation').tableExport({type:'excel',escape:'false'});\"> Export to Excel</a>";
 		
 
 }
