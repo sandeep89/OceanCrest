@@ -175,7 +175,7 @@ function reservationlist($sql){
 	echo "</tbody>";
 			echo "</table>";
 			echo "<a href=\"#\" onClick =\"$('#canceled-reservation').tableExport({type:'excel',escape:'false'});\"> XLS export</a>";
-			break;
+		
 
 }
 function guestslist($sql){
