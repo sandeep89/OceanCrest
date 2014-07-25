@@ -138,13 +138,10 @@ function find($search){
 	$search=$search;
 	//search on booking
 	//check on wether search is being done on idno/ppno/guestid/guestname
-	$sql="Select bills.bill_id,bills.book_id,bills.date_billed,bills.billno,bills.`status`,bills.date_checked,
-		concat_ws(' ',guests.firstname,guests.middlename,guests.lastname) as guest,guests.pobox,guests.town,guests.postal_code,
-		booking.checkin_date,booking.checkout_date,booking.roomid,rooms.roomno
-		From bills
-		Inner Join booking ON bills.book_id = booking.book_id
-		Inner Join guests ON booking.guestid = guests.guestid
-		Inner Join rooms ON booking.roomid = rooms.roomid where bills.bill_id='$search'";
+	$sql="Select bills.bill_id,bills.book_id,bills.date_billed,bills.billno,booking.name_of_guest, 
+		booking.address, booking.checkin_date, booking.checkout_date, booking.room_no,rooms.roomno From bills
+		Inner Join act_booking as booking ON bills.book_id = booking.booking_id
+		Inner Join rooms ON booking.room_no = rooms.roomid where bills.bill_id ='$search'";
 		
 	$results=mkr_query($sql,$conn);
 	$bill=fetch_object($results);
