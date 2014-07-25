@@ -52,6 +52,17 @@ if (isset($_GET['action'])){
 			$search=$_GET["search"];
 			find($search);
 			break;
+		case 'checkout':
+			$search=$_GET["search"];
+			$booking = findBooking($search);
+			$bill->book_id = $booking->booking_id;
+			$bill->billno = $booking->booking_id;
+			$bill->roomno = get_roomno($booking->roomid);
+			$bill->checkin_date = $booking->checkin_date;
+			$bill->checkout_date = $booking->checkout_date;
+			$bill->guest = $booking->name_of_guest;
+			$bill->address = $booking->address;
+			break;
 }		
 }
 
@@ -135,16 +146,20 @@ function find($search){
 		Inner Join guests ON booking.guestid = guests.guestid
 		Inner Join rooms ON booking.roomid = rooms.roomid where bills.bill_id='$search'";
 		
-		//need a search on reservation - todo not (tested)
-		/*$sql="Select bills.bill_id,bills.book_id,bills.date_billed,bills.billno,bills.`status`,bills.date_checked,
-		concat_ws(' ',guests.firstname,guests.middlename,guests.lastname) as guest,guests.pobox,guests.town,guests.postal_code,
-		reservation.reserve_checkindate,reservation.reserve_checkoutdate,reservation.roomid,rooms.roomno
-		From bills
-		Inner Join reservation ON bills.book_id = reservation.reservation_id
-		Inner Join guests ON reservation.guestid = guests.guestid
-		Inner Join rooms ON reservation.roomid = rooms.roomid where bills.bill_id='$search'";*/
 	$results=mkr_query($sql,$conn);
 	$bill=fetch_object($results);
+}
+
+function findBooking($search){
+	global $conn,$booking;
+	$search=$search;
+	//search on booking
+	//check on wether search is being done on idno/ppno/guestid/guestname
+	$sql="Select booking_id, name_of_guest, checkin_date, checkout_date, address, room_no as roomid 
+		from act_booking where booking_id='$search'";
+		
+	$results=mkr_query($sql,$conn);
+	return fetch_object($results);
 }
 ?>
 
@@ -286,8 +301,7 @@ This notice must stay intact for use
             <tr>
               <td>Address</td>
               <td><?php
-			   echo "P. O. Box " . trim($bill->pobox) ."<br>";
-			   echo trim($bill->town) . "-" . trim($bill->postal_code);
+			   echo trim($bill->address);
 			   ?>
 	   		</td>
               <td>&nbsp;</td>

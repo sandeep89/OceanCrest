@@ -183,9 +183,9 @@ function loadHTMLPost(URL, destination){
 					echo "<tr id=\"row$j\" onmouseover=\"javascript:setColor('$j')\" onmouseout=\"javascript:origColor('$j')\" bgcolor=\"#EEEEF8\">";
 				}
 					echo "<td><a href=\"bookings.php?search=$booking->booking_id\"><img src=\"images/button_view.png\" width=\"16\" height=\"16\" border=\"0\" title=\"view booking details\"/></a></td>";
-					echo "<td><a href=\"billings.php?search=$booking->guestid\"><img src=\"images/button_signout.png\" width=\"16\" height=\"16\" border=\"0\" title=\"bill guest\"/></a></td>";
-                    echo "<td>" . $booking->booking_id . "</td>";
-                    echo "<td>" . $booking->roomno . "</td>";
+					echo "<td><a href=\"billings.php?action=checkout&search=$booking->booking_id\"><img src=\"images/button_signout.png\" width=\"16\" height=\"16\" border=\"0\" title=\"bill guest\"/></a></td>";
+          echo "<td>" . $booking->booking_id . "</td>";
+          echo "<td>" . $booking->roomno . "</td>";
 					echo "<td>" . trim($booking->guest) . "</td>";
 					echo "<td>" . $booking->checkin_date . "</td>";
 					echo "<td>" . $booking->checkout_date . "</td>";
