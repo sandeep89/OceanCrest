@@ -189,12 +189,6 @@ function loadHTMLPost(URL, destination, button){
     }
 }
 
-$(document).ready(function() {
-  if(!$("#reservation_date").val()){
-    $("#reservation_date").val(getCurrentDate());
-  }
-});
-
 //-->	 
 </script>
 <style type="text/css">
@@ -216,7 +210,7 @@ $(document).ready(function() {
 </style>
 </head>
 
-<body >
+<body onload="return getCurrentDate();">
 <form action="reservations.php" method="post" name="reservation" enctype="multipart/form-data">
 <table width="100%"  border="0" cellpadding="1" bgcolor="#66CCCC" align="center">
   <tr valign="top">
@@ -311,8 +305,7 @@ $(document).ready(function() {
     </tr>
     <tr>
       <td>Date</td>
-      <td><input type="text" name="reservation_date" id="reservation_date" readonly="" value="<?php echo $reservation->reservation_date; ?>"/>
-        <a href="javascript:showCal('Calendar9')"> <img src="images/ew_calendar.gif" width="16" height="15" border="0"/></a>
+      <td><input type="text" name="reservation_date" id="reservation_date" readonly=""/>
         </td?
     </tr>
     <tr>

@@ -47,7 +47,7 @@ function validateBooking()
     {
         return false;
     }
-    if(!Isnumber(document.getElementById('no_adults'),'Please enter valid numeric value for adults'))
+    if(!Isnumber(document.getElementById('no_adults'),'Please enter a non-zero numeric value for adults',true))
     {
         return false;
     }
@@ -150,7 +150,7 @@ function validateReservation()
     {
         return false;
     }
-    if(!Isnumber(document.getElementById('num_of_adults'),'Please enter valid numeric value for adults'))
+    if(!Isnumber(document.getElementById('num_of_adults'),'Please enter a non-zero numeric value for adults',true))
     {
         return false;
     }
@@ -190,10 +190,15 @@ function IsEmpty(fld,msg)
     return true;
 }
 
-function Isnumber(fld,msg)
+function Isnumber(fld,msg,boolNonZero)
 {
     fld.value = Trim(fld.value);
-    var regex = /^[0-9]*$/;
+
+    if(boolNonZero)
+        var regex = /^[1-9]*$/;
+    else
+        var regex = /^[0-9]*$/;
+
     if(!regex.test(fld.value))
     {
         alert(msg);
