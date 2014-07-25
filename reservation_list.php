@@ -156,6 +156,19 @@ function confirmDeletion(id){
 		<h2>Reservation List </h2>
 		</td>
       </tr>
+        <tr bgcolor="#66CCCC" >
+            <td align="left"><div id="RequestDetails"></div>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <?php
+                if(isset($_GET["msgSuccess"]) && !empty($_GET["msgSuccess"])){
+                    echo "<div align=\"left\"><h1>Reservation Successfully Created</h1></div>";
+                }
+                ?>
+            </td>
+        </tr>
       <tr>
         <td><div id="Requests">
 		<?php
@@ -163,7 +176,7 @@ function confirmDeletion(id){
 			$conn=db_connect(HOST,USER,PASS,DB,PORT);
 			$results=mkr_query($sql,$conn);
 			
-			echo "<table align=\"center\">";
+			echo "<table>";
 			//get field names to create the column header
 			echo "<tr bgcolor=\"#009999\">
 				<th colspan=\"3\">Action</th>
@@ -201,10 +214,7 @@ function confirmDeletion(id){
 		?>
 		</div></td>		
       </tr>
-	  <tr bgcolor="#66CCCC" >
-        <td align="left"><div id="RequestDetails"></div>
-		</td>
-      </tr>
+
     </table></td>
 </tr></table>
 	</td>

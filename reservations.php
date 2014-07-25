@@ -76,7 +76,8 @@ if (isset($_POST['Submit'])){
                   (now(), $booked_by, 1, $reservationId, '0')";
 
           $results=mkr_query($sql,$conn);
-          var_dump($results);
+
+                    header("Location:reservation_list.php?msgSuccess=true");
 					echo "<div align=\"center\"><h1>Reservation Successful.</h1></div>";					
 				}							
 			break;

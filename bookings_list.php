@@ -44,6 +44,8 @@ if (isset($_POST['Submit'])){
 	}
 
 }
+
+
 ?>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -147,6 +149,15 @@ function loadHTMLPost(URL, destination){
         <td align="left"><div id="RequestDetails"></div>
         </td>
     </tr>
+      <tr>
+          <td>
+              <?php
+              if(isset($_GET["msgSuccess"]) && !empty($_GET["msgSuccess"])){
+                  echo "<div align=\"left\"><h1>Booking Successfully Created</h1></div>";
+              }
+              ?>
+          </td>
+      </tr>
       <tr>
         <td><div id="Requests"><br /><br />
 		<?php

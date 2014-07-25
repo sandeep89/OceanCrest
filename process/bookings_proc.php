@@ -95,6 +95,8 @@ if (isset($_POST['Submit'])){
             }*/
             //}
             //find($guestid);
+            header("Location:bookings_list.php?msgSuccess=true");
+
             break;
         case 'Find':
             //check if user is searching using name, payrollno, national id number or other fields

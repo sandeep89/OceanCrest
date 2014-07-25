@@ -648,7 +648,7 @@ function getCurrentDate() {
     var day = currentDate.getDate();
     var month = currentDate.getMonth() + 1;
     var year = currentDate.getFullYear();
-    var my_date = day+"/"+month+"/"+year;
+    var my_date = day+"-"+month+"-"+year;
     document.getElementById("reservation_date").value=my_date;
 }
 
