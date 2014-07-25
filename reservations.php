@@ -284,8 +284,8 @@ $(document).ready(function() {
           <small><a href="javascript:showCal('Calendar2')"> <img src="images/ew_calendar.gif" width="16" height="15" border="0"/></a></small></td>
     </tr>
     <tr>
-      <td>Number of nights*</td>
-      <td><input type="text" name="num_of_nights" id="num_of_nights" value="<?php echo $reservation->num_of_nights; ?>" size="10"/></td>
+      <td>Number of nights</td>
+      <td><input type="text" name="num_of_nights" id="num_of_nights" value="<?php echo $reservation->num_of_nights; ?>" size="10" readonly/></td>
     </tr>
     <tr>
       <td>Number of Guests* </td>
@@ -322,7 +322,7 @@ $(document).ready(function() {
           <?php
           }
           else{?>
-            <td><input class="buttonlink" type="submit" name="Submit" value="Reserve Now" /></td>    
+            <td><input class="buttonlink" type="submit" name="Submit" value="Reserve Now" onclick="return validateReservation();"/></td>
           <?php
         }
       ?>
