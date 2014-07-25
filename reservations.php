@@ -276,7 +276,7 @@ $(document).ready(function() {
       <td><input type="text" id="alt_contact_num" name="alt_contact_num" maxlength="15" value="<?php echo $reservation->alt_contact_num; ?>"/></td>
     </tr>
     <tr>
-      <td>Date of arrival* </td>
+      <td>Arrival Date* </td>
       <td><input type="text" name="checkin_date" id="checkin_date" onblur="nights()" readonly="" value="<?php echo $reservation->checkin_date; ?>"/>
           <a href="javascript:showCal('Calendar1')"> <img src="images/ew_calendar.gif" width="16" height="15" border="0"/></a></td>
       <td>Departure Date*</td>

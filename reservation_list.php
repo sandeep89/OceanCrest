@@ -37,7 +37,7 @@ if (isset($_GET['action'])){
 			$sql="update act_reservation set status=0 where reservation_id='$search'";
 			$results=mkr_query($sql,$conn);
 			$msg[0]="Sorry reservation not deleted";
-			$msg[1]="Reservation successful canceled";
+			$msg[1]="Reservation Cancelled Successfully";
 			AddSuccess($results,$conn,$msg);
 			break;
 		case 'Find':
@@ -114,7 +114,7 @@ function loadHTMLPost(URL, destination){
 }
 function confirmDeletion(id){
 
- 	var confirmation = confirm("Are you sure you want to delete reservation!");
+ 	var confirmation = confirm("Are you sure you want to delete this reservation!");
     if (confirmation == true) {
          window.location.assign("reservation_list.php?search="+ id +"&action=remove");
     } 

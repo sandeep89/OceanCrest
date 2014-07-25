@@ -157,7 +157,7 @@ This notice must stay intact for use
       <tr>
     <td align="center" onclick="loadHTMLPost('reportqueries.php','ReportDetails','arrivals')" style="cursor:pointer">Guests Arrivals</td>
 		<td align="center" onclick="loadHTMLPost('reportqueries.php','ReportDetails','')" style="cursor:pointer">Guests Departures</td>
-		<td align="center" onclick="loadHTMLPost('reportqueries.php','ReportDetails','canceled_reservations')" style="cursor:pointer">Canceled Reservations</td>
+		<td align="center" onclick="loadHTMLPost('reportqueries.php','ReportDetails','canceled_reservations')" style="cursor:pointer">Cancelled Reservations</td>
     <td align="center" onclick="loadHTMLPost('reportqueries.php','ReportDetails','')" style="cursor:pointer">Housekeepers</td>
 		<td align="center" onclick="loadHTMLPost('reportqueries.php','ReportDetails','')" style="cursor:pointer">Expenses</td>
 		<td align="center" onclick="loadHTMLPost('reportqueries.php','ReportDetails','')" style="cursor:pointer">Income</td>
