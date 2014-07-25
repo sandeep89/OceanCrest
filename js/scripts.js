@@ -110,7 +110,7 @@ function validateBooking()
     {
         return false;
     }
-    if(!Isnumber(document.getElementById('advance_amt'),'Please enter valid numeric value for advance amount',true))
+    if(!Isnumber(document.getElementById('advance_amt'),'Please enter valid numeric value for advance amount'))
     {
         return false;
     }
