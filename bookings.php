@@ -48,7 +48,7 @@ if (isset($_GET["search"]) && !empty($_GET["search"])){
     $alt_contact_num = ($bookings->landline_num != 'NULL') ? $bookings->landline_num : '';
     $checkin_date = $bookings->checkin_date;
     $checkout_date = $bookings->checkout_date;
-    $numNights = $bookings->no_nights;
+    $numNights =($bookings->no_of_nights != 'NULL') ? $bookings->no_of_nights : '';
     $arrivedFrom = $bookings->arrived_from;
     $emp_india = $bookings->employed_in_india;
     $duration_stay_india = ($bookings->duration_of_stay_in_india != 'NULL') ? $bookings->duration_of_stay_in_india : '';
@@ -92,7 +92,7 @@ function find($search){
 	//check on wether search is being done on idno/ppno/guestid/guestname
 	$sql="Select booking.booking_id,booking.name_of_guest,booking.age, booking.dependents,booking.num_of_adults,booking.num_of_children,
           booking.address,booking.nationality,booking.identification_document,booking.id_doc_num,booking.mobile_num,booking.landline_num,
-          booking.checkin_date,booking.checkout_date,DATEDIFF(booking.checkout_date,booking.checkin_date) as no_nights,booking.arrived_from,
+          booking.checkin_date,booking.checkout_date,booking.no_of_nights,booking.arrived_from,
           booking.employed_in_india,booking.duration_of_stay_in_india,booking.purpose_of_visit,booking.room_no,booking.advance
 		From act_booking as booking
 		where booking.booking_id='$search'";

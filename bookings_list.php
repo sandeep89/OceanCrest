@@ -108,7 +108,7 @@ function loadHTMLPost(URL, destination){
 }
 //-->	 
 </script>
-<script language="JavaScript" src="js/highlight.js" type="text/javascript"></script>
+<script language="JavaScript" src="js/lib/highlight.js" type="text/javascript"></script>
 </head>
 
 <body>
