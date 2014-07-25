@@ -227,7 +227,7 @@ This notice must stay intact for use
 */
 </script>
 <script language="javascript" src="js/cal_conf2.js"></script>
-<script type="text/javascript" src="js/jquery-2.1.1.min.js"></script>
+<script type="text/javascript" src="js/lib/jquery-2.1.1.min.js"></script>
 <script language="javascript" src="js/scripts.js"></script>
 </head>
 
@@ -419,11 +419,21 @@ This notice must stay intact for use
      <tr>
          <td valign="top">Room Number </td>
          <td>
+            <?php 
+                if($roomId == null){
+            ?>
              <div id="showrates"></div>
              <select name="roomid" id="roomid" size="6" onchange="loadHTMLPost('ajaxfunctions.php','showrates','GetRates')" multiple>
                  <option value="" >Select Room</option>
-                 <?php populate_select("rooms","roomid","roomno",$roomId);?>
+                 <?php populate_rooms($roomId);?>
              </select>
+                <?php
+            } else{
+            ?>
+            <input type="text" name="purpose_of_visit" value="<?php echo get_roomno($roomId); ?>" readonly="" size="20" maxlength="50" />       
+             <?php
+            }
+         ?>
          </td>
      </tr>
     <tr>

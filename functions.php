@@ -22,6 +22,8 @@ For any details please feel free to contact me at taifa@users.sourceforge.net
 Or for snail mail. P. O. Box 938, Kilifi-80108, East Africa-Kenya.
 /*****************************************************************************/
 error_reporting(E_ALL & ~E_NOTICE);
+//require_once("queryfunctions.php");
+//get_roomno(1);
 function populate_select($table,$fields_id,$fields_value,$selected){
     if($selected == '')
         $selected = "IN";
@@ -37,6 +39,37 @@ function populate_select($table,$fields_id,$fields_value,$selected){
 	free_result($results);
 }
 
+function populate_rooms($selected){
+    if($selected == '')
+        $selected = "1";
+
+	$conn=db_connect(HOST,USER,PASS,DB,PORT);
+	$sql="Select roomid,roomno From rooms where status LIKE 'V' Order By roomno";
+	$results=mkr_query($sql,$conn);
+	var_dump($results);
+	$fields_id = "roomid";
+	$fields_value = "roomno";
+	while ($row = fetch_object($results)){
+		$SelectedRoom=($row->$fields_id==$selected) ? " selected" : "";
+		echo "<option value=" . $row->$fields_id . $SelectedRoom . ">" . $row->$fields_value . "</option>";
+		//($row->$fields_id==$selected) ? 'selected' : '';
+	}
+	free_result($results);
+}
+
+function get_roomno($roomid){
+	    if($roomid == '')
+        $roomid = "1";
+
+	$conn=db_connect(HOST,USER,PASS,DB,PORT);
+	$sql="Select roomno From rooms where roomid = $roomid";
+	$results=mkr_query($sql,$conn);
+	$fields_id = "roomid";
+	$fields_value = "roomno";
+	$row = fetch_object($results);
+	free_result($results);
+	return $row->$fields_value;
+}
 function signon(){
 	echo "<input name=\"login\" type=\"submit\" value=\"";
 	echo !isset($_COOKIE['data_login']) ? "Login" : "Logout";
