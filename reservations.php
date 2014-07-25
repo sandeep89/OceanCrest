@@ -306,8 +306,7 @@ function loadHTMLPost(URL, destination, button){
     </tr>
     <tr>
       <td>Date</td>
-      <td><input type="text" name="reservation_date" id="reservation_date" readonly="" value="<?php echo $reservation->reservation_date; ?>"/>
-        <a href="javascript:showCal('Calendar9')"> <img src="images/ew_calendar.gif" width="16" height="15" border="0"/></a>
+      <td><input type="text" name="reservation_date" id="reservation_date" readonly=""/>
         </td?
     </tr>
     <tr>
