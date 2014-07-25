@@ -35,7 +35,7 @@ switch ($_POST["button"]){
 		$roomid=$_POST["roomid"];
 		$sql="Select rooms.roomid,rooms.roomno,rooms.status,booking.checkin_date,booking.checkout_date
 		From rooms
-		Left Join booking ON rooms.roomid = booking.roomid
+		Left Join booking ON rooms.roomid = act_booking.roomid
 		Where rooms.status = 'V' and rooms.roomid=$roomid";
 		$results=mkr_query($sql,$conn);
 		$msg[0]="";

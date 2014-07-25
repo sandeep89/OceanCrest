@@ -64,6 +64,8 @@ if (isset($_POST['Submit'])){
                     $sql = "UPDATE act_reservation SET status=2 where reservation_id = $reservationId";
                     $results=mkr_query($sql,$conn);
 
+                    $sql = "UPDATE rooms SET status='B' where roomid = $roomid";
+                    $results=mkr_query($sql,$conn);
                     // create a audit log for the reservation
                     // Need to check why we do not have a user name who is confirming the booking
                 }

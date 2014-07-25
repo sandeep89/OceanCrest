@@ -112,7 +112,7 @@ function loadHTMLPost(URL, destination, button){
 }
 //-->	 
 </script>
-<script language="JavaScript" src="js/highlight.js" type="text/javascript"></script>
+<script language="JavaScript" src="js/lib/highlight.js" type="text/javascript"></script>
 <script language="javascript" src="js/cal2.js">
 /*
 Xin's Popup calendar script-  Xin Yang (http://www.yxscripts.com/)
@@ -121,13 +121,13 @@ This notice must stay intact for use
 */
 </script>
 <script language="javascript" src="js/cal_conf2.js"></script>
-<script type="text/javascript" src="js/jquery-2.1.1.min.js"></script>
-  <script type="text/javascript" src="js/tableExport.js"></script>
-  <script type="text/javascript" src="js/jquery.base64.js"></script>
-  <script type="text/javascript" src="js/html2canvas.js"></script>
-  <script type="text/javascript" src="js/jspdf/libs/sprintf.js"></script>
-  <script type="text/javascript" src="js/jspdf/jspdf.js"></script>
-  <script type="text/javascript" src="js/jspdf/libs/base64.js"></script>
+<script type="text/javascript" src="js/lib/jquery-2.1.1.min.js"></script>
+  <script type="text/javascript" src="js/lib/tableExport.js"></script>
+  <script type="text/javascript" src="js/lib/jquery.base64.js"></script>
+  <script type="text/javascript" src="js/lib/html2canvas.js"></script>
+  <script type="text/javascript" src="js/lib/jspdf/libs/sprintf.js"></script>
+  <script type="text/javascript" src="js/lib/jspdf/jspdf.js"></script>
+  <script type="text/javascript" src="js/lib/jspdf/libs/base64.js"></script>
 </head>
 
 <body>
