@@ -258,7 +258,7 @@ This notice must stay intact for use
 
       <tr>
         <td>
-		<H2>GUEST REGISTRATION CARD (BOOKINGS)</H2>
+		<H2>BOOKINGS</H2>
 		</td>
       </tr>
       <tr>

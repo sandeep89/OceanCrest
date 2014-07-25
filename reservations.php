@@ -263,7 +263,7 @@ function loadHTMLPost(URL, destination, button){
       <td width="45%"><input type="text" id="contact_num" name="contact_num" maxlength="15" value="<?php echo $reservation->contact_num; ?>" /></td>
     </tr>
     <tr>
-      <td>Coming From* </td>
+      <td>Arriving From* </td>
       <td><input type="text" id="coming_from" name="coming_from" value="<?php echo trim($reservation->coming_from); ?>" /></td>
       <td>Alternate Number</td>
       <td><input type="text" id="alt_contact_num" name="alt_contact_num" maxlength="15" value="<?php echo $reservation->alt_contact_num; ?>"/></td>
