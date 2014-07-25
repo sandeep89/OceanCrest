@@ -48,7 +48,7 @@ if (isset($_GET["search"]) && !empty($_GET["search"])){
     $alt_contact_num = ($bookings->landline_num != 'NULL') ? $bookings->landline_num : '';
     $checkin_date = $bookings->checkin_date;
     $checkout_date = $bookings->checkout_date;
-    $numNights = $bookings->no_nights;
+    $numNights =($bookings->no_of_nights != 'NULL') ? $bookings->no_of_nights : '';
     $arrivedFrom = $bookings->arrived_from;
     $emp_india = $bookings->employed_in_india;
     $duration_stay_india = ($bookings->duration_of_stay_in_india != 'NULL') ? $bookings->duration_of_stay_in_india : '';
@@ -92,7 +92,7 @@ function find($search){
 	//check on wether search is being done on idno/ppno/guestid/guestname
 	$sql="Select booking.booking_id,booking.name_of_guest,booking.age, booking.dependents,booking.num_of_adults,booking.num_of_children,
           booking.address,booking.nationality,booking.identification_document,booking.id_doc_num,booking.mobile_num,booking.landline_num,
-          booking.checkin_date,booking.checkout_date,DATEDIFF(booking.checkout_date,booking.checkin_date) as no_nights,booking.arrived_from,
+          booking.checkin_date,booking.checkout_date,booking.no_of_nights,booking.arrived_from,
           booking.employed_in_india,booking.duration_of_stay_in_india,booking.purpose_of_visit,booking.room_no,booking.advance
 		From act_booking as booking
 		where booking.booking_id='$search'";
@@ -286,49 +286,53 @@ This notice must stay intact for use
 
     </tr>
     <tr>
-      <td width="20%">Name of Primary Guest</td>
-      <td><input type="text" name="guest_name" value="<?php echo $guestName; ?>" size="30"/></td>
+      <td width="20%">Name of Primary Guest*</td>
+      <td><input type="text" id="guest_name" name="guest_name" value="<?php echo $guestName; ?>" size="30"/></td>
     </tr>
     <tr>
-      <td>Age</td>
-      <td><input type="text" name="age" value="<?php echo $age; ?>" size="1" maxlength="3"/></td>
+      <td>Age*</td>
+      <td><input type="text" id="age" name="age" value="<?php echo $age; ?>" size="1" maxlength="3"/></td>
     </tr>
     <tr>
         <td width="20%" valign="top">Dependents</td>
         <td><textarea name="dependents" rows="5" cols="24" maxlength="500" /><?php echo $dependents; ?></textarea></td>
     </tr>
     <tr>
-        <td>No. of Guests </td>
+        <td>No. of Guests* </td>
         <td colspan="4">
             <table border="0" width="30%" cellpadding="1">
                 <tr>
                     <td>Adults <br />
                         <input type="text" name="no_adults" id="no_adults" size="10" value="<?php echo $no_adults; ?>"/></td>
                     <td>Children<br />
-                        <input type="text" name="no_child" size="10" value="<?php echo $no_child; ?>"/></td>
+                        <input type="text" id="no_child" name="no_child" size="10" value="<?php echo $no_child; ?>"/></td>
                 </tr>
             </table>
         </td>
     </tr>
     <tr>
-        <td width="20%" valign="top">Address</td>
-        <td><textarea name="address" rows="5" cols="24" maxlength="255" /><?php echo $address; ?></textarea></td>
+        <td width="20%" valign="top">Address*</td>
+        <td><textarea name="address" id="address" rows="5" cols="24" maxlength="255" /><?php echo $address; ?></textarea></td>
     </tr>
     <tr>
-        <td>Nationality</td>
+        <td>Nationality*</td>
         <td>
-            <select name="residence_id">
-                <option value="">Select Country</option>
+            <select name="residence_id" id="nationality">
+                <option value="">Select Country*</option>
                 <?php populate_select("countries","countrycode","country",$nationality);?>
             </select>
         </td>
+    </tr>
+    <tr style="display:none;">
+        <td>Duration of Stay in India</td>
+        <td><input type="text" id="duration_stay_india" name="duration_stay_india" value="<?php echo $duration_stay_india; ?>" size="2" maxlength="3" /> days</td>
     </tr>
     <tr>
         <td>Identification</td>
         <td colspan="4">
             <table border="0" width="45%" cellpadding="1">
                 <tr>
-                    <td>Document Type <br />
+                    <td>Document Type* <br />
 					<?php
 					$selectedPP = "";
 					$selectedPAN = "";
@@ -354,8 +358,8 @@ This notice must stay intact for use
                             <option value="Aadhar" <?php echo $selectedAadh; ?>>Aadhar Card</option>
                         </select>
                     </td>
-                    <td>ID Number <br />
-                        <input type="text" name="id_no" value="<?php echo $idNo; ?>" maxlength="50"/>
+                    <td>ID Number* <br />
+                        <input type="text" id="id_no" name="id_no" value="<?php echo $idNo; ?>" maxlength="50"/>
                     </td>
                 </tr>
             </table>
@@ -366,34 +370,34 @@ This notice must stay intact for use
         <td colspan="4">
             <table border="0" width="100%" cellpadding="1">
                 <tr>
-                    <td width="25%">Mobile</td><td><input type="text" name="mobile_num" id="mobile_num" size="20" value="<?php echo $mobile_num; ?>" maxlength="15"/></td>
+                    <td width="25%">Mobile*</td><td><input type="text" name="mobile_num" id="mobile_num" size="20" value="<?php echo $mobile_num; ?>" maxlength="15"/></td>
                 </tr>
                 <tr>
-                    <td width="25%">Alternate Contact Number </td><td><input type="text" name="alt_num" size="20" maxlength="15" value="<?php echo $alt_contact_num; ?>"/></td>
+                    <td width="25%">Alternate Contact Number </td><td><input type="text" id="landline_num" name="alt_num" size="20" maxlength="15" value="<?php echo $alt_contact_num; ?>"/></td>
                 </tr>
             </table>
         </td>
     </tr>
     <tr>
-        <td width="20%">Arrival Date </td>
+        <td width="20%">Arrival Date* </td>
         <td>
             <input type="text" name="checkin_date" id="checkin_date" readonly="" value="<?php echo $checkin_date; ?>"/>
             <a href="javascript:showCal('Calendar3')"> <img src="images/ew_calendar.gif" width="16" height="15" border="0"/></a>
             &nbsp;&nbsp;&nbsp;
-            Departure Date&nbsp;&nbsp;&nbsp;<input type="text" name="checkout_date" id="checkout_date" readonly="" value="<?php echo $checkout_date; ?>" onblur="nights()"/>
+            Departure Date*&nbsp;&nbsp;&nbsp;<input type="text" name="checkout_date" id="checkout_date" readonly="" value="<?php echo $checkout_date; ?>" onblur="nights()"/>
             <small><a href="javascript:showCal('Calendar4')"> <img src="images/ew_calendar.gif" width="16" height="15" border="0"/></a></small>
         </td>
     </tr>
     <tr>
         <td>No. of Nights</td>
-        <td><input type="text" id="num_of_nights" name="num_of_nights" value="<?php echo $numNights; ?>" size="1" maxlength="2" /></td>
+        <td><input type="text" id="num_of_nights" name="num_of_nights" value="<?php echo $numNights; ?>" size="1" maxlength="2" readonly/></td>
     </tr>
     <tr>
-        <td>Arrived From</td>
-        <td><input type="text" name="arrived_from" value="<?php echo $arrivedFrom; ?>" size="20" maxlength="100" /></td>
+        <td>Arrived From*</td>
+        <td><input type="text" id="arrived_from" name="arrived_from" value="<?php echo $arrivedFrom; ?>" size="20" maxlength="100" /></td>
     </tr>
     <tr>
-        <td>Employed in India</td>
+        <td>Employed in India*</td>
         <td>
 		<?php
 		$checkedY = '';
@@ -409,15 +413,11 @@ This notice must stay intact for use
         </td>
     </tr>
     <tr>
-        <td>Duration of Stay in India</td>
-        <td><input type="text" name="duration_stay_india" value="<?php echo $duration_stay_india; ?>" size="2" maxlength="3" /> days</td>
-    </tr>
-    <tr>
-        <td>Purpose of visit</td>
-        <td><input type="text" name="purpose_of_visit" value="<?php echo $purpose_of_visit; ?>" size="20" maxlength="50" /></td>
+        <td>Purpose of visit*</td>
+        <td><input type="text" name="purpose_of_visit" id="purpose_visit" value="<?php echo $purpose_of_visit; ?>" size="20" maxlength="50" /></td>
     </tr>
      <tr>
-         <td valign="top">Room Number </td>
+         <td valign="top">Room Number* </td>
          <td>
             <?php 
                 if($roomId == null){
@@ -430,14 +430,14 @@ This notice must stay intact for use
                 <?php
             } else{
             ?>
-            <input type="text" name="purpose_of_visit" value="<?php echo get_roomno($roomId); ?>" readonly="" size="20" maxlength="50" />       
+            <input type="text" name="roomid" value="<?php echo get_roomno($roomId); ?>" readonly="" size="20" maxlength="50" />
              <?php
             }
          ?>
          </td>
      </tr>
     <tr>
-        <td>Advance Amount</td>
+        <td>Advance Amount*</td>
         <td>INR <input type="text" name="advance_amt" id="advance_amt" value="<?php echo $advance_amt; ?>" size="5" maxlength="5" /></td>
     </tr>
      <tr>
@@ -445,7 +445,7 @@ This notice must stay intact for use
          <td colspan="3">
              <table border="0" cellpadding="0" width="20%">
                  <tr>
-                     <td><input type="submit" name="Submit" value="Book Guest"/></td>
+                     <td><input type="submit" name="Submit" value="Book Guest" onclick="return validateBooking();"/></td>
                      <td><input type="button" name="Submit" value="Prepare Bill" onclick="RatesPeacker()"/></td>
                  </tr>
              </table>
