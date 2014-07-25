@@ -896,6 +896,7 @@ CREATE TABLE `act_booking` (
   `num_of_adults` int(11) DEFAULT NULL,
   `num_of_children` int(11) DEFAULT NULL,
   `status` int(1) NOT NULL DEFAULT '1',
+  `billed` int(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`booking_id`),
   KEY `fk_room_no` (`room_no`),
   KEY `idx_guest_name` (`name_of_guest`),

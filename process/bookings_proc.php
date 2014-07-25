@@ -64,38 +64,26 @@ if (isset($_POST['Submit'])){
                     $sql = "UPDATE act_reservation SET status=2 where reservation_id = $reservationId";
                     $results=mkr_query($sql,$conn);
 
-                    $sql = "UPDATE rooms SET status='B' where roomid = $roomid";
-                    $results=mkr_query($sql,$conn);
+                    //$sql = "UPDATE rooms SET status='B' where roomid = $roomid";
+                    //$results=mkr_query($sql,$conn);
                     // create a audit log for the reservation
                     // Need to check why we do not have a user name who is confirming the booking
                 }
-            }
-            /*else{
-                echo "<div align=\"center\"><h1>Guests successful checked in.</h1></div>";
-                //create bill - let user creat bill/create bill automatically
-                $sql="INSERT INTO bills (book_id,billno,date_billed) select booking.book_id,booking.book_id,booking.checkin_date from booking where booking.billed=0";
-                $results=mkr_query($sql,$conn);
-                $msg[0]="Sorry no bill created";
-                $msg[1]="Bill successfull created";
-                AddSuccess($results,$conn,$msg);
 
-                //if bill succesful created update billed to 1 in bookings- todo
-                $sql="Update booking set billed=1 where billed=0"; //get the actual updated book_id, currently this simply updates all bookings
-                $results=mkr_query($sql,$conn);
-                $msg[0]="Sorry Booking not updated";
-                $msg[1]="Booking successful updated";
-                AddSuccess($results,$conn,$msg);
+                    $sql="INSERT INTO bills (book_id,billno,date_billed) select
+                    booking.booking_id,booking.booking_id,booking.checkin_date from act_booking as booking where booking.billed=0";
+                    $results=mkr_query($sql,$conn);
 
                 //mark room as booked
                 $sql="Update rooms set status='B' where roomid=$roomid"; //get the actual updated book_id, currently this simply updates all bookings
                 $results=mkr_query($sql,$conn);
-                $msg[0]="Sorry room occupation not marked";
-                $msg[1]="Room marked as occupied";
-                AddSuccess($results,$conn,$msg);
-            }*/
-            //}
-            //find($guestid);
-            header("Location:bookings_list.php?msgSuccess=true");
+
+                   //if bill succesful created update billed to 1 in bookings- todo
+                    $sql="Update act_booking set billed=1 where billed=0"; //get the actual updated book_id, currently this simply updates all bookings
+                    $results=mkr_query($sql,$conn);
+
+                header("Location:bookings_list.php?msgSuccess=true");
+            }
 
             break;
         case 'Find':
