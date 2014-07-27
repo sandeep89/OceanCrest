@@ -102,6 +102,9 @@ switch ($_GET["submit"]){
 		break;
 	case "PaymentMode":
 		PaymentMode();
+		break;
+	case "deleteTransaction":
+		deleteTransaction();
 		break;		
 	default:
 		echo $_GET["submit"];
@@ -243,6 +246,13 @@ function bills_details(){
 	echo "</table>";
 }
 
+function deleteTransaction(){
+	$itemId = $_GET["delete"];
+	$conn=db_connect(HOST,USER,PASS,DB,PORT);
+	$sql="Delete From details where itemid = $itemId";
+	$bills=mkr_query($sql,$conn);
+	transdetails();
+}
 function transdetails(){
 	$conn=db_connect(HOST,USER,PASS,DB,PORT);
 	$sql="Select itemid,item,description,sale,expense From details";
@@ -252,6 +262,7 @@ function transdetails(){
 	echo "<table valign=\"top\">";
 	//get field names to create the column header
 	echo "<tr bgcolor=\"#009999\">
+		<th>Action</th>
 		<th>Item ID.</th>
 		<th>Item</th>
 		<th>Description</th>
@@ -268,8 +279,8 @@ function transdetails(){
 			}else{
 			echo "<tr id=\"row$j\" onmouseover=\"javascript:setColor('$j')\" onmouseout=\"javascript:origColor('$j')\" bgcolor=\"#EEEEF8\">";
 		}
-			echo "<td title=\"edit details\"><a href=\"lookup.php?search=$row->itemid\"><img src=\"images/button_edit.png\" width=\"16\" height=\"16\" border=\"0\" title=\"edit details\"/></a></td>";			
-			//echo "<td>" . $row->itemid . "</td>";
+			echo "<td title=\"delete\"><a href=\"#\" onClick=\"confirmDeleteDetails(".$row->itemid.",'".$row->item."')\"><img src=\"images/button_remove.png\" width=\"16\" height=\"16\" border=\"0\" title=\"edit details\"/></a></td>";			
+			echo "<td>" . $row->itemid . "</td>";
 			echo "<td>" . $row->item . "</td>";
 			echo "<td>" . $row->description . "</td>";
 			echo "<td>" . $row->sale . "</td>";

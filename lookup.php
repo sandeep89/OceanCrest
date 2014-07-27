@@ -27,6 +27,7 @@ include_once ("queryfunctions.php");
 include_once ("functions.php");
 access("lookup"); //check if user is allowed to access this page
 
+
 if (isset($_POST['Submit'])){
 	$conn=db_connect(HOST,USER,PASS,DB,PORT);
 	$action=$_POST['Submit'];
@@ -201,9 +202,20 @@ function loadHTMLPost(URL, destination, button){
         }
     }
 }
+
+function confirmDeleteDetails(detailId, item){
+	if(item == 'Advance Payment'){
+		alert("You cannot delete advanced payment");
+	}else{
+		 	var confirmation = confirm("Are you sure you want to delete the detail");
+	    if (confirmation == true) {
+	    	 loadHTML('ajaxfunctions.php', 'RequestDetails','deleteTransaction&delete='+ detailId);
+	    } 
+    }
+}
 //-->	 
 </script>
-<script language="JavaScript" src="js/highlight.js" type="text/javascript"></script>
+<script language="JavaScript" src="js/lib/highlight.js" type="text/javascript"></script>
 </head>
 
 <body>
