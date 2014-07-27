@@ -73,9 +73,9 @@ if (isset($_POST['Submit'])){
 		case 'Update':
 			// instantiate form validator object
 			$fv=new formValidator(); //from functions.php
-			$fv->validateEmpty('doc_no','Please enter document number.');			
-			$fv->validateEmpty('doc_date','Please enter date');
-			$fv->validateEmpty('doc_date','Please enter details');			
+			//$fv->validateEmpty('doc_no','Please enter document number.');			
+			$fv->validateEmpty('trans_date','Please enter date');
+			$fv->validateEmpty('details','Please enter details');			
 			if($fv->checkErrors()){
 				// display errors
 				echo "<div align=\"center\">";
@@ -87,13 +87,17 @@ if (isset($_POST['Submit'])){
 			else {
 				$billno=$_POST["billno"];
 				$doc_type=$_POST["doc_type"];
-				$doc_no=$_POST["doc_no"];			
-				$doc_date= $_POST["doc_date"];
-				$details=$_POST["details"];			
-				$dr= !empty($_POST["dr"]) ? $_POST["dr"] : 'NULL';				
-				$cr= !empty($_POST["cr"]) ? $_POST["cr"] : 'NULL';								
-				$sql="INSERT INTO transactions (billno,doc_type,doc_no,doc_date,details,dr,cr)
-				 VALUES($billno,'$doc_type',$doc_no,'$doc_date',$details,$dr,$cr)";
+				//$doc_no=$_POST["doc_no"];			
+				$trans_date= $_POST["trans_date"];
+				$details=$_POST["details"];	
+				$amount=$_POST["amount"];
+				$create_date = date("dd-mm-yy"); 		
+				//$dr= !empty($_POST["dr"]) ? $_POST["dr"] : 'NULL';				
+				//$cr= !empty($_POST["cr"]) ? $_POST["cr"] : 'NULL';								
+				//$sql="INSERT INTO transactions (billno,doc_type,doc_no,doc_date,details,dr,cr)
+				// VALUES($billno,'$doc_type',$doc_no,'$doc_date',$details,$dr,$cr)";
+				$sql="INSERT INTO act_transactions (bill_no,trans_date,details,amount,create_date)
+					VALUES($billno,'$trans_date',$details,$amount,$create_date)";
 				$results=mkr_query($sql,$conn);		
 				$msg[0]="Sorry item not posted";
 				$msg[1]="Item successful posted";
@@ -230,7 +234,10 @@ This notice must stay intact for use
 */
 </script>
 <script language="javascript" src="js/cal_conf2.js"></script>
-<script language="JavaScript" src="js/highlight.js" type="text/javascript"></script>
+<script language="JavaScript" src="js/lib/highlight.js" type="text/javascript"></script>
+<style media="print" type="text/css">
+.no-print{display:None}
+</style>
 </head>
 
 <body>
@@ -238,7 +245,7 @@ This notice must stay intact for use
 <table width="100%"  border="0" cellpadding="1" align="center" bgcolor="#66CCCC">
   <tr valign="top">
     <td width="17%" bgcolor="#FFFFFF"><div id="navigation">
-	<table width="100%"  border="0" cellpadding="1">	  
+	<table width="100%"  border="0" cellpadding="1" class="no-print">	  
 	  <tr>
     <td width="15%" bgcolor="#66CCCC">
 		<table cellspacing=0 cellpadding=0 width="100%" align="left" bgcolor="#FFFFFF">
@@ -305,13 +312,24 @@ This notice must stay intact for use
               <td>&nbsp;</td>
             </tr>
             <tr>
-              <td>Payment options </td>
-              <td colspan="2"><label>
-                <input type="radio" name="doc_type" value="Reciept" onclick="loadHTMLPost('ajaxfunctions.php','transoption','Cash')"/>
-      Cash Sales </label>
-                  <label>
-                  <input type="radio" name="doc_type" value="Chit" onclick="loadHTMLPost('ajaxfunctions.php','transoption','Debit')"/>
-      Debit Sales </label>
+              <td colspan="4" class="no-print"><?php
+              echo "<table>
+		<tr>
+		<td width=\"27%\">Date</td>
+		<td width=\"22%\">Details</td>
+		<td width=\"26%\">Amount</td>
+	  </tr>
+		<tr><td><input type=\"text\" name=\"trans_date\" id=\"trans_date\" size=\"15\"/>
+		<a href=\"javascript:showCal('Calendar7')\"> <img src=\"images/ew_calendar.gif\" width=\"16\" height=\"15\" border=\"0\"/>
+		</a></td>
+		<td><select name=\"details\">
+			<option value=\"\">Select Item</option>";
+			populate_select("details","itemid","item",0);
+		  echo "</select></td>
+		<td><input type=\"text\" name=\"amount\" size=\"20\"/></td>
+		<td align=\"center\"><input type=\"submit\" name=\"Submit\" value=\"Update\"/></td>
+		</tr></table>";
+		?>
               </td>
               <td colspan="2">&nbsp;</td>
             </tr>
@@ -321,26 +339,22 @@ This notice must stay intact for use
 			  <?php
 				$billno=!empty($_POST['search']) ? $_POST['search'] : 0;
 				//$billno=!empty($_POST['billid']) ? $_POST['billid'] : 1;
-				$sql="Select transactions.transno,transactions.doc_date,details.item,transactions.dr,transactions.cr,transactions.doc_no,transactions.doc_type,details.itemid,transactions.billno
-					From transactions
+				$sql="Select transactions.trans_no,transactions.trans_date,details.item,details.itemid,transactions.amount,transactions.bill_no
+					From act_transactions as transactions
 					Inner Join details ON transactions.details = details.itemid
-					Where transactions.billno = '$search'";
+					Where transactions.bill_no = '$search'";
 				$results=mkr_query($sql,$conn);
 			
 			  	echo "<table width=\"100%\"  border=\"0\" cellpadding=\"1\">
                   <tr bgcolor=\"#FF9900\">
-                    <th></th>
+                    <th class=\"no-print\">Action</th>
 					<th>Date</th>
                     <th>Details</th>
-                    <th>DR</th>
-                    <th>CR</th>
-                    <th>Balance</th>
-                    <th>Doc. No. </th>
-                    <th>Doc. Type</th>					
+                    <th>Amount</th>				
                   </tr>";
 				//get data from selected table on the selected fields
 				while ($trans = fetch_object($results)) {
-					$balance=$balance-$trans->cr+$trans->dr;
+					$total=$total + $trans->amount;
 					//alternate row colour
 					$j++;
 					if($j%2==1){
@@ -348,18 +362,15 @@ This notice must stay intact for use
 						}else{
 						echo "<tr id=\"row$j\" onmouseover=\"javascript:setColor('$j')\" onmouseout=\"javascript:origColor('$j')\" bgcolor=\"#EEEEF8\">";
 					}
-						echo "<td><a href=\"billings.php?search=$trans->transno&action=remove&billno=$trans->billno\"><img src=\"images/button_remove.png\" width=\"16\" height=\"16\" border=\"0\" title=\"bill guest\"/></a></td>";
-						echo "<td>" . $trans->doc_date . "</td>";
-						echo "<td>" . $trans->item . "</td>";
-						echo "<td>" . $trans->dr . "</td>";
-						echo "<td>" . $trans->cr . "</td>";
-						echo "<td>" . $balance . "</td>"; //when negative don't show
-						echo "<td>" . $trans->doc_no . "</td>";
-						echo "<td>" . $trans->doc_type . "</td>"; //calucate running balance		
+						echo "<td class=\"no-print\"\"><a href=\"billings.php?search=$trans->trans_no&action=remove&billno=$trans->bill_no\"><img src=\"images/button_remove.png\" width=\"16\" height=\"16\" border=\"0\" title=\"bill guest\"/></a></td>";
+						echo "<td align=\"center\">" . $trans->trans_date . "</td>";
+						echo "<td align=\"center\">" . $trans->item . "</td>";
+						echo "<td align=\"center\">" . $trans->amount . "</td>"; //when negative don't show
 					echo "</tr>"; //end of - data rows
 				} //end of while row
-				echo "<tr><td colspan=\"3\" align=\"center\"><b>TOTAL</b></td><td><b>DR Total</b></td><td><b>CR Total</b></td><td><b>Total Bal.</b></td><tr>";
-				  echo "</table>"; ?>
+				  echo "</table>"; 
+				  echo "<tr><td align=\"right\"><b>TOTAL:</b></td><td><b>Rs. ".$total."</b></td><tr>";?>
+				  <button class="no-print" id="printbutton" value="Print Bill" onclick="window.print();return false;" >Print Bill</button>
 				 </div> 
 			  </td>
             </tr>
@@ -374,7 +385,7 @@ This notice must stay intact for use
 	<table width="100%"  border="0" cellpadding="1">	  
 	  <tr>
     <td width="15%" bgcolor="#66CCCC">
-	<table width="100%"  border="0" cellpadding="1" bgcolor="#FFFFFF">
+	<table width="100%"  border="0" cellpadding="1" bgcolor="#FFFFFF" class="no-print">
        <tr>
         <td>Image</td>
       </tr>

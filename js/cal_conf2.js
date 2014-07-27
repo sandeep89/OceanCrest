@@ -9,7 +9,7 @@ addCalendar("Calendar4", "Select Date", "checkout_date", "bookings");
 addCalendar("Calendar5", "Select Date", "date_started", "rates");
 addCalendar("Calendar6", "Select Date", "date_stopped", "rates");
 
-addCalendar("Calendar7", "Select Date", "doc_date", "billing");
+addCalendar("Calendar7", "Select Date", "trans_date", "billing");
 
 addCalendar("Calendar8", "Select Date", "date", "report");
 

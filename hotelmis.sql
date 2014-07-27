@@ -939,3 +939,47 @@ CREATE TABLE `act_audit` (
   KEY `idx_changed_by` (`changed_by`),
   KEY `fk_audit_num` (`audit_num`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Table structure for table `act_transactions`
+--
+
+CREATE TABLE IF NOT EXISTS `act_transactions` (
+  `trans_no` int(11) NOT NULL AUTO_INCREMENT,
+  `bill_no` int(11) NOT NULL,
+  `trans_date` date NOT NULL,
+  `details` int(11) NOT NULL,
+  `amount` float NOT NULL,
+  `create_date` date NOT NULL,
+  PRIMARY KEY (`trans_no`),
+  KEY `trans_no` (`trans_no`)
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
+
+-- --------------------------------------------------------
+DROP TABLE IF EXISTS `details`
+--
+-- Table structure for table `details`
+--
+
+CREATE TABLE IF NOT EXISTS `details` (
+  `itemid` int(11) NOT NULL AUTO_INCREMENT,
+  `item` varchar(35) NOT NULL,
+  `description` varchar(150) DEFAULT NULL,
+  `sale` tinyint(1) DEFAULT NULL,
+  `expense` tinyint(1) DEFAULT NULL,
+  PRIMARY KEY (`itemid`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 ;
+
+--
+-- Dumping data for table `details`
+--
+
+REPLACE INTO `details` (`itemid`, `item`, `description`, `sale`, `expense`) VALUES
+(1, 'Advance Payment', 'advance payment for booking', 1, NULL),
+(2, 'Accomodation', 'Room rent', 1, NULL),
+(3, 'Extra bed', 'Extra mattress provided', 1, NULL),
+(4, 'Water', 'Packaged Water', 1, NULL);
+
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
