@@ -54,6 +54,7 @@ if (isset($_POST['Submit'])){
 				        ,'".$identification_doc."','".addslashes($id_no)."','".$mobile_num."','".$alt_num."','".$checkin_date."','".$checkout_date."','".$num_of_nights."','".addslashes($arrived_from)."'
 				        ,'".$emp_india."','".addslashes($duration_stay_india)."','".addslashes($purpose_of_visit)."','".$roomid."','".$advance_amt."')";
             $results=mkr_query($sql,$conn);
+            $bookingId = mysql_insert_id();
             if ((int) $results==0){
                 //should log mysql errors to a file instead of displaying them to the user
                 echo 'Invalid query: ' . mysql_errno($conn). "<br>" . ": " . mysql_error($conn). "<br>";
@@ -74,13 +75,30 @@ if (isset($_POST['Submit'])){
                     booking.booking_id,booking.booking_id,booking.checkin_date from act_booking as booking where booking.billed=0";
                     $results=mkr_query($sql,$conn);
 
-                //mark room as booked
-                $sql="Update rooms set status='B' where roomid=$roomid"; //get the actual updated book_id, currently this simply updates all bookings
-                $results=mkr_query($sql,$conn);
+                    //mark room as booked
+                    $sql="Update rooms set status='B' where roomid=$roomid"; //get the actual updated book_id, currently this simply updates all bookings
+                    $results=mkr_query($sql,$conn);
 
                    //if bill succesful created update billed to 1 in bookings- todo
                     $sql="Update act_booking set billed=1 where billed=0"; //get the actual updated book_id, currently this simply updates all bookings
                     $results=mkr_query($sql,$conn);
+
+                    /*
+                    need to think about this one
+                    $sql="Select itemid from details where item like '%Advance Payment%'";
+                    $result=mkr_query($sql,$conn);
+                    $detailId=fetch_object($results);
+                    echo $detailId;
+                    $detailId = $detailId->itemid;
+                    if($detailId == ''){
+                       $sql="INSERT INTO details(item, description, sale) VALUES ('Advance Payment', 'advance payment for booking', 1)";
+                       $result=mkr_query($sql,$conn); 
+                       $detailId = mysql_insert_id();
+                    }*/
+
+                    $sql="INSERT INTO act_transactions (bill_no,trans_date,details,amount,create_date)
+                     VALUES($bookingId,CURDATE(),1, $advance_amt, CURDATE())";
+                    $results=mkr_query($sql,$conn);     
 
                 header("Location:bookings_list.php?msgSuccess=true");
             }
