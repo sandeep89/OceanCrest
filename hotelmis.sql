@@ -956,7 +956,7 @@ CREATE TABLE IF NOT EXISTS `act_transactions` (
 ) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
 
 -- --------------------------------------------------------
-DROP TABLE IF EXISTS `details`
+DROP TABLE IF EXISTS `details`;
 --
 -- Table structure for table `details`
 --
@@ -979,7 +979,3 @@ REPLACE INTO `details` (`itemid`, `item`, `description`, `sale`, `expense`) VALU
 (2, 'Accomodation', 'Room rent', 1, NULL),
 (3, 'Extra bed', 'Extra mattress provided', 1, NULL),
 (4, 'Water', 'Packaged Water', 1, NULL);
-
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
