@@ -62,6 +62,7 @@ if (isset($_GET['action'])){
 			$bill->checkout_date = $booking->checkout_date;
 			$bill->guest = $booking->name_of_guest;
 			$bill->address = $booking->address;
+
 			break;
 }		
 }
@@ -85,31 +86,32 @@ if (isset($_POST['Submit'])){
 				//search current record
 			}
 			else {
-				$billno=$_POST["billno"];
+                $bill->book_id=$_POST["billno"];
 				$doc_type=$_POST["doc_type"];
 				//$doc_no=$_POST["doc_no"];			
 				$trans_date= $_POST["trans_date"];
 				$details=$_POST["details"];	
 				$amount=$_POST["amount"];
-				$create_date = date("dd-mm-yy"); 		
+				$create_date = date("Y-m-d");
 				//$dr= !empty($_POST["dr"]) ? $_POST["dr"] : 'NULL';				
 				//$cr= !empty($_POST["cr"]) ? $_POST["cr"] : 'NULL';								
 				//$sql="INSERT INTO transactions (billno,doc_type,doc_no,doc_date,details,dr,cr)
 				// VALUES($billno,'$doc_type',$doc_no,'$doc_date',$details,$dr,$cr)";
 				$sql="INSERT INTO act_transactions (bill_no,trans_date,details,amount,create_date)
-					VALUES($billno,'$trans_date',$details,$amount,$create_date)";
+					VALUES($bill->book_id,'$trans_date',$details,$amount,'$create_date')";
+
 				$results=mkr_query($sql,$conn);		
 				$msg[0]="Sorry item not posted";
 				$msg[1]="Item successful posted";
 				AddSuccess($results,$conn,$msg);
-				find($billno); //go back to bill after updating it
-				$search=$billno;
+				//find($billno); //go back to bill after updating it
+				//$search=$billno;
 			}
 			break;
 		case 'Check Out Guest':
 			//Check if bill has been cleared,Change room status to vacant,print bill,mark booking status and update checkout date - to add checkoutby,codatetime in booking
 			$roomno=$_POST["roomno"];
-			$book_id=$_POST["book_id"];
+            $bill->book_id=$_POST["book_id"];
 			$userid=$_SESSION["userid"];
 
 			//change room status to vacant
@@ -118,9 +120,12 @@ if (isset($_POST['Submit'])){
 			$msg[0]="Sorry room not marked as vacant";
 			$msg[1]="Room <b>$roomno</b> marked as vacant";
 			AddSuccess($results,$conn,$msg);
-			
-			//Update booking status and update checkout date - to add checkoutby,codatetime in booking
-			$sql="Update booking set checkoutby=$userid,codatetime=now() where book_id=$book_id";
+
+            $sql="Update act_booking set status=2 where booking_id = $bill->book_id";
+            $results=mkr_query($sql,$conn);
+
+            //Update booking status and update checkout date - to add checkoutby,codatetime in booking
+			$sql="Update booking set checkoutby=$userid,codatetime=now() where book_id=$bill->book_id";
 			$results=mkr_query($sql,$conn);		
 			$msg[0]="Sorry checkout details not updated.";
 			$msg[1]="Checkout date and time updated.";
@@ -283,7 +288,7 @@ This notice must stay intact for use
               <td width="23%">&nbsp;</td>
               <td width="26%">&nbsp;</td>
               <td width="21%">Bill No. </td>
-              <td width="30%"><input type="text" name="billno" size="10" value="<?php echo $bill->billno; ?>"/></td>
+              <td width="30%"><input type="text" name="billno" size="10" value="<?php echo $bill->book_id; ?>"/></td>
             </tr>
             <tr>
               <td>&nbsp;</td>
@@ -315,9 +320,9 @@ This notice must stay intact for use
               <td colspan="4" class="no-print"><?php
               echo "<table>
 		<tr>
-		<td width=\"27%\">Date</td>
-		<td width=\"22%\">Details</td>
-		<td width=\"26%\">Amount</td>
+		<td width=\"30%\">Date</td>
+		<td width=\"25%\">Details</td>
+		<td width=\"30%\">Amount</td>
 	  </tr>
 		<tr><td><input type=\"text\" name=\"trans_date\" id=\"trans_date\" size=\"15\"/>
 		<a href=\"javascript:showCal('Calendar7')\"> <img src=\"images/ew_calendar.gif\" width=\"16\" height=\"15\" border=\"0\"/>
@@ -337,24 +342,29 @@ This notice must stay intact for use
             <tr>
               <td colspan="4"><div id="showbill">
 			  <?php
-				$billno=!empty($_POST['search']) ? $_POST['search'] : 0;
+              //echo $bill->book_id;
+				$billno=!empty($_POST['search']) ? $_POST['search'] : $bill->book_id;
 				//$billno=!empty($_POST['billid']) ? $_POST['billid'] : 1;
-				$sql="Select transactions.trans_no,transactions.trans_date,details.item,details.itemid,transactions.amount,transactions.bill_no
+				$sql="Select transactions.trans_no,transactions.trans_date,transactions.details,details.item,details.itemid,transactions.amount,transactions.bill_no
 					From act_transactions as transactions
 					Inner Join details ON transactions.details = details.itemid
-					Where transactions.bill_no = '$search'";
+					Where transactions.bill_no = '$billno'";
+                //echo $sql;
 				$results=mkr_query($sql,$conn);
 			
 			  	echo "<table width=\"100%\"  border=\"0\" cellpadding=\"1\">
                   <tr bgcolor=\"#FF9900\">
-                    <th class=\"no-print\">Action</th>
+                    <!--<th class=\"no-print\">Action</th>-->
 					<th>Date</th>
                     <th>Details</th>
                     <th>Amount</th>				
                   </tr>";
 				//get data from selected table on the selected fields
 				while ($trans = fetch_object($results)) {
-					$total=$total + $trans->amount;
+                    if($trans->details == 1)
+                        $total=$total - $trans->amount;
+                    else
+					    $total=$total + $trans->amount;
 					//alternate row colour
 					$j++;
 					if($j%2==1){
@@ -362,7 +372,7 @@ This notice must stay intact for use
 						}else{
 						echo "<tr id=\"row$j\" onmouseover=\"javascript:setColor('$j')\" onmouseout=\"javascript:origColor('$j')\" bgcolor=\"#EEEEF8\">";
 					}
-						echo "<td class=\"no-print\"\"><a href=\"billings.php?search=$trans->trans_no&action=remove&billno=$trans->bill_no\"><img src=\"images/button_remove.png\" width=\"16\" height=\"16\" border=\"0\" title=\"bill guest\"/></a></td>";
+						//echo "<td class=\"no-print\"\"><a href=\"billings.php?search=$trans->trans_no&action=remove&billno=$trans->bill_no\"><img src=\"images/button_remove.png\" width=\"16\" height=\"16\" border=\"0\" title=\"bill guest\"/></a></td>";
 						echo "<td align=\"center\">" . $trans->trans_date . "</td>";
 						echo "<td align=\"center\">" . $trans->item . "</td>";
 						echo "<td align=\"center\">" . $trans->amount . "</td>"; //when negative don't show

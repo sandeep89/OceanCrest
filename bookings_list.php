@@ -165,7 +165,7 @@ function loadHTMLPost(URL, destination){
 			booking.checkout_date,DATEDIFF(booking.checkout_date,booking.checkin_date) as nights,
 			booking.num_of_adults,booking.num_of_children,rooms.roomno
 			From hotelmis.act_booking as booking
-			Inner Join rooms ON booking.room_no = rooms.roomid";
+			Inner Join rooms ON booking.room_no = rooms.roomid WHERE booking.status=1";
 			$conn=db_connect(HOST,USER,PASS,DB,PORT);
 
 			$results=mkr_query($sql,$conn);
