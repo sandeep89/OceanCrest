@@ -208,7 +208,7 @@ function loadHTMLPost(URL, destination, button){
 }
 
 function RatesPeacker(){
-	window.open ('rates.html', 'newwindow', config='height=100,width=400, toolbar=no, menubar=no, scrollbars=no, resizable=no,location=no, directories=no, status=no');
+	window.open ('billings.php?action=checkout&search=22', 'newwindow', config='height=700,width=1000, toolbar=no, menubar=no, scrollbars=no, resizable=no,location=no, directories=no, status=no');
 }
 
 //have this in cal2.js - get date differences
@@ -446,7 +446,7 @@ This notice must stay intact for use
              <table border="0" cellpadding="0" width="20%">
                  <tr>
                      <td><input type="submit" name="Submit" value="Book Guest" onclick="return validateBooking();"/></td>
-                     <td><input type="button" name="Submit" value="Prepare Bill" onclick="RatesPeacker()"/></td>
+                     <td><input type="button" name="Submit" value="Prepare Bill" onclick="RatesPeacker(<?php echo $bookingId; ?>)"/></td>
                  </tr>
              </table>
          </td>
