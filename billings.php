@@ -104,7 +104,7 @@ if (isset($_POST['Submit'])){
 				$msg[0]="Sorry item not posted";
 				$msg[1]="Item successful posted";
 				AddSuccess($results,$conn,$msg);
-				//find($billno); //go back to bill after updating it
+				find($bill->book_id); //go back to bill after updating it
 				//$search=$billno;
 			}
 			break;
@@ -147,11 +147,11 @@ function find($search){
 	$search=$search;
 	//search on booking
 	//check on wether search is being done on idno/ppno/guestid/guestname
-	$sql="Select bills.bill_id,bills.book_id,bills.date_billed,bills.billno,booking.name_of_guest, 
+	$sql="Select bills.bill_id,booking.booking_id as book_id,bills.date_billed,bills.billno,booking.name_of_guest as guest,
 		booking.address, booking.checkin_date, booking.checkout_date, booking.room_no,rooms.roomno From bills
-		Inner Join act_booking as booking ON bills.book_id = booking.booking_id
+		Inner Join act_booking as booking ON bills.bill_id = booking.booking_id
 		Inner Join rooms ON booking.room_no = rooms.roomid where bills.bill_id ='$search'";
-		
+
 	$results=mkr_query($sql,$conn);
 	$bill=fetch_object($results);
 }
@@ -349,7 +349,7 @@ This notice must stay intact for use
 					From act_transactions as transactions
 					Inner Join details ON transactions.details = details.itemid
 					Where transactions.bill_no = '$billno'";
-                //echo $sql;
+               
 				$results=mkr_query($sql,$conn);
 			
 			  	echo "<table width=\"100%\"  border=\"0\" cellpadding=\"1\">
