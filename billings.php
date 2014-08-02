@@ -39,14 +39,13 @@ if (isset($_GET['action'])){
 	switch ($action) {
 		case 'remove':
 			//before deleting make sure bill has not been printed - todo
-			$sql="delete from transactions where transno='$search'";
+			$sql="delete from act_transactions where trans_no='$search'";
 			$results=mkr_query($sql,$conn);
 			$msg[0]="Sorry item not deleted";
 			$msg[1]="Item successful deleted";
 			AddSuccess($results,$conn,$msg);
 			//go to original billno - get value from hidden field
-			find($billno);
-			$search=$billno;
+			find($search);
 			break;
 		case 'search':
 			$search=$_GET["search"];
@@ -354,7 +353,7 @@ This notice must stay intact for use
 			
 			  	echo "<table width=\"100%\"  border=\"0\" cellpadding=\"1\">
                   <tr bgcolor=\"#FF9900\">
-                    <!--<th class=\"no-print\">Action</th>-->
+                    <th class=\"no-print\">Action</th>
 					<th>Date</th>
                     <th>Details</th>
                     <th>Amount</th>				
@@ -372,7 +371,7 @@ This notice must stay intact for use
 						}else{
 						echo "<tr id=\"row$j\" onmouseover=\"javascript:setColor('$j')\" onmouseout=\"javascript:origColor('$j')\" bgcolor=\"#EEEEF8\">";
 					}
-						//echo "<td class=\"no-print\"\"><a href=\"billings.php?search=$trans->trans_no&action=remove&billno=$trans->bill_no\"><img src=\"images/button_remove.png\" width=\"16\" height=\"16\" border=\"0\" title=\"bill guest\"/></a></td>";
+						echo "<td class=\"no-print\"\"><a href=\"billings.php?search=$trans->trans_no&action=remove&billno=$trans->bill_no\"><img src=\"images/button_remove.png\" width=\"16\" height=\"16\" border=\"0\" title=\"bill guest\"/></a></td>";
 						echo "<td align=\"center\">" . $trans->trans_date . "</td>";
 						echo "<td align=\"center\">" . $trans->item . "</td>";
 						echo "<td align=\"center\">" . $trans->amount . "</td>"; //when negative don't show
