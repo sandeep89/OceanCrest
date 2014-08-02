@@ -39,13 +39,14 @@ if (isset($_GET['action'])){
 	switch ($action) {
 		case 'remove':
 			//before deleting make sure bill has not been printed - todo
+			$bill->book_id=$_GET['billno'];
 			$sql="delete from act_transactions where trans_no='$search'";
 			$results=mkr_query($sql,$conn);
 			$msg[0]="Sorry item not deleted";
 			$msg[1]="Item successful deleted";
 			AddSuccess($results,$conn,$msg);
 			//go to original billno - get value from hidden field
-			find($search);
+			find($bill->book_id);
 			break;
 		case 'search':
 			$search=$_GET["search"];
