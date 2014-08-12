@@ -180,12 +180,13 @@ function findguest($search){
 }
 
 function AddSuccess($results,&$conn,$msg){
+	echo "coming here";
 	if ((int) $results==0){
 		//should log mysql errors to a file instead of displaying them to the user
 		echo 'Invalid query: ' . mysql_errno($conn). "<br>" . ": " . mysql_error($conn). "<br>";
-		echo "<div align=\"center\"><h1>$msg[0]</h1></div>";		
+		echo "<div class=\"no-print\" align=\"center\"><h1>$msg[0]</h1></div>";		
 	}else{
-		echo "<div align=\"center\"><h1>$msg[1]</h1></div>";
+		echo "<div class=\"no-print\" align=\"center\"><h1>$msg[1]</h1></div>";
 		//return(AddSuccess);
 	}
 }
