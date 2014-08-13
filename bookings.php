@@ -124,6 +124,11 @@ function findReservation($findReservation){
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
 <link href="css/new.css" rel="stylesheet" type="text/css">
+<link href="./css/new.css" rel="stylesheet" type="text/css">
+<link href="./css/jquery.datetimepicker.css" rel="stylesheet" type="text/css">
+<script type="text/javascript" src="./js/lib/jquery-2.1.1.min.js"></script>
+<script type="text/javascript" src="./js/lib/jquery.datetimepicker.js"></script>
+<script language="javascript" src="./js/scripts.js"></script>
 <title>OCEAN CREST RESERVATION SYSTEMS</title>
 
 <script type="text/javascript">
@@ -213,22 +218,12 @@ function RatesPeacker(){
 
 //have this in cal2.js - get date differences
 function nights(){
-date2=(document.getElementById('departuredate').value);
-date1=(document.getElementById('arrivaldate').value);
-document.getElementById('no_nights').value=date2-date1;
+date2=($('#checkout_date').value);
+date1=($('#checkin_date').value);
+$('#num_of_nights').value=date2-date1;
 }
 //-->	 
 </script>
-<script language="javascript" src="js/cal2.js">
-/*
-Xin's Popup calendar script-  Xin Yang (http://www.yxscripts.com/)
-Script featured on/available at http://www.dynamicdrive.com/
-This notice must stay intact for use
-*/
-</script>
-<script language="javascript" src="js/cal_conf2.js"></script>
-<script type="text/javascript" src="js/lib/jquery-2.1.1.min.js"></script>
-<script language="javascript" src="js/scripts.js"></script>
 </head>
 
 <body>
@@ -382,10 +377,8 @@ This notice must stay intact for use
         <td width="20%">Arrival Date* </td>
         <td>
             <input type="text" name="checkin_date" id="checkin_date" readonly="" value="<?php echo $checkin_date; ?>"/>
-            <a href="javascript:showCal('Calendar3')"> <img src="images/ew_calendar.gif" width="16" height="15" border="0"/></a>
             &nbsp;&nbsp;&nbsp;
             Departure Date*&nbsp;&nbsp;&nbsp;<input type="text" name="checkout_date" id="checkout_date" readonly="" value="<?php echo $checkout_date; ?>" onblur="nights()"/>
-            <small><a href="javascript:showCal('Calendar4')"> <img src="images/ew_calendar.gif" width="16" height="15" border="0"/></a></small>
         </td>
     </tr>
     <tr>
@@ -466,4 +459,12 @@ This notice must stay intact for use
 </table>
 </form>
 </body>
+<script type="text/javascript">
+$('#checkin_date').datetimepicker({
+    mask:'9999/19/39 29:59'
+});
+$('#checkout_date').datetimepicker({
+    mask:'9999/19/39 29:59'
+});
+</script>
 </html>
