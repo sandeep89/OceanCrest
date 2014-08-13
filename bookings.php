@@ -416,7 +416,7 @@ $('#num_of_nights').value=date2-date1;
                 if($roomId == null){
             ?>
              <div id="showrates"></div>
-             <select name="roomid" id="roomid" size="6" onchange="loadHTMLPost('ajaxfunctions.php','showrates','GetRates')" multiple>
+             <select name="roomid" id="roomid" onchange="loadHTMLPost('ajaxfunctions.php','showrates','GetRates')">
                  <option value="" >Select Room</option>
                  <?php populate_rooms($roomId);?>
              </select>
