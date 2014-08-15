@@ -109,9 +109,11 @@ function find($search){
 <title>OCEAN CREST RESERVATION SYSTEMS</title>
 
 <script language="javascript" src="js/cal2.js"></script>
-<script language="javascript" src="js/scripts.js"></script>
-<script language="javascript" src="js/jquery-2.1.1.min.js"></script>
-<script language="javascript" src="js/cal_conf2.js"></script>
+<!--<script language="javascript" src="js/cal_conf2.js"></script>-->
+<link href="./css/jquery.datetimepicker.css" rel="stylesheet" type="text/css">
+<script type="text/javascript" src="./js/lib/jquery-2.1.1.min.js"></script>
+<script type="text/javascript" src="./js/lib/jquery.datetimepicker.js"></script>
+<script language="javascript" src="./js/scripts.js"></script>
 
 <script type="text/javascript">
 <!--
@@ -271,11 +273,9 @@ function loadHTMLPost(URL, destination, button){
     </tr>
     <tr>
       <td>Arrival Date* </td>
-      <td><input type="text" name="checkin_date" id="checkin_date" onblur="nights()" readonly="" value="<?php echo $reservation->checkin_date; ?>"/>
-          <a href="javascript:showCal('Calendar1')"> <img src="images/ew_calendar.gif" width="16" height="15" border="0"/></a></td>
+      <td><input type="text" name="checkin_date" id="checkin_date" readonly="" value="<?php echo $reservation->checkin_date; ?>"/></td>
       <td>Departure Date*</td>
-      <td><input type="text" name="checkout_date" id="checkout_date" onblur="nights()" readonly="" value="<?php echo $reservation->checkout_date; ?>"/>
-          <small><a href="javascript:showCal('Calendar2')"> <img src="images/ew_calendar.gif" width="16" height="15" border="0"/></a></small></td>
+      <td><input type="text" name="checkout_date" id="checkout_date" onblur="nights()" readonly="" value="<?php echo $reservation->checkout_date; ?>"/></td>
     </tr>
     <tr>
       <td>Number of nights</td>
@@ -332,4 +332,39 @@ function loadHTMLPost(URL, destination, button){
 </table>
 </form>
 </body>
+<script type="text/javascript">
+var checkin_date, checkout_date;
+$('#checkin_date').datetimepicker({
+    mask:'9999/19/39 29:59',
+    minDate:new Date(),
+    defaultDate:<?php 
+      if($reservation->checkin_date != '') {
+        echo $reservation->checkin_date;
+      }else{?>
+        new Date()
+      <?php
+      }
+      ?>,
+      onChangeDateTime:function(dp,$input){
+      checkin_date = dp;
+      nights(checkout_date, checkin_date, "num_of_nights")
+    }
+});
+$('#checkout_date').datetimepicker({
+    mask:'9999/19/39 29:59',
+    minDate: new Date(),
+    defaultDate:<?php 
+      if($reservation->checkout_date != '') {
+        echo $reservation->checkout_date;
+      }else{?>
+        new Date()
+      <?php
+      }
+      ?>,
+    onChangeDateTime:function(dp,$input){
+      checkout_date = dp;
+      nights(checkout_date, checkin_date, "num_of_nights")
+    },
+});
+</script>
 </html>

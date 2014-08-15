@@ -180,7 +180,6 @@ function findguest($search){
 }
 
 function AddSuccess($results,&$conn,$msg){
-	echo "coming here";
 	if ((int) $results==0){
 		//should log mysql errors to a file instead of displaying them to the user
 		echo 'Invalid query: ' . mysql_errno($conn). "<br>" . ": " . mysql_error($conn). "<br>";

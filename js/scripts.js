@@ -1,5 +1,12 @@
 //common script file
-function nights(){
+//have this in cal2.js - get date differences
+function nights(checkout_date, checkin_date, input_field_id){
+var timeDiff = Math.abs(checkout_date - checkin_date);
+var diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24)); 
+$('#' + input_field_id ).val(diffDays);
+}
+
+function nights_old(){
 var date2=document.getElementById('checkout_date').value;
 var date1=document.getElementById('checkin_date').value;
 
@@ -223,3 +230,4 @@ function Trim(fld)
         fld=fld.substring(0,fld.length-1);
     return fld;
 }
+

@@ -215,13 +215,6 @@ function loadHTMLPost(URL, destination, button){
 function RatesPeacker(){
 	window.open ('billings.php?action=checkout&search=22', 'newwindow', config='height=700,width=1000, toolbar=no, menubar=no, scrollbars=no, resizable=no,location=no, directories=no, status=no');
 }
-
-//have this in cal2.js - get date differences
-function nights(){
-date2=($('#checkout_date').value);
-date1=($('#checkin_date').value);
-$('#num_of_nights').value=date2-date1;
-}
 //-->	 
 </script>
 </head>
@@ -460,11 +453,38 @@ $('#num_of_nights').value=date2-date1;
 </form>
 </body>
 <script type="text/javascript">
+var checkin_date, checkout_date;
 $('#checkin_date').datetimepicker({
-    mask:'9999/19/39 29:59'
+    mask:'9999/19/39 29:59',
+    minDate: new Date(),
+    defaultDate:<?php 
+      if($checkout_date != '') {
+        echo $checkout_date;
+      }else{?>
+        new Date()
+      <?php
+      }
+      ?>,
+    onChangeDateTime:function(dp,$input){
+    checkin_date = dp;
+    nights(checkout_date, checkin_date, "num_of_nights")
+  }
 });
 $('#checkout_date').datetimepicker({
-    mask:'9999/19/39 29:59'
+    mask:'9999/19/39 29:59',
+    minDate: new Date(),
+    defaultDate:<?php 
+      if($checkout_date != '') {
+        echo $checkout_date;
+      }else{?>
+        new Date()
+      <?php
+      }
+      ?>,
+    onChangeDateTime:function(dp,$input){
+    checkout_date = dp;
+    nights(checkout_date, checkin_date, "num_of_nights")
+  }
 });
 </script>
 </html>

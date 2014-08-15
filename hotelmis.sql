@@ -852,7 +852,7 @@ INSERT INTO `users_online` (`id`, `timestamp`, `ip`, `file`) VALUES (591, 114396
 (590, 1143969159, '127.0.0.1', '/titanic/photogallery/photo.php'),
 (571, 1143969018, '127.0.0.1', '/titanic/index.php');
 
-CREATE TABLE `act_booking` (
+CREATE TABLE IF NOT EXISTS `act_booking` (
   `booking_id` int(11) NOT NULL AUTO_INCREMENT,
   `name_of_guest` varchar(100) NOT NULL,
   `age` int(11) NOT NULL,
@@ -862,8 +862,8 @@ CREATE TABLE `act_booking` (
   `landline_num` varchar(15) DEFAULT NULL,
   `address` varchar(255) NOT NULL,
   `nationality` varchar(10) DEFAULT NULL,
-  `checkin_date` date DEFAULT '0000-00-00',
-  `checkout_date` date DEFAULT '0000-00-00',
+  `checkin_date` datetime DEFAULT '0000-00-00 00:00:00',
+  `checkout_date` datetime DEFAULT '0000-00-00 00:00:00',
   `arrived_from` varchar(255) DEFAULT NULL,
   `room_no` int(11) NOT NULL,
   `employed_in_india` enum('Y','N') NOT NULL DEFAULT 'Y',
@@ -884,13 +884,13 @@ CREATE TABLE `act_booking` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 
-CREATE TABLE `act_reservation` (
+CREATE TABLE IF NOT EXISTS `act_reservation` (
   `reservation_id` int(11) NOT NULL AUTO_INCREMENT,
   `name_of_guest` varchar(100) NOT NULL,
   `contact_num` varchar(15) NOT NULL,
   `alt_contact_num` varchar(15) DEFAULT NULL,
-  `checkin_date` date DEFAULT '0000-00-00',
-  `checkout_date` date DEFAULT '0000-00-00',
+  `checkin_date` datetime DEFAULT '0000-00-00 00:00:00',
+  `checkout_date` datetime DEFAULT '0000-00-00 00:00:00',
   `num_of_nights` int(3) NOT NULL,
   `num_of_adults` int(11) NOT NULL,
   `num_of_children` int(11) DEFAULT NULL,
