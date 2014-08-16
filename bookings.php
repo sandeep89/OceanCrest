@@ -215,6 +215,26 @@ function loadHTMLPost(URL, destination, button){
 function RatesPeacker(){
 	window.open ('billings.php?action=checkout&search=22', 'newwindow', config='height=700,width=1000, toolbar=no, menubar=no, scrollbars=no, resizable=no,location=no, directories=no, status=no');
 }
+
+function activateDates(){
+    if($('#advance-booking').prop( "checked" )){
+        $('#checkout_date').datetimepicker("enable");
+        $('#checkin_date').datetimepicker("enable");
+        <?php
+            if( $checkin_date == ''){
+                $checkin_date =date('Y-m-d H:i');
+            }
+            if( $checkout_date == ''){
+                $checkout_date =date('Y-m-d H:i');
+            }
+        ?>
+    }else{
+        $('#checkin_date').prop("readonly", true);
+        $('#checkout_date').prop("readonly", true);
+        $('#checkout_date').unbind('click');
+        $('#checkin_date').unbind('click');
+    }
+}
 //-->	 
 </script>
 </head>
@@ -263,14 +283,18 @@ function RatesPeacker(){
             <td width="20%">Booking Id</td>
             <td><?php echo $bookingId; ?></td>
         <?php
-        }
+       /* }else{?>
+           <td width="20%">Advance Booking</td>
+            <td><input type="checkbox" id="advance-booking" name="advance-booking" onClick="activateDates()"/></td> 
+        <?php
+        }*/
         if($reservationId != '')
         {
         ?>
             <td><input type="hidden" name="reservationId" value="<?php echo $reservationId; ?>" /></td>
         <?php
         }
-        ?>
+            ?>
 
     </tr>
     <tr>
@@ -453,17 +477,17 @@ function RatesPeacker(){
 </form>
 </body>
 <script type="text/javascript">
-var checkin_date, checkout_date;
+var checkin_date = new Date($('#checkin_date').val()), 
+    checkout_date = new Date($('#checkout_date').val());
+nights(checkout_date, checkin_date, "num_of_nights");
 $('#checkin_date').datetimepicker({
-    mask:'9999/19/39 29:59',
     minDate: new Date(),
     defaultDate:<?php 
       if($checkout_date != '') {
-        echo $checkout_date;
-      }else{?>
-        new Date()
-      <?php
-      }
+        echo "'".$checkout_date."'";
+      }else{
+        echo "'".date('Y-m-d H:i').":00'";
+        }
       ?>,
     onChangeDateTime:function(dp,$input){
     checkin_date = dp;
@@ -471,15 +495,13 @@ $('#checkin_date').datetimepicker({
   }
 });
 $('#checkout_date').datetimepicker({
-    mask:'9999/19/39 29:59',
     minDate: new Date(),
     defaultDate:<?php 
       if($checkout_date != '') {
-        echo $checkout_date;
-      }else{?>
-        new Date()
-      <?php
-      }
+        echo "'".$checkout_date."'";
+      }else{
+        echo "'".date('Y-m-d H:i').":00'";
+        }
       ?>,
     onChangeDateTime:function(dp,$input){
     checkout_date = dp;
