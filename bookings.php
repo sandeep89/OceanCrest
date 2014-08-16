@@ -283,11 +283,7 @@ function activateDates(){
             <td width="20%">Booking Id</td>
             <td><?php echo $bookingId; ?></td>
         <?php
-       /* }else{?>
-           <td width="20%">Advance Booking</td>
-            <td><input type="checkbox" id="advance-booking" name="advance-booking" onClick="activateDates()"/></td> 
-        <?php
-        }*/
+		}
         if($reservationId != '')
         {
         ?>
