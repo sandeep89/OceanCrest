@@ -164,3 +164,51 @@ h4 {
  	color: #996666;
 	font-size: 13px;
  }
+
+ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+}
+
+li {
+    float: left;
+    border: 5px;
+    border-color: #000000;
+}
+
+.menu_link:link, .menu_link:visited {
+    display: block;
+    width: 200px;
+    height: 20px;
+    font-size: 12px;
+    font-weight: normal;
+    color: #FFFFFF;
+    background-color: #804A9E;
+    text-align: center;
+    padding: 4px;
+    text-decoration: none;
+    text-transform: uppercase;
+}
+
+.menu_link:hover, .menu_link:active {
+    background-color: #604A9E;
+}
+
+.opt_link:link, .opt_link:visited {
+    display: block;
+    border: 1px solid #804A9E;
+    font-size: 12px;
+    font-weight: normal;
+    color: #804A9E;
+    text-decoration: none;
+    padding: 4px;
+    text-transform: uppercase;
+}
+
+.opt_link:hover, .opt_link:active {
+    display: block;
+    color: #FFFFFF;
+    background-color: #804A9E;
+}

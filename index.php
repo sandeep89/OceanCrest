@@ -32,14 +32,16 @@ if (!empty($_POST["login"])){
 		case "Login":
 			Login();
 			break;
-		case "Logout":
-			echo "<center><font color=\"#0033CC\"><b>Session successful ended.</b></font></center>";
-			setcookie("data_login","",time()-60);
-			//ob_start();
-			session_unset();
-			session_destroy();
-			break;	
 	}
+}
+
+if(!empty($_GET['mode']) && $_GET['mode']=='logout')
+{
+    echo "<center><font color=\"#0033CC\"><b>Session successful ended.</b></font></center>";
+    setcookie("data_login","",time()-60);
+    //ob_start();
+    session_unset();
+    session_destroy();
 }
 
 //don't know what this does.
@@ -85,6 +87,7 @@ function Login(){
 			//******************************************************************
 			setcookie("data_login","$username $password",time()+60*30);  // Set the cookie named 'candle_login' with the value of the username (in plain text) and the password (which has been encrypted and serialized.)
 			$_SESSION["logged"]=1;
+            header("Location: home.php");
 			// set variable $msg with an HTML statement that basically says redirect to the next page. The reason we didn't use header() is that using setcookie() and header() at the sametime isn't 100% compatible with all browsers, this is more compatible.
 			$msg = "<meta http-equiv=\"Refresh\" content=\"0;url=./index.php\">"; //put index.php
 		}
@@ -166,26 +169,8 @@ function loadHTMLPost(URL, destination){
 <form action="index.php" method="post" enctype="multipart/form-data">
 <table width="102%"  border="0" cellpadding="1" bgcolor="#66CCCC" align="center">
   <tr valign="top">
-    <td width="18%" bgcolor="#FFFFFF">
-	<table width="100%" border="0" cellpadding="1" cellspacing="5">
-	  <tr>
-    <td bgcolor="#66CCCC">
-		<table cellspacing=0 cellpadding=0 width="100%" align="left" bgcolor="#FFFFFF">
-      <tr><td align="center"><a href="index.php"><img src="images/OpenCrest.gif" width="100%" height="100%" border="0"/><br>Home</a></td></tr>
-	  <tr><td width="110"> Username:<br><input name="username" type="text" width="10"></input> </td></tr>
-      <tr><td> Password: <br><input name="password" type="password" width="10"></input></td></tr>
-      <tr>
-        <td align="center">
-		<?php signon(); ?>		
-		</td>
-		</tr>
-	  </table></td></tr>
-		<?php require_once("menu_header.php"); ?>	
-    <!--<tr><td align="center"><div onclick="loadHTML('futures.php','RequestDetails')" style="cursor:pointer"><h2>Futures</h2></div></td></tr>		-->
-    </table>
-	</td>
-    
-    <td width="82%" bgcolor="#FFFFFF"><table width="100%"  border="0" cellpadding="1">
+
+    <td bgcolor="#FFFFFF"><table width="100%"  border="0" cellpadding="1">
       <tr>
         <td align="center"></td>
       </tr>
@@ -203,6 +188,26 @@ function loadHTMLPost(URL, destination){
 		<div id="RequestDetails"></div>
 		</td>
       </tr>
+            <tr>
+                <td align="center">
+                    <table width="20%" border="0" cellpadding="1" cellspacing="5">
+                        <tr>
+                            <td bgcolor="#66CCCC">
+                                <table cellspacing=0 cellpadding=0 border="0" width="100%" align="left" bgcolor="#FFFFFF">
+                                    <tr><td align="center"><a href="index.php"><img src="images/OpenCrest.gif" width="100%" height="100%" border="0"/><br>Home</a></td></tr>
+                                    <tr><td width="110"> Username:<br><input name="username" type="text" width="10"></input> </td></tr>
+                                    <tr><td> Password: <br><input name="password" type="password" width="10"></input></td></tr>
+                                    <tr>
+                                        <td align="center">
+                                            <?php signon(); ?>
+                                        </td>
+                                    </tr>
+                                </table></td></tr>
+                        <?php require_once("menu_header.php"); ?>
+                        <!--<tr><td align="center"><div onclick="loadHTML('futures.php','RequestDetails')" style="cursor:pointer"><h2>Futures</h2></div></td></tr>		-->
+                    </table>
+                </td>
+            </tr>
     </table></td>
   </tr>
   <!--<tr><td><a href="www.php.net" target="_blank"><img src="images/php-power-white.gif" width="88" height="31" border="0" /></a><a href="www.mysql.com" target="_blank"><img src="images/powered-by-mysql-88x31.png" width="88" height="31" border="0" /></a></td>

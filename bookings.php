@@ -243,27 +243,66 @@ function activateDates(){
 <form action="bookings.php" method="post" name="bookings" enctype="multipart/form-data">
 <table width="100%"  border="0" cellpadding="1" bgcolor="#66CCCC" align="center">
   <tr valign="top">
-    <td width="19%" bgcolor="#FFFFFF">
-	<table width="100%"  border="0" cellpadding="1">
-	  <tr>
-    <td width="15%" bgcolor="#66CCCC">
-		<table cellspacing=0 cellpadding=0 width="100%" align="left" bgcolor="#FFFFFF">
-      <tr><td width="110" align="center"><a href="index.php"><img src="images/OpenCrest.gif" width="100%" height="100%" border="0"/><br>
-          Home</a></td>
-      </tr>
-      <tr><td>&nbsp; </td>
-      </tr>
-      <tr>
-        <td align="center">
-		<?php signon(); ?>		
-		</td></tr>
-	  </table></td></tr>
-		<?php require_once("menu_header.php"); ?>	
-    </table>
-	</td>
-    
-    <td width="81%" bgcolor="#FFFFFF"><table width="100%"  border="0" cellpadding="1">
 
+    
+    <td bgcolor="#FFFFFF"><table width="100%"  border="0" cellpadding="1">
+    <tr>
+        <td align="center"></td>
+    </tr>
+    <tr>
+        <td>
+            <H4>OCEAN CREST RESERVATION SYSTEMS</H4> </td>
+    </tr>
+    <tr>
+        <td><div id="Requests">
+            </div></td>
+
+    </tr>
+    <tr bgcolor="#66CCCC" >
+        <td align="left">
+            <div id="RequestDetails"></div>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <table width="100%" border="0" cellpadding="1" cellspacing="5">
+                <tr>
+                    <td width="50%">
+                        <ul>
+                            <li><a class="menu_link" href="home.php">Home</a></li>
+                            <!--<li><a class="menu_link" href="reservation_list.php">Reservations List</a></li>
+                            <li><a class="menu_link" href="bookings_list.php">Bookings List</a></li>-->
+                            <li><a class="menu_link" href="lookup.php">Expense Management</a></li>
+                            <li><a class="menu_link" href="reports.php">Reports</a></li>
+                            <li><a class="menu_link" href="admin.php">User Account Management</a></li>
+                            <li><a class="menu_link" href="index.php?mode=logout">Logout</a></li>
+                        </ul>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+
+    <tr>
+        <td>
+            <table border="0" cellpadding="6" cellspacing="6">
+                <tr>
+                    <td width="50%">
+                        <a class="opt_link" href="reservations.php">Make a New Reservation</a>
+                    </td>
+                    <td width="50%">
+                        <a class="opt_link" href="bookings.php">Create a New Booking</a>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+
+    <tr>
+    <td>
+    <table width="100%" border="0" cellpadding="6" cellspacing="6">
+    <tr>
+    <td bgcolor="#FFFFFF"><table width="100%"  border="0" cellpadding="1">
       <tr>
         <td>
 		<H2>BOOKINGS</H2>
@@ -466,6 +505,12 @@ function activateDates(){
 		<div id="booking_list"></div>
 		</td>
       </tr>
+
+    </table></td>
+
+    </tr>
+    </table></td>
+    </tr>
     </table></td>
   </tr>
    <?php require_once("footer1.php"); ?>

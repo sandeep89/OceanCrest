@@ -117,139 +117,135 @@ function loadHTMLPost(URL, destination){
 <form action="bookings.php" method="post" enctype="multipart/form-data">
 <table width="100%"  border="0" cellpadding="1" align="center" bgcolor="#66CCCC">
   <tr valign="top">
-    <td width="17%" bgcolor="#FFFFFF">
-	<table width="100%"  border="0" cellpadding="1">	  
-	  <tr>
-    <td width="15%" bgcolor="#66CCCC">
-		<table cellspacing=0 cellpadding=0 width="100%" align="left" bgcolor="#FFFFFF">
-      <tr><td width="110" align="center"><a href="index.php"><img src="images/OpenCrest.gif" width="100%" height="100%" border="0"/><br>
-          Home</a></td>
-      </tr>
-      <tr><td>&nbsp; </td>
-      </tr>
-      <tr>
-        <td align="center">
-		<?php signon(); ?>		
-		</td></tr>
-	  </table></td></tr>
-		<?php require_once("menu_header.php"); ?>	
-    </table>
-	</td>
-    
-    <td width="67%" bgcolor="#FFFFFF"><table width="100%"  border="0" cellpadding="1">
-      <tr>
-        <td align="center"></td>
-      </tr>
-      <tr>
-        <td>
-		<h2>Booking List </h2>
-		</td>
-      </tr>
-    <tr bgcolor="#66CCCC" >
-        <td align="left"><div id="RequestDetails"></div>
-        </td>
-    </tr>
-      <tr>
-          <td>
-              <?php
-              if(isset($_GET["msgSuccess"]) && !empty($_GET["msgSuccess"])){
-                  echo "<div align=\"left\"><h1>Booking Successfully Created</h1></div>";
-              }
-              ?>
-          </td>
-      </tr>
-      <tr>
-        <td><div id="Requests"><br /><br />
-		<?php
-			$sql="Select booking.booking_id,booking.name_of_guest as guest,booking.checkin_date,
-			booking.checkout_date,DATEDIFF(booking.checkout_date,booking.checkin_date) as nights,
-			booking.num_of_adults,booking.num_of_children,rooms.roomno
-			From hotelmis.act_booking as booking
-			Inner Join rooms ON booking.room_no = rooms.roomid WHERE booking.status=1";
-			$conn=db_connect(HOST,USER,PASS,DB,PORT);
 
-			$results=mkr_query($sql,$conn);
-			
-			echo "<table>";
-			//get field names to create the column header
-			echo "<tr bgcolor=\"#009999\">
-				<th colspan=\"2\">Action</th>
-				<th>Booking Id</th>
-				<th>Room No.</th>
-				<th>Guest</th>
-				<th>Check-In Date</th>
-				<th>Check-Out Date</th>
-				<th>Nights</th>
-				<th>Adults</th>
-				<th>Children</th>
-				</tr>";
-				//end of field header
-				//get data from selected table on the selected fields
-			while ($booking = fetch_object($results)) {
-			//alternate row colour
-				$j++;
-				if($j%2==1){
-					echo "<tr id=\"row$j\" onmouseover=\"javascript:setColor('$j')\" onmouseout=\"javascript:origColor('$j')\" bgcolor=\"#CCCCCC\">";
-					}else{
-					echo "<tr id=\"row$j\" onmouseover=\"javascript:setColor('$j')\" onmouseout=\"javascript:origColor('$j')\" bgcolor=\"#EEEEF8\">";
-				}
-					echo "<td><a href=\"bookings.php?search=$booking->booking_id\"><img src=\"images/button_view.png\" width=\"16\" height=\"16\" border=\"0\" title=\"view booking details\"/></a></td>";
-					echo "<td><a href=\"billings.php?action=checkout&search=$booking->booking_id\"><img src=\"images/button_signout.png\" width=\"16\" height=\"16\" border=\"0\" title=\"bill guest\"/></a></td>";
-          echo "<td>" . $booking->booking_id . "</td>";
-          echo "<td>" . $booking->roomno . "</td>";
-					echo "<td>" . trim($booking->guest) . "</td>";
-					echo "<td>" . $booking->checkin_date . "</td>";
-					echo "<td>" . $booking->checkout_date . "</td>";
-					echo "<td>" . $booking->nights . "</td>";			
-					echo "<td>" . $booking->num_of_adults . "</td>";
-					echo "<td>" . $booking->num_of_children . "</td>";
-				echo "</tr>"; //end of - data rows
-			} //end of while row
-			echo "</table>";
-		?>
-		</div></td>		
-      </tr>
-    </table></td>
-	<!-- <td width="16%" bgcolor="#FFFFFF">
-	<table width="100%"  border="0" cellpadding="1">	  
-	  <tr>
-    <td width="15%" bgcolor="#66CCCC">
-	<table width="100%"  border="0" cellpadding="1" bgcolor="#FFFFFF">
-       <tr>
-        <td>Image</td>
-      </tr>
-	  <tr>
-        <td><input type="button" name="Submit" value="List" onclick="self.location='bookings_list.php'"/></td>
-	  </tr>
-      <tr>
-        <td>&nbsp;</td>
-      </tr>
-      <tr>
-        <td>&nbsp;</td>
-      </tr>
-      <tr>
-        <td>
-            <label> Search By:<br />
-            <input type="radio" name="optFind" value="Name" />
-        Card No.</label>
-            <br />
-            <label>
-            <input type="radio" name="optFind" value="Payrollno" />
-        Room No. </label>
-            <br>
-        <input type="text" name="search" width="100" /><br>
-        <input type="submit" name="Submit" value="Find"/>
-        </td>
-      </tr>
-      <tr>
-        <td>&nbsp;</td>
-      </tr>
-      <tr>
-        <td>&nbsp;</td>
-      </tr>
-    </table>
-	</td></tr></table>
-	</td> -->
+    <td bgcolor="#FFFFFF"><table width="100%"  border="0" cellpadding="1">
+            <tr>
+                <td align="center"></td>
+            </tr>
+            <tr>
+                <td>
+                    <H4>OCEAN CREST RESERVATION SYSTEMS</H4> </td>
+            </tr>
+            <tr>
+                <td><div id="Requests">
+                    </div></td>
+
+            </tr>
+            <tr bgcolor="#66CCCC" >
+                <td align="left">
+                    <div id="RequestDetails"></div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <table width="100%" border="0" cellpadding="1" cellspacing="5">
+                        <tr>
+                            <td width="50%">
+                                <ul>
+                                    <li><a class="menu_link" href="home.php">Home</a></li>
+                                    <!--<li><a class="menu_link" href="reservation_list.php">Reservations List</a></li>
+                                    <li><a class="menu_link" href="bookings_list.php">Bookings List</a></li>-->
+                                    <li><a class="menu_link" href="lookup.php">Expense Management</a></li>
+                                    <li><a class="menu_link" href="reports.php">Reports</a></li>
+                                    <li><a class="menu_link" href="admin.php">User Account Management</a></li>
+                                    <li><a class="menu_link" href="index.php?mode=logout">Logout</a></li>
+                                </ul>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+
+            <tr>
+                <td>
+                    <table border="0" cellpadding="6" cellspacing="6">
+                        <tr>
+                            <td width="50%">
+                                <a class="opt_link" href="reservations.php">Make a New Reservation</a>
+                            </td>
+                            <td width="50%">
+                                <a class="opt_link" href="bookings.php">Create a New Booking</a>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+
+            <tr>
+                <td>
+                    <table border="0" cellpadding="6" cellspacing="6">
+                        <tr>
+                            <td bgcolor="#FFFFFF"><table width="100%"  border="0" cellpadding="1">
+
+                                  <tr>
+                                    <td>
+                                    <h2>Booking List </h2>
+                                    </td>
+                                  </tr>
+                                  <tr>
+                                      <td>
+                                          <?php
+                                          if(isset($_GET["msgSuccess"]) && !empty($_GET["msgSuccess"])){
+                                              echo "<div align=\"left\"><h1>Booking Successfully Created</h1></div>";
+                                          }
+                                          ?>
+                                      </td>
+                                  </tr>
+                                  <tr>
+                                    <td><div id="Requests">
+                                    <?php
+                                        $sql="Select booking.booking_id,booking.name_of_guest as guest,booking.checkin_date,
+                                        booking.checkout_date,DATEDIFF(booking.checkout_date,booking.checkin_date) as nights,
+                                        booking.num_of_adults,booking.num_of_children,rooms.roomno
+                                        From hotelmis.act_booking as booking
+                                        Inner Join rooms ON booking.room_no = rooms.roomid WHERE booking.status=1";
+                                        $conn=db_connect(HOST,USER,PASS,DB,PORT);
+
+                                        $results=mkr_query($sql,$conn);
+
+                                        echo "<table>";
+                                        //get field names to create the column header
+                                        echo "<tr bgcolor=\"#009999\">
+                                            <th colspan=\"2\">Action</th>
+                                            <th>Booking Id</th>
+                                            <th>Room No.</th>
+                                            <th>Guest</th>
+                                            <th>Check-In Date</th>
+                                            <th>Check-Out Date</th>
+                                            <th>Nights</th>
+                                            <th>Adults</th>
+                                            <th>Children</th>
+                                            </tr>";
+                                            //end of field header
+                                            //get data from selected table on the selected fields
+                                        while ($booking = fetch_object($results)) {
+                                        //alternate row colour
+                                            $j++;
+                                            if($j%2==1){
+                                                echo "<tr id=\"row$j\" onmouseover=\"javascript:setColor('$j')\" onmouseout=\"javascript:origColor('$j')\" bgcolor=\"#CCCCCC\">";
+                                                }else{
+                                                echo "<tr id=\"row$j\" onmouseover=\"javascript:setColor('$j')\" onmouseout=\"javascript:origColor('$j')\" bgcolor=\"#EEEEF8\">";
+                                            }
+                                                echo "<td><a href=\"bookings.php?search=$booking->booking_id\"><img src=\"images/button_view.png\" width=\"16\" height=\"16\" border=\"0\" title=\"view booking details\"/></a></td>";
+                                                echo "<td><a href=\"billings.php?action=checkout&search=$booking->booking_id\"><img src=\"images/button_signout.png\" width=\"16\" height=\"16\" border=\"0\" title=\"bill guest\"/></a></td>";
+                                      echo "<td>" . $booking->booking_id . "</td>";
+                                      echo "<td>" . $booking->roomno . "</td>";
+                                                echo "<td>" . trim($booking->guest) . "</td>";
+                                                echo "<td>" . $booking->checkin_date . "</td>";
+                                                echo "<td>" . $booking->checkout_date . "</td>";
+                                                echo "<td>" . $booking->nights . "</td>";
+                                                echo "<td>" . $booking->num_of_adults . "</td>";
+                                                echo "<td>" . $booking->num_of_children . "</td>";
+                                            echo "</tr>"; //end of - data rows
+                                        } //end of while row
+                                        echo "</table>";
+                                    ?>
+                                    </div></td>
+                                  </tr>
+                                </table></td>
+
+                        </tr>
+                    </table></td>
   </tr>
    <?php require_once("footer1.php"); ?>
 </table>
