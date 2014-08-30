@@ -102,7 +102,7 @@ function loadHTMLPost(URL, destination){
                                     echo "<table>";
                                     //get field names to create the column header
                                     echo "<tr bgcolor=\"#009999\">
-                                    <!--<th colspan=\"3\">Action</th>-->
+                                    <th colspan=\"3\">Action</th>
                                     <th>Sr. No.</th>
                                     <th>Registration Id</th>
                                     <th>Guest Name</th>
@@ -123,9 +123,9 @@ function loadHTMLPost(URL, destination){
                                         }else{
                                             echo "<tr id=\"row$j\" onmouseover=\"javascript:setColor('$j')\" onmouseout=\"javascript:origColor('$j')\" bgcolor=\"#EEEEF8\">";
                                         }
-                                        /*echo "<td><a href=\"reservations.php?search=$reservation->reservation_id\"><img src=\"images/button_view.png\" width=\"16\" height=\"16\" border=\"0\" title=\"view/edit reservation\"/></a></td>";
+                                        echo "<td><a href=\"reservations.php?search=$reservation->reservation_id\"><img src=\"images/button_view.png\" width=\"16\" height=\"16\" border=\"0\" title=\"view/edit reservation\"/></a></td>";
                                         echo "<td><a href=\"bookings.php?confirmReservation=$reservation->reservation_id\"><img src=\"images/bed.jpg\" width=\"16\" height=\"16\" border=\"0\" title=\"book guest\"/></a></td>";
-                                        echo "<td><a href=\"#\" onclick=\"confirmDeletion($reservation->reservation_id)\"><img src=\"images/button_remove.png\" width=\"16\" height=\"16\" border=\"0\" title=\"delete reservation\"/></a></td>";*/
+                                        echo "<td><a href=\"#\" onclick=\"confirmDeletion($reservation->reservation_id)\"><img src=\"images/button_remove.png\" width=\"16\" height=\"16\" border=\"0\" title=\"delete reservation\"/></a></td>";
                                         echo "<td>" . $j. "</td>";
                                         echo "<td>" . $reservation->reservation_id. "</td>";
                                         echo "<td>" . trim($reservation->name_of_guest) . "</td>";
@@ -161,6 +161,7 @@ function loadHTMLPost(URL, destination){
                                     echo "<table>";
                                     //get field names to create the column header
                                     echo "<tr bgcolor=\"#009999\">
+                                    <th colspan=\"2\">Action</th>
                                     <th>Sr. No.</th>
                                     <th>Booking Id</th>
                                     <th>Room No.</th>
@@ -182,8 +183,8 @@ function loadHTMLPost(URL, destination){
                                         }else{
                                             echo "<tr id=\"row$j\" onmouseover=\"javascript:setColor('$j')\" onmouseout=\"javascript:origColor('$j')\" bgcolor=\"#EEEEF8\">";
                                         }
-                                        /*echo "<td><a href=\"bookings.php?search=$booking->booking_id\"><img src=\"images/button_view.png\" width=\"16\" height=\"16\" border=\"0\" title=\"view booking details\"/></a></td>";
-                                        echo "<td><a href=\"billings.php?action=checkout&search=$booking->booking_id\"><img src=\"images/button_signout.png\" width=\"16\" height=\"16\" border=\"0\" title=\"bill guest\"/></a></td>";*/
+                                        echo "<td><a href=\"bookings.php?search=$booking->booking_id\"><img src=\"images/button_view.png\" width=\"16\" height=\"16\" border=\"0\" title=\"view booking details\"/></a></td>";
+                                        echo "<td><a href=\"billings.php?action=checkout&search=$booking->booking_id\"><img src=\"images/button_signout.png\" width=\"16\" height=\"16\" border=\"0\" title=\"bill guest\"/></a></td>";
                                         echo "<td>" . $j. "</td>";
                                         echo "<td>" . $booking->booking_id . "</td>";
                                         echo "<td>" . $booking->roomno . "</td>";
