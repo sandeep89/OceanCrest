@@ -470,8 +470,8 @@ function activateDates(){
 </form>
 </body>
 <script type="text/javascript">
-var checkin_date = new Date($('#checkin_date').val()), 
-    checkout_date = new Date($('#checkout_date').val());
+var checkin_date = new Date($('#checkin_date').val().replace(/-/g,"/")), 
+    checkout_date = new Date($('#checkout_date').val().replace(/-/g,"/"));
 nights(checkout_date, checkin_date, "num_of_nights");
 $('#checkin_date').datetimepicker({
     minDate: new Date(),
