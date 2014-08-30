@@ -212,8 +212,8 @@ function loadHTMLPost(URL, destination, button){
     }
 }
 
-function RatesPeacker(){
-	window.open ('billings.php?action=checkout&search=22', 'newwindow', config='height=700,width=1000, toolbar=no, menubar=no, scrollbars=no, resizable=no,location=no, directories=no, status=no');
+function RatesPeacker(bookingId){
+	window.open ('billings.php?action=checkout&search=' + bookingId, 'newwindow', config='height=700,width=1000, toolbar=no, menubar=no, scrollbars=no, resizable=no,location=no, directories=no, status=no');
 }
 
 function activateDates(){
