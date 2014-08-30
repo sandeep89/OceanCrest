@@ -26,7 +26,7 @@
 </tr>
 <tr>
     <td>
-        <table width="100%" border="0" cellpadding="1" cellspacing="5">
+        <table class="no-print" width="100%" border="0" cellpadding="1" cellspacing="5">
             <tr>
                 <td width="50%">
                     <ul>
@@ -46,7 +46,7 @@
 
 <tr>
     <td>
-        <table border="0" cellpadding="6" cellspacing="6">
+        <table class="no-print" border="0" cellpadding="6" cellspacing="6">
             <tr>
                 <td width="50%">
                     <a class="opt_link" href="reservations.php">Make a New Reservation</a>

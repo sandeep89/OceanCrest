@@ -247,34 +247,20 @@ This notice must stay intact for use
 
 <body>
 <form action="billings.php" method="post" enctype="multipart/form-data" id="billing" name="billing">
-<table width="100%"  border="0" cellpadding="1" align="center" bgcolor="#66CCCC">
+<table width="100%"  border="0" cellpadding="1" bgcolor="#66CCCC" align="center">
   <tr valign="top">
-    <td width="17%" bgcolor="#FFFFFF"><div id="navigation">
-	<table width="100%"  border="0" cellpadding="1" class="no-print">	  
-	  <tr>
-    <td width="15%" bgcolor="#66CCCC">
-		<table cellspacing=0 cellpadding=0 width="100%" align="left" bgcolor="#FFFFFF">
-      <tr><td width="110" align="center"><a href="index.php"><img src="images/OpenCrest.gif" width="100%" height="100%" border="0"/><br>
-          Home</a></td>
-      </tr>
-      <tr><td>&nbsp; </td>
-      </tr>
+    <td bgcolor="#FFFFFF"><table width="100%"  border="0" cellpadding="1">
+
+    <?php require_once("menu_bar_header.php"); ?>
+
+    <tr>
+    <td>
+    <table width="100%" border="0" cellpadding="6" cellspacing="6">
+    <tr>
+    <td bgcolor="#FFFFFF"><table width="100%"  border="0" cellpadding="1">
       <tr>
-        <td align="center">
-		<?php signon(); ?>		
-		</td></tr>
-	  </table></td></tr>
-		<?php require_once("menu_header.php"); ?>		
-    </table>
-	</div></td>
-    
-    <td width="67%" bgcolor="#FFFFFF"><table width="100%"  border="0" cellpadding="1">
-      <tr>
-        <td align="center"></td>
-      </tr>
-      <tr>
-        <td>
-		<h2>GUEST BILLS</h2>
+        <td width="20%">
+		<H2>GUEST BILLS</H2>
 		</td>
       </tr>
       <tr >
@@ -394,7 +380,7 @@ This notice must stay intact for use
 	<td width="16%" bgcolor="#FFFFFF">
 	<table width="100%"  border="0" cellpadding="1">	  
 	  <tr>
-    <td width="15%" bgcolor="#66CCCC">
+    <!--<td width="15%" bgcolor="#66CCCC">
 	<table width="100%"  border="0" cellpadding="1" bgcolor="#FFFFFF" class="no-print">
        <tr>
         <td>Image</td>
@@ -429,7 +415,7 @@ This notice must stay intact for use
         <td>&nbsp;</td>
       </tr>
     </table>
-	</td></tr></table>
+	</td>--></tr></table>
 	</td>
   </tr>
    <?php require_once("footer1.php"); ?>
