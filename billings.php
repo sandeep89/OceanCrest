@@ -366,10 +366,15 @@ This notice must stay intact for use
 				} //end of while row
 				  echo "</table>"; 
 				  echo "<tr><td align=\"right\"><b>TOTAL:</b></td><td><b>Rs. ".$total."</b></td><tr>";?>
-				  <button class="no-print" id="printbutton" value="Print Bill" onclick="window.print();return false;" >Print Bill</button>
 				 </div> 
 			  </td>
             </tr>
+			<tr>
+				<td>
+					<button class="no-print" id="printbutton" value="Print Bill" onclick="window.print();return false;" >Print Bill</button>
+					<input type="submit" name="Submit" value="Checkout Guest"/>
+				</td>
+			</tr>
           </table></td>
       </tr>
 	  <!--<tr >
@@ -388,9 +393,6 @@ This notice must stay intact for use
 	  <tr>
         <td align="center"><input type="button" name="Submit" value="View Bills" onclick="loadHTML('ajaxfunctions.php?submit=Bills','RequestDetails')"/></td>
 	  </tr>
-      <tr>
-        <td align="center"><input type="submit" name="Submit" value="Check Out Guest"/></td>
-      </tr>
       <tr>
         <td align="center">&nbsp;</td>
       </tr>
